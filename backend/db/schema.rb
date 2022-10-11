@@ -36,12 +36,12 @@ ActiveRecord::Schema.define(version: 2022_10_10_154809) do
   end
 
   create_table "follows", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3", force: :cascade do |t|
-    t.integer "follower_id"
-    t.integer "following_id"
+    t.bigint "follower_id"
+    t.bigint "following_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["follower_id"], name: "index_follows_on_follower_id"
-    t.index ["following_id"], name: "index_follows_on_following_id"
+    t.index ["follower_id"], name: "index_users_on_follower_id"
+    t.index ["following_id"], name: "index_users_on_following_id"
   end
 
   create_table "likes", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3", force: :cascade do |t|
@@ -102,6 +102,8 @@ ActiveRecord::Schema.define(version: 2022_10_10_154809) do
 
   add_foreign_key "comment_likes", "comments"
   add_foreign_key "comments", "posts"
+  add_foreign_key "follows", "users", column: "follower_id", name: "fk_follows_1"
+  add_foreign_key "follows", "users", column: "following_id", name: "fk_follows_2"
   add_foreign_key "likes", "posts"
   add_foreign_key "likes", "users"
   add_foreign_key "posts", "districts"
