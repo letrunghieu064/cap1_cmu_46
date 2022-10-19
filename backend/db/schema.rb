@@ -36,8 +36,8 @@ ActiveRecord::Schema.define(version: 2022_10_21_092014) do
   end
 
   create_table "follows", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3", force: :cascade do |t|
-    t.bigint "follower_id"
-    t.bigint "following_id"
+    t.integer "follower_id"
+    t.integer "following_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["follower_id"], name: "index_follows_on_follower_id"
@@ -72,7 +72,7 @@ ActiveRecord::Schema.define(version: 2022_10_21_092014) do
     t.string "first_name"
     t.string "last_name"
     t.string "username"
-    t.string "password"
+    t.string "password_digest"
     t.date "birthday"
     t.string "url_img"
     t.string "phone_number"
@@ -80,6 +80,8 @@ ActiveRecord::Schema.define(version: 2022_10_21_092014) do
     t.binary "gender"
     t.string "card_id"
     t.string "role"
+    t.string "resend_password_token"
+    t.string "resend_password_at"
     t.string "confirmation_token"
     t.string "confirmation_at"
     t.integer "lock_at"
@@ -106,8 +108,6 @@ ActiveRecord::Schema.define(version: 2022_10_21_092014) do
 
   add_foreign_key "comment_likes", "comments"
   add_foreign_key "comments", "posts"
-  add_foreign_key "follows", "users", column: "follower_id", name: "fk_follows_users_1", on_update: :cascade, on_delete: :cascade
-  add_foreign_key "follows", "users", column: "following_id", name: "fk_follows_users_2", on_update: :cascade, on_delete: :cascade
   add_foreign_key "likes", "posts"
   add_foreign_key "likes", "users"
   add_foreign_key "posts", "districts"
