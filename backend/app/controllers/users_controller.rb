@@ -17,21 +17,7 @@ class UsersController < ApplicationController
     current_user.update!(last_login: Time.now)
     render json: current_user
   end
-  
-  private
-  
-  # Setting up strict parameters for when we add account creation.
-  def user_params
-    params.require(:user).permit(:username, :email, :password, :password_confirmation)
-  end
-  
-  # Adding a method to check if current_user can update itself. 
-  # This uses our UserModel method.
-  def authorize
-    return_unauthorized unless current_user && current_user.can_modify_user?(params[:id])
-  end
-
-  # GET /users or /users.json
+   # GET /users or /users.json
 
   # def index
   #   @users = User.all
@@ -67,6 +53,8 @@ def create
     
     if @user.save
       render json: {status: 200, msg: 'User was created.'}
+    else
+      render json: {error: @user.errors.full_messages}, status: :unprocessable_entity
     end
 end
 
@@ -88,13 +76,24 @@ end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_user
-      @user = User.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def user_params
-      params.require(:user).permit(:email, :first_name, :last_name, :username, :password, :birthday, :url_img, :phone_number, :address, :gender, :card_id, :role, :resend_password_token, :resend_password_at, :confirmation_token, :confirmation_at, :lock_at, :count_lock)
-    end
+  # Setting up strict parameters for when we add account creation.
+  def user_params
+    params.require(:user).permit(:username, :email, :password, :password_confirmation)
+  end
+  
+  # Adding a method to check if current_user can update itself. 
+  # This uses our UserModel method.
+  def authorize
+    return_unauthorized unless current_user && current_user.can_modify_user?(params[:id])
+  end
+    # Use callbacks to share common setup or constraints between actions.
+  def set_user
+    @user = User.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def user_params
+    params.require(:user).permit(:email, :first_name, :last_name, :username, :password, :birthday, :url_img, :phone_number, :address, :gender, :card_id, :role, :resend_password_token, :resend_password_at, :confirmation_token, :confirmation_at, :lock_at, :count_lock)
+  end
 end

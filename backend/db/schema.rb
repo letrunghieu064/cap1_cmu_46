@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_10_10_154809) do
+ActiveRecord::Schema.define(version: 2022_10_20_095444) do
 
   create_table "comment_likes", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3", force: :cascade do |t|
     t.integer "count"
@@ -72,7 +72,7 @@ ActiveRecord::Schema.define(version: 2022_10_10_154809) do
     t.string "first_name"
     t.string "last_name"
     t.string "username"
-    t.string "password"
+    t.string "password_digest"
     t.date "birthday"
     t.string "url_img"
     t.string "phone_number"
