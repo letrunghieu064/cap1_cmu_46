@@ -67,4 +67,4 @@ class CommentLikesController < ApplicationController
     def comment_like_params
       params.require(:comment_like).permit(:count, :comment_id)
     end
-end
+end 

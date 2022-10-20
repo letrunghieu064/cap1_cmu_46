@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_10_08_152235) do
+ActiveRecord::Schema.define(version: 2022_10_20_095444) do
 
   create_table "comment_likes", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3", force: :cascade do |t|
     t.integer "count"
@@ -33,6 +33,15 @@ ActiveRecord::Schema.define(version: 2022_10_08_152235) do
     t.string "icon_url"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "follows", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3", force: :cascade do |t|
+    t.integer "follower_id"
+    t.integer "following_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["follower_id"], name: "index_follows_on_follower_id"
+    t.index ["following_id"], name: "index_follows_on_following_id"
   end
 
   create_table "likes", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3", force: :cascade do |t|
@@ -63,7 +72,7 @@ ActiveRecord::Schema.define(version: 2022_10_08_152235) do
     t.string "first_name"
     t.string "last_name"
     t.string "username"
-    t.string "password"
+    t.string "password_digest"
     t.date "birthday"
     t.string "url_img"
     t.string "phone_number"
