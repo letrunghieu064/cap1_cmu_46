@@ -13,8 +13,6 @@ class CreateUsers < ActiveRecord::Migration[6.0]
       t.binary :gender
       t.string :card_id
       t.string :role
-      t.string :resend_password_token
-      t.string :resend_password_at
       t.string :confirmation_token
       t.string :confirmation_at
       t.integer :lock_at
