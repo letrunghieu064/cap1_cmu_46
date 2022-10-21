@@ -12,7 +12,6 @@
 
 ActiveRecord::Schema.define(version: 2022_10_20_095444) do
 
-
   create_table "comment_likes", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3", force: :cascade do |t|
     t.integer "count"
     t.bigint "comment_id", null: false
@@ -37,8 +36,8 @@ ActiveRecord::Schema.define(version: 2022_10_20_095444) do
   end
 
   create_table "follows", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3", force: :cascade do |t|
-    t.bigint "follower_id"
-    t.bigint "following_id"
+    t.integer "follower_id"
+    t.integer "following_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["follower_id"], name: "index_follows_on_follower_id"
@@ -81,18 +80,14 @@ ActiveRecord::Schema.define(version: 2022_10_20_095444) do
     t.binary "gender"
     t.string "card_id"
     t.string "role"
+    t.string "resend_password_token"
+    t.string "resend_password_at"
     t.string "confirmation_token"
     t.string "confirmation_at"
     t.integer "lock_at"
     t.integer "count_lock"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.string "encrypted_password", default: "", null: false
-    t.string "reset_password_token"
-    t.datetime "reset_password_sent_at"
-    t.datetime "remember_created_at"
-    t.index ["email"], name: "index_users_on_email", unique: true
-    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
   create_table "wards", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3", force: :cascade do |t|
@@ -107,8 +102,6 @@ ActiveRecord::Schema.define(version: 2022_10_20_095444) do
 
   add_foreign_key "comment_likes", "comments"
   add_foreign_key "comments", "posts"
-  add_foreign_key "follows", "users", column: "follower_id", name: "fk_follows_users_1", on_update: :cascade, on_delete: :cascade
-  add_foreign_key "follows", "users", column: "following_id", name: "fk_follows_users_2", on_update: :cascade, on_delete: :cascade
   add_foreign_key "likes", "posts"
   add_foreign_key "likes", "users"
   add_foreign_key "posts", "districts"
