@@ -1,17 +1,19 @@
 import React, { useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Navigate, useNavigate } from "react-router-dom";
-
+import './Login.css';
 import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 import CheckButton from "react-validation/build/button";
-
 import { login } from "../actions/auth";
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { AiFillLinkedin } from "react-icons/ai";
+import { BsFacebook } from "react-icons/bs";
+import { BsTwitter } from "react-icons/bs";
 const required = (value) => {
   if (!value) {
     return (
-      <div className="alert alert-danger" role="alert">
+      <div className="validate__input" role="alert">
         This field is required!
       </div>
     );
@@ -69,41 +71,65 @@ const Login = (props) => {
   }
 
   return (
-    <div className="col-md-12">
-      <div className="card card-container">
-        <img
+    <div className=" home">
+      <div className=" container">
+        {/* <img
           src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
           alt="profile-img"
           className="profile-img-card"
-        />
-
-        <Form onSubmit={handleLogin} ref={form}>
-          <div className="form-group">
-            <label htmlFor="username">Username</label>
+        /> */}
+        
+        <Form onSubmit={handleLogin} ref={form} className="form_container-login">
+          <div>
+            <h2 className="form__title">     
+              Sign in to Website
+            </h2>
+            <div className="container__icon">
+          <a href="" className="login__icon">
+          <AiFillLinkedin className="login__icon-items"/>
+          </a>
+          <a href="" className="login__icon">
+          <BsFacebook className="login__icon-items"/>
+          </a>
+          <a href="" className="login__icon">
+          <BsTwitter className="login__icon-items"/>
+          </a>
+          </div>
+          <div >
+                <p className="login__text" >or use your emaill account</p>
+          </div>
+          </div>
+          <div>
+          </div>
+          <div className=" form-login">
+            {/* <label htmlFor="username">Username</label> */}
             <Input
               type="text"
-              className="form-control"
+              className="login-input"
               name="username"
               value={username}
+              placeholder="Email/User Name"
               onChange={onChangeUsername}
               validations={[required]}
             />
           </div>
-
-          <div className="form-group">
-            <label htmlFor="password">Password</label>
+          <div className=" form-login">
+            {/* <label htmlFor="password">Password</label> */}
             <Input
               type="password"
-              className="form-control"
+              className="login-input"
               name="password"
+              placeholder="Password"
               value={password}
               onChange={onChangePassword}
               validations={[required]}
             />
           </div>
-
-          <div className="form-group">
-            <button className="btn btn-primary btn-block" disabled={loading}>
+          <div >
+                <a className="form__link" href="#">Forgot your password</a>
+          </div>
+          <div className=" form-login">
+            <button className="btn btn-primary btn-block button-login" disabled={loading}>
               {loading && (
                 <span className="spinner-border spinner-border-sm"></span>
               )}
@@ -112,8 +138,8 @@ const Login = (props) => {
           </div>
 
           {message && (
-            <div className="form-group">
-              <div className="alert alert-danger" role="alert">
+            <div className=" form-login">
+              <div className="alert alert-danger validate__input" role="alert">
                 {message}
               </div>
             </div>
