@@ -4,7 +4,7 @@ import { Fragment } from "react";
 import { BrowserRouter } from "react-router-dom";
 import "./App.css";
 import Page from "./components/Page";
-
+import "../src/fontawesome.js"
 function App() {
   return (
     <Fragment>
