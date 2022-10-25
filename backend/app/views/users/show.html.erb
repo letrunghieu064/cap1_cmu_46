@@ -21,11 +21,6 @@
 </p>
 
 <p>
-  <strong>Password:</strong>
-  <%= @user.password %>
-</p>
-
-<p>
   <strong>Birthday:</strong>
   <%= @user.birthday %>
 </p>
@@ -55,40 +50,6 @@
   <%= @user.card_id %>
 </p>
 
-<p>
-  <strong>Role:</strong>
-  <%= @user.role %>
-</p>
-
-<p>
-  <strong>Resend password token:</strong>
-  <%= @user.resend_password_token %>
-</p>
-
-<p>
-  <strong>Resend password at:</strong>
-  <%= @user.resend_password_at %>
-</p>
-
-<p>
-  <strong>Confirmation token:</strong>
-  <%= @user.confirmation_token %>
-</p>
-
-<p>
-  <strong>Confirmation at:</strong>
-  <%= @user.confirmation_at %>
-</p>
-
-<p>
-  <strong>Lock at:</strong>
-  <%= @user.lock_at %>
-</p>
-
-<p>
-  <strong>Count lock:</strong>
-  <%= @user.count_lock %>
-</p>
 
 <%= link_to 'Edit', edit_user_path(@user) %> |
 <%= link_to 'Back', users_path %>
