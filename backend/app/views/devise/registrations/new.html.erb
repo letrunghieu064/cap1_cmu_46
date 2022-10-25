@@ -7,20 +7,37 @@
       <%= render "devise/shared/error_messages", resource: resource %>
 
       <div class="field form-group">
-        <%= f.label :email %><br />
-        <%= f.email_field :email, class:"form-control", placeholder:"Enter your email", autofocus: true, autocomplete: "email" %>
+        <%= f.text_field :first_name, class:"form-control", placeholder:"Enter your first name" %>
       </div>
 
       <div class="field form-group">
-        <%= f.label :password %>
-        <% if @minimum_password_length %>
-        <em>(<%= @minimum_password_length %> characters minimum)</em>
-        <% end %><br />
+        <%= f.text_field :last_name, class:"form-control", placeholder:"Enter your last name" %>
+      </div>
+
+      <div class="field form-group">
+        <%= f.text_field :gender, class:"form-control", placeholder:"Enter your gender" %>
+      </div>
+
+      <div class="field form-group">
+        <%= f.text_field :username, class:"form-control", placeholder:"Enter your username" %>
+      </div>
+
+      <div class="field form-group">
+        <%= f.email_field :email, class:"form-control", placeholder:"Enter your email address", autocomplete: "email" %>
+      </div>
+
+      <div class="field form-group">
+        <%= f.text_field :address, class:"form-control", placeholder:"Enter your address (address, ward, district, city)" %>
+      </div>
+
+      <div class="field form-group">
+<!--         <% if @minimum_password_length %>
+          <em>(<%= @minimum_password_length %> characters minimum)</em>
+        <% end %><br> -->
         <%= f.password_field :password, class:"form-control", placeholder:"Enter your password", autocomplete: "new-password" %>
       </div>
 
       <div class="field form-group" >
-        <%= f.label :password_confirmation %><br />
         <%= f.password_field :password_confirmation, class:"form-control", placeholder:"Enter your password confirmation", autocomplete: "new-password" %>
       </div>
 
