@@ -1,4 +1,5 @@
-class Post < ApplicationRecord
+class PostSerializer < ActiveModel::Serializer
+  attributes :id
   belongs_to :users
   belongs_to :districts
   has_many :likes
