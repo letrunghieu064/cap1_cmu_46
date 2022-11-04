@@ -1,3 +1,3 @@
 class Ward < ApplicationRecord
-  belongs_to :district
+  belongs_to :districts
 end

@@ -1,4 +1,4 @@
 class Comment < ApplicationRecord
-  belongs_to :post
-  has_many :comment_like
+  belongs_to :posts
+  has_many :comment_likes
 end

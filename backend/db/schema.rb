@@ -40,8 +40,8 @@ ActiveRecord::Schema.define(version: 2022_10_21_092014) do
     t.bigint "following_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["follower_id"], name: "index_follows_on_follower_id"
-    t.index ["following_id"], name: "index_follows_on_following_id"
+    t.index ["follower_id"], name: "fk_rails_622d34a301"
+    t.index ["following_id"], name: "fk_rails_9cfc70f043"
   end
 
   create_table "likes", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3", force: :cascade do |t|
@@ -59,12 +59,12 @@ ActiveRecord::Schema.define(version: 2022_10_21_092014) do
     t.string "description"
     t.binary "status"
     t.string "address"
-    t.bigint "users_id", null: false
+    t.bigint "user_id", null: false
     t.bigint "district_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["district_id"], name: "index_posts_on_district_id"
-    t.index ["users_id"], name: "index_posts_on_users_id"
+    t.index ["user_id"], name: "index_posts_on_user_id"
   end
 
   create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3", force: :cascade do |t|
@@ -106,11 +106,11 @@ ActiveRecord::Schema.define(version: 2022_10_21_092014) do
 
   add_foreign_key "comment_likes", "comments"
   add_foreign_key "comments", "posts"
-  add_foreign_key "follows", "users", column: "follower_id", name: "fk_follows_users_1", on_update: :cascade, on_delete: :cascade
-  add_foreign_key "follows", "users", column: "following_id", name: "fk_follows_users_2", on_update: :cascade, on_delete: :cascade
+  add_foreign_key "follows", "users", column: "follower_id"
+  add_foreign_key "follows", "users", column: "following_id"
   add_foreign_key "likes", "posts"
   add_foreign_key "likes", "users"
   add_foreign_key "posts", "districts"
-  add_foreign_key "posts", "users", column: "users_id"
+  add_foreign_key "posts", "users"
   add_foreign_key "wards", "districts"
 end
