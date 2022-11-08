@@ -51,7 +51,8 @@ import { BiGroup } from "react-icons/bi";
 import { AiTwotoneLike } from "react-icons/ai";
 import { AiOutlineComment } from "react-icons/ai";
 import { AiOutlineShareAlt } from "react-icons/ai";
-
+import { TfiClose } from "react-icons/tfi";
+import { CiLocationOn } from "react-icons/ci";
 
 const Home = () => {
   const [enteredSearch, setEnteredSearch] = useState("");
@@ -64,6 +65,13 @@ const Home = () => {
     setEnteredSearch((prevState) => {
       return { ...prevState, enteredSearch: event.target.value };
     });
+      let post = document.getElementById("post-choose_item")
+      let create_modal = document.querySelector('.create_modal')
+      function showPost(){
+            create_modal.classList.add('open')
+      }
+    post.addEventListener('click',showPost)
+  
   };
 
   return (
@@ -133,12 +141,12 @@ const Home = () => {
         </div>
         <div className="home-body_right">
             <div className="home-body_post">
-              <div className="home-body_post-input">
+              <div id="home-body_post-input" className="home-body_post-input">
               <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQiquxzRvxiQGtrn3rlBgGKAWixXBIhPWhOOw&usqp=CAU" alt="" class=""/>
-                <input placeholder="Ngân ơi, bạn cần hỗ trợ gì?" type="text" className="inputPost" />
+                <input id="inputPost" placeholder="Ngân ơi, bạn cần hỗ trợ gì?" type="text" className="inputPost" />
               </div>
               <ul className="post-choose">
-                <li className="post-choose_item">
+                <li id="post-choose_item" className="post-choose_item">
                   <FcVideoCall className="post-choose_icon"></FcVideoCall>
                   <p>Video Trực Tiếp</p>
                 </li>
@@ -185,7 +193,35 @@ const Home = () => {
             </div>
         </div>
       </div>
+      <div id="create_modal" className="create_modal">
+      <div className="modal-overplay"></div>
+      <div className="modal--body">
+        <div className="create--header">
+            <p className="create--title">Tạo bài viết</p>
+            <TfiClose className="create--close"></TfiClose>
+        </div>
+        <div className="create--header__user">
+        <img class="header__user-img" className="new-header_img" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQiquxzRvxiQGtrn3rlBgGKAWixXBIhPWhOOw&usqp=CAU" alt="" />
+        <p>Lê Thị Kim Ngân</p>
+        </div>
+        <div className="create--header-content">
+        <textarea className="header-content-textarae" id="w3review" name="w3review" ></textarea>
+        </div>
+        <div className="create__content"> 
+        <input placeholder="Nhập địa chỉ"  type="text" className="create__content-input" />
+        </div>
+        <div className="create__choose">
+          <p>Thêm vào bài viết </p>
+          <CiLocationOn className="create__choose-location"></CiLocationOn>
+        </div>
+        <div className="create__submit">
+            <button className="create__submit-submit">Đăng</button>
+        </div>
+      </div>
+      </div>
     </div>
+    
   );
+  
 };
 export default Home;
