@@ -48,11 +48,14 @@ export const register = (username, email, password) => (dispatch) => {
 export const login = (username, password) => (dispatch) => {
   return AuthService.login(username, password).then(
     (data) => {
-      dispatch({
-        type: LOGIN_SUCCESS,
-        payload: { user: data },
-      });
+      if (data && data.data) {
+        dispatch({
+          type: LOGIN_SUCCESS,
+          payload: { user: data.data },
+        });
 
+        localStorage.setItem("user", JSON.stringify(data.data));
+      }
       return Promise.resolve();
     },
     (error) => {

@@ -1,9 +1,9 @@
 import axios from "axios";
 
-const API_URL = "http://casestudy.cyberlearn.vn/api";
+const API_URL = "http://localhost:5000/api";
 
 const register = (username, email, password) => {
-  return axios.post(API_URL + "/users/signup", {
+  return axios.post(API_URL + "/Users/signup", {
     username,
     email,
     password,
@@ -12,7 +12,7 @@ const register = (username, email, password) => {
 
 const login = (username, password) => {
   return axios
-    .post(API_URL + "/users/signin", {
+    .post(API_URL + "/Users/signin", {
       username,
       password,
     })
