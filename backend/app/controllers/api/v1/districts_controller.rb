@@ -27,7 +27,7 @@ class Api::V1::DistrictsController < ApplicationController
     @district = District.new(district_params)
 
     if @district.save
-      render json: @district, status: :created, location: @district
+      render json: @district, status: :created
     else
       render json: @district.errors, status: :unprocessable_entity
     end

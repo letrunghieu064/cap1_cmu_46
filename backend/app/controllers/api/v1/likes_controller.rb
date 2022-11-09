@@ -14,20 +14,20 @@ class Api::V1::LikesController < ApplicationController
   end
 
   # GET /likes/new
-  def new
-    @like = Like.new
-  end
+  # def new
+  #   @like = Like.new
+  # end
 
   # GET /likes/1/edit
-  def edit
-  end
+  # def edit
+  # end
 
   # POST /likes or /likes.json
   def create
     @like = Like.new(like_params)
 
-    if like.save
-      render json: @like, status: :created, location: @like
+    if @like.save
+      render json: @like, status: :created
     else
       render json: @like.errors, status: :unprocessable_entity
     end
