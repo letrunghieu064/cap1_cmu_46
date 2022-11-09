@@ -421,3 +421,54 @@ font-weight: 500;
 .create__submit-submit:hover{
 opacity: 0.9;
 }
+.nav-align_item-user{
+  position: relative;
+   
+}
+.user__modal--body{
+  position: absolute;
+  top: 96%;
+  right: 0px;
+  background-color: white;
+  text-align: left;
+  box-shadow: 0px 0px 2px rgba(204, 204, 204, 0.764);
+  width: 160px;
+  z-index: 1;
+  border-radius: 10px;
+  overflow: hidden;
+}
+.user__modal--body p {
+  font-weight: 500;
+  width: 100%;
+  padding: 8px;
+  margin: 0;
+  padding-left: 10px;
+  position: relative;
+  
+
+}
+.user__modal--body-list{
+  list-style: none;
+}
+.user__modal--body-item:hover{
+  cursor: pointer;
+  background-color: #ebedf0;
+}
+.user__modal--body-item{
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.user__modal--body-icon{
+  margin-right: 16px;
+  font-size: 36px;
+}
+.user__modal--body-item::after{
+  position: absolute;
+  content: '';
+  border-bottom: 1px solid rgb(226, 226, 226);
+  left: 5%;
+  width: 90%;
+  display: block;
+  bottom: 0;
+}

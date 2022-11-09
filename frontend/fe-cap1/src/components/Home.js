@@ -63,7 +63,7 @@
 
 // export default Home;
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./Home.css";
 import { AiOutlineSearch } from "react-icons/ai";
 import { BiHomeAlt } from "react-icons/bi";
@@ -71,6 +71,8 @@ import { BiMap } from "react-icons/bi";
 import { BiMenu } from "react-icons/bi";
 import { BiBell } from "react-icons/bi";
 import { BiUserCircle, BiDotsHorizontalRounded } from "react-icons/bi";
+import Posts from "../components/Post";
+import axios from "axios";
 // import { BiDotsHorizontalRounded } from "react-icons/bi";
 import { FcClock } from "react-icons/fc";
 import { FcVideoCall } from "react-icons/fc";
@@ -83,34 +85,54 @@ import { AiOutlineComment } from "react-icons/ai";
 import { AiOutlineShareAlt } from "react-icons/ai";
 import { TfiClose } from "react-icons/tfi";
 import { CiLocationOn } from "react-icons/ci";
+import { CgProfile } from "react-icons/cg";
+import { CgLogOut } from "react-icons/cg";
 import { logout } from "../actions/auth";
 import { useDispatch, useSelector } from "react-redux";
+import { CreatePost } from "../actions/post";
 const Home = () => {
+  const [address, setaddress] = useState("");
+  const [descripstion, setdescripstion] = useState("");
+  const [img_url, setimgurl] = useState("");
+
   const [enterPopup, setEnterPopup] = useState(false);
   const [enteredSearch, setEnteredSearch] = useState(false);
+  const [addpost, setaddpost] = useState([]);
   const { isLoggedIn } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
+  const { Post } = useSelector((state) => state.post);
+
+  console.log("post", +Post);
   const titleChangeHandler = () => {
     setEnteredSearch(!enteredSearch);
     console.log("titleChangeHandler" + enteredSearch);
     // let create_modal = document.querySelector(".create_modal");
   };
-  //   setEnteredSearch((prevState) => {
-  //     return { ...prevState, enteredSearch: event.target.value };
-  //   });
-  //   let post = document.getElementById("post-choose_item");
-  //   let create_modal = document.querySelector(".create_modal");
-  //   function showPost() {
-  //     create_modal.classList.add("open");
-  //   }
-  //   post.addEventListener("click", showPost);
-  // };
+  const onChangeAddress = (e) => {
+    const address = e.target.value;
+    setaddress(address);
+    console.log(address);
+  };
+  const onChangeDescription = (e) => {
+    const descripstion = e.target.value;
+    setdescripstion(descripstion);
+    console.log(descripstion);
+  };
+  const onChangeImg_url = (e) => {
+    const img_url = e.target.value;
+    setimgurl(img_url);
+    console.log(img_url);
+  };
+  const HandleCreatePost = async () => {
+    await dispatch(CreatePost(descripstion, address, img_url));
+    setTimeout(function () {
+      titleChangeHandler();
+    }, 1000);
+  };
   const onHanler = () => {
     setEnterPopup(!enterPopup);
-
-    // let create_modal = document.querySelector(".create_modal");
   };
-  const handleLoout = (e) => {
+  const handleLogout = (e) => {
     e.preventDefault();
     dispatch(logout())
       .then(() => {
@@ -132,6 +154,19 @@ const Home = () => {
     e.preventDefault();
     window.location.replace("/map");
   };
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:5000/api/Project/getpost")
+      .then((response) => {
+        return response.data;
+      })
+      .then((result) => {
+        const postlist = [...result.data];
+        setaddpost(postlist);
+        console.log(postlist);
+      });
+  }, []);
 
   return (
     <div>
@@ -176,13 +211,32 @@ const Home = () => {
                 <BiBell className="nav-align_icon"></BiBell>
               </a>
             </li>
-            <li className="nav-align_item">
+            <li className="nav-align_item  nav-align_item-user">
               <a href="#">
-                <BiUserCircle
-                  className="nav-align_icon"
-                  onClick={onHanler}
-                ></BiUserCircle>
+                <BiUserCircle className="nav-align_icon" onClick={onHanler}>
+                  {/* {enterPopup && ( */}
+
+                  {/* )} */}
+                </BiUserCircle>
               </a>
+              {enterPopup && (
+                <div className="user__modal--body">
+                  <ul className="user__modal--body-list">
+                    <li className="user__modal--body-item">
+                      <p>Admin</p>
+                      <BiGroup className="user__modal--body-icon"></BiGroup>
+                    </li>
+                    <li className="user__modal--body-item">
+                      <p>Profile</p>
+                      <CgProfile className="user__modal--body-icon"></CgProfile>
+                    </li>
+                    <li className="user__modal--body-item">
+                      <p onClick={handleLogout}>LogOut</p>
+                      <CgLogOut className="user__modal--body-icon"></CgLogOut>
+                    </li>
+                  </ul>
+                </div>
+              )}
             </li>
           </ul>
         </div>
@@ -204,6 +258,7 @@ const Home = () => {
             </li>
           </ul>
         </div>
+
         <div className="home-body_right">
           <div className="home-body_post">
             <div id="home-body_post-input" className="home-body_post-input">
@@ -235,48 +290,51 @@ const Home = () => {
               </li>
             </ul>
           </div>
-          <div className="home-body_news">
-            <div className="new-header">
-              <img
-                class="new-header_img"
-                className="new-header_img"
-                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQiquxzRvxiQGtrn3rlBgGKAWixXBIhPWhOOw&usqp=CAU"
-                alt=""
-              />
-              <div className="new-header_infor">
-                <p className="new-header_infor-name">Lê Thị Kim Ngân</p>
-                <div className="new-header_infor-time">
-                  <span>1 giờ</span>
-                  <BiWorld className="new-header_infor-earth"></BiWorld>
+
+          {addpost.map((post) => (
+            <div className="home-body_news">
+              <div className="new-header">
+                <img
+                  class="new-header_img"
+                  className="new-header_img"
+                  src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQiquxzRvxiQGtrn3rlBgGKAWixXBIhPWhOOw&usqp=CAU"
+                  alt=""
+                />
+                <div className="new-header_infor">
+                  <p className="new-header_infor-name">{post.descripstion}</p>
+                  <div className="new-header_infor-time">
+                    <span>{post.createdAt}</span>
+                    <BiWorld className="new-header_infor-earth"></BiWorld>
+                  </div>
+                </div>
+                <BiDotsHorizontalRounded className="new-header_infor-icon">
+                  {" "}
+                </BiDotsHorizontalRounded>
+              </div>
+              <div className="new-content">
+                <p>1234567890</p>
+                <img
+                  className="new-content_img"
+                  src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQiquxzRvxiQGtrn3rlBgGKAWixXBIhPWhOOw&usqp=CAU"
+                  alt=""
+                />
+              </div>
+              <div className="new-actions">
+                <div className="new-action">
+                  <AiTwotoneLike className="new-actions-icon"></AiTwotoneLike>
+                  <p className="new-actions-text">Thích</p>
+                </div>
+                <div className="new-action">
+                  <AiOutlineComment className="new-actions-icon"></AiOutlineComment>
+                  <p className="new-actions-text">Bình luận</p>
+                </div>
+                <div className="new-action">
+                  <AiOutlineShareAlt className="new-actions-icon"></AiOutlineShareAlt>
+                  <p className="new-actions-text">Chia sẻ</p>
                 </div>
               </div>
-              <BiDotsHorizontalRounded className="new-header_infor-icon">
-                {" "}
-              </BiDotsHorizontalRounded>
             </div>
-            <div className="new-content">
-              <p>1234567890</p>
-              <img
-                className="new-content_img"
-                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQiquxzRvxiQGtrn3rlBgGKAWixXBIhPWhOOw&usqp=CAU"
-                alt=""
-              />
-            </div>
-            <div className="new-actions">
-              <div className="new-action">
-                <AiTwotoneLike className="new-actions-icon"></AiTwotoneLike>
-                <p className="new-actions-text">Thích</p>
-              </div>
-              <div className="new-action">
-                <AiOutlineComment className="new-actions-icon"></AiOutlineComment>
-                <p className="new-actions-text">Bình luận</p>
-              </div>
-              <div className="new-action">
-                <AiOutlineShareAlt className="new-actions-icon"></AiOutlineShareAlt>
-                <p className="new-actions-text">Chia sẻ</p>
-              </div>
-            </div>
-          </div>
+          ))}
         </div>
       </div>
       {enteredSearch && (
@@ -304,6 +362,7 @@ const Home = () => {
                 className="header-content-textarae"
                 id="w3review"
                 name="w3review"
+                onChange={onChangeDescription}
               ></textarea>
             </div>
             <div className="create__content">
@@ -311,6 +370,7 @@ const Home = () => {
                 placeholder="Nhập địa chỉ"
                 type="text"
                 className="create__content-input"
+                onChange={onChangeAddress}
               />
             </div>
             <div className="create__choose">
@@ -318,12 +378,17 @@ const Home = () => {
               <CiLocationOn className="create__choose-location"></CiLocationOn>
             </div>
             <div className="create__submit">
-              <button className="create__submit-submit">Đăng</button>
+              <button
+                className="create__submit-submit"
+                onClick={HandleCreatePost}
+              >
+                Đăng
+              </button>
             </div>
           </div>
         </div>
       )}
-      {enterPopup && (
+      {/* {enterPopup && (
         <div id="create_modal" className="open create_modal">
           <div onClick={onHanler} className="modal-overplay"></div>
           <div className="modal--body">
@@ -333,7 +398,7 @@ const Home = () => {
             </div>
           </div>
         </div>
-      )}
+      )} */}
     </div>
   );
 };
