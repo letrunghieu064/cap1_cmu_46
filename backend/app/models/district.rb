@@ -1,4 +1,4 @@
 class District < ApplicationRecord
-  has_many :post
-  has_many :ward
+  has_many :posts
+  has_many :wards
 end

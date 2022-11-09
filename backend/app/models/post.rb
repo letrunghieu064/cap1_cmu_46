@@ -1,6 +1,6 @@
 class Post < ApplicationRecord
-  belongs_to :users
-  belongs_to :district
+  belongs_to :users, optional: true
+  belongs_to :districts, optional: true
   has_many :likes
-  has_many :comment
+  has_many :comments
 end
