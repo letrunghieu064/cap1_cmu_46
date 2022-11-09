@@ -14,22 +14,22 @@ class Api::V1::PostsController < ApplicationController
   end
 
   # GET /posts/new
-  def new
-    @post = Post.new
-  end
+  # def new
+  #   @post = Post.new
+  # end
 
   # GET /posts/1/edit
-  def edit
-  end
+  # def edit
+  # end
 
   # POST /posts or /posts.json
   def create
     @post = Post.new(post_params)
 
     if @post.save
-      render json: @band, status: :created, location: @post
+      render json: @post, status: :created, location: @post
     else
-      render json: @band.errors, status: :unprocessable_entity
+      render json: @post.errors, status: :unprocessable_entity
     end
 
     # respond_to do |format|
