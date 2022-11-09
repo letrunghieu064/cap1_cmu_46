@@ -1,5 +1,5 @@
 class Api::V1::WardsController < ApplicationController
-  before_action :set_ward, only: %i[ show edit update destroy ]
+  before_action :set_ward, only: [ :show, :edit, :update, :destroy ]
 
   # GET /wards or /wards.json
   def index
@@ -14,20 +14,20 @@ class Api::V1::WardsController < ApplicationController
   end
 
   # GET /wards/new
-  def new
-    @ward = Ward.new
-  end
+  # def new
+  #   @ward = Ward.new
+  # end
 
   # GET /wards/1/edit
-  def edit
-  end
+  # def edit
+  # end
 
   # POST /wards or /wards.json
   def create
     @ward = Ward.new(ward_params)
 
     if @ward.save
-      render json: @ward, status: :created, location: @ward
+      render json: @ward, status: :created
     else
       render json: @ward.errors, status: :unprocessable_entity
     end
@@ -80,6 +80,6 @@ class Api::V1::WardsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def ward_params
-      params.require(:ward).permit(:name, :longitude, :latitude, :district_id)
+      params.require(:ward).permit(:name, :district_id)
     end
 end

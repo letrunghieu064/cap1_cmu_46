@@ -8,8 +8,8 @@ Rails.application.routes.draw do
       resources :follows
       resources :comment_likes
       resources :likes
-      resources :wards
       resources :districts
+      resources :wards, defaults: { format: 'json' }
       resources :posts
       resources :users
       resources :comments
