@@ -27,7 +27,7 @@ class Api::V1::FollowsController < ApplicationController
     @follow = Follow.new(follow_params)
 
     if @follow.save
-      render json: @follow, status: :created, location: @follow
+      render json: @follow, status: :created
     else
       render json: @follow.errors, status: :unprocessable_entity
     end

@@ -27,7 +27,7 @@ class Api::V1::CommentLikesController < ApplicationController
     @comment_like = CommentLike.new(comment_like_params)
 
     if @comment_like.save
-      render json: @comment_like, status: :created, location: @comment_like
+      render json: @comment_like, status: :created
     else
       render json: @comment_like, status: :unprocessable_entity
     end

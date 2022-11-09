@@ -1,15 +1,14 @@
 Rails.application.routes.draw do
+  devise_for :users
+  # root 'home#index'
+  # get 'home/about'
   namespace :api do
     namespace :v1 do
-      devise_for :users
-      # root 'home#index'
-      # get 'home/about'
-
       resources :follows
       resources :comment_likes
       resources :likes
       resources :districts
-      resources :wards, defaults: { format: 'json' }
+      resources :wards
       resources :posts
       resources :users
       resources :comments

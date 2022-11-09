@@ -1,5 +1,5 @@
 class Api::V1::UsersController < ApplicationController
-  before_action :set_user, only: [ :show, :edit, :update, :destroy ]
+  before_action :set_user, only: [ :show, :update, :destroy ]
 
   # GET /users or /users.json
   def index
@@ -27,7 +27,7 @@ class Api::V1::UsersController < ApplicationController
     @user = User.new(user_params)
 
     if @user.save
-      render json: @user, status: :created, location: @user
+      render json: @user, status: :created
     else
       render json: @user.errors, status: :unprocessable_entity
     end
@@ -80,7 +80,7 @@ class Api::V1::UsersController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def user_params
-      params.require(:user).permit(:email, :first_name, :last_name, :username, :password, :birthday, :url_img, :phone_number, :address, :gender, :card_id, :role, :resend_password_token, :resend_password_at, :confirmation_token, :confirmation_at, :lock_at, :count_lock)
+      params.require(:user).permit(:email, :first_name, :last_name, :username, :password, :birthday, :url_img, :phone_number, :address, :gender, :card_id, :role, :reset_password_token, :reset_password_at, :confirmation_token, :confirmation_at, :lock_at, :count_lock, :encrypted_password)
     end
 
 end
