@@ -12,6 +12,12 @@ Rails.application.routes.draw do
       resources :posts
       resources :users
       resources :comments
+      resources :sessions
+      devise_scope :user do
+        post "register", :to => 'registrations#create'
+        post "login", :to => 'sessions#create'
+        delete "logout", :to => 'sessions#destroy'
+      end
     end
   end
 end
