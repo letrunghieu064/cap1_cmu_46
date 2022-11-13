@@ -1,36 +1,36 @@
-// import React, { useState, useEffect } from "react";
+// // import React, { useState, useEffect } from "react";
 
-// import UserService from "../services/user.service";
+// // import UserService from "../services/user.service";
 
-// const Home = () => {
-//   const [content, setContent] = useState("");
+// // const Home = () => {
+// //   const [content, setContent] = useState("");
 
-//   useEffect(() => {
-//     UserService.getPublicContent().then(
-//       (response) => {
-//         setContent(response.data);
-//       },
-//       (error) => {
-//         const _content =
-//           (error.response && error.response.data) ||
-//           error.message ||
-//           error.toString();
+// //   useEffect(() => {
+// //     UserService.getPublicContent().then(
+// //       (response) => {
+// //         setContent(response.data);
+// //       },
+// //       (error) => {
+// //         const _content =
+// //           (error.response && error.response.data) ||
+// //           error.message ||
+// //           error.toString();
 
-//         setContent(_content);
-//       }
-//     );
-//   }, []);
+// //         setContent(_content);
+// //       }
+// //     );
+// //   }, []);
 
-//   return (
-//     <div className="container">
-//       <header className="jumbotron">
-//         <h3>{content}</h3>
-//       </header>
-//     </div>
-//   );
-// };
+// //   return (
+// //     <div className="container">
+// //       <header className="jumbotron">
+// //         <h3>{content}</h3>
+// //       </header>
+// //     </div>
+// //   );
+// // };
 
-// export default Home;
+// // export default Home;
 
 
 import React, { useState } from "react";
@@ -47,6 +47,7 @@ import { FcVideoCall } from "react-icons/fc";
 import { FcPicture } from "react-icons/fc";
 import { SlEmotsmile } from "react-icons/sl";
 import { BiWorld } from "react-icons/bi";
+
 import { BiGroup } from "react-icons/bi";
 import { AiTwotoneLike } from "react-icons/ai";
 import { AiOutlineComment } from "react-icons/ai";
@@ -54,6 +55,12 @@ import { AiOutlineShareAlt } from "react-icons/ai";
 import { TfiClose } from "react-icons/tfi";
 import { CiLocationOn } from "react-icons/ci";
 
+import { CgProfile } from "react-icons/cg";
+import { CgLogOut } from "react-icons/cg";
+
+// 2 import cần coppy
+import { CiTrash } from "react-icons/ci";
+import { CiPickerEmpty } from "react-icons/ci";
 const Home = () => {
   const [enteredSearch, setEnteredSearch] = useState("");
   const titleChangeHandler = (event) => {
@@ -71,7 +78,7 @@ const Home = () => {
             create_modal.classList.add('open')
       }
     post.addEventListener('click',showPost)
-  
+
   };
 
   return (
@@ -95,7 +102,7 @@ const Home = () => {
                     <BiMap className="nav-align_icon"></BiMap>
                   </a>
               </li>
-              <li className="nav-align_item">
+              <li  className="nav-align_item">
                   <a href="#">
                     <BiGroup className="nav-align_icon"></BiGroup>
                   </a>
@@ -114,10 +121,26 @@ const Home = () => {
                     <BiBell className="nav-align_icon"></BiBell>
                   </a>
               </li>
-              <li className="nav-align_item">
+              <li className="nav-align_item  nav-align_item-user">
                   <a href="#">
                     <BiUserCircle className="nav-align_icon"></BiUserCircle>
                   </a>
+                 <div className="user__modal--body">
+                  <ul className="user__modal--body-list">
+                    <li className="user__modal--body-item">
+                    <p>Admin</p>
+                    <BiGroup className="user__modal--body-icon"></BiGroup>
+                    </li>
+                    <li className="user__modal--body-item">
+                    <p>Profile</p>
+                    <CgProfile className="user__modal--body-icon"></CgProfile>
+                    </li>
+                    <li className="user__modal--body-item">
+                    <p>Đăng xuất</p>
+                    <CgLogOut className="user__modal--body-icon"></CgLogOut>
+                    </li>
+                  </ul>      
+              </div>
               </li>
             </ul>
         </div>
@@ -147,7 +170,7 @@ const Home = () => {
               </div>
               <ul className="post-choose">
                 <li id="post-choose_item" className="post-choose_item">
-                  <FcVideoCall className="post-choose_icon"></FcVideoCall>
+                  <FcVideoCall  className="post-choose_icon"></FcVideoCall>
                   <p>Video Trực Tiếp</p>
                 </li>
                 <li className="post-choose_item">
@@ -170,7 +193,23 @@ const Home = () => {
                           <BiWorld className="new-header_infor-earth"></BiWorld>
                     </div>
                 </div>
-                <BiDotsHorizontalRounded className="new-header_infor-icon"> </BiDotsHorizontalRounded>
+                {/* đầu: Dòng cần coppy */}
+                <div className="new-header_infor-icons"><BiDotsHorizontalRounded className="new-header_infor-icon">
+                </BiDotsHorizontalRounded>
+                <div className="more_action-post">
+                    <ul className="post_action-list">
+                      <li className="post_action-item">
+                      <p>Xóa</p>
+                        <CiTrash className="post_action-icon"></CiTrash>
+                      </li>
+                      <li className="post_action-item">
+                      <p>Chỉnh Sửa</p>
+                        <CiPickerEmpty className="post_action-icon"></CiPickerEmpty>
+                        </li>
+                    </ul>
+                </div>
+                </div>  
+                    {/* cuối       */}
               </div>
               <div className="new-content">
                 <p>1234567890</p>
@@ -189,6 +228,39 @@ const Home = () => {
                     <AiOutlineShareAlt className="new-actions-icon"></AiOutlineShareAlt>
                     <p className="new-actions-text">Chia sẻ</p>
                     </div>
+                </div>
+                {/* coppy khối comment */}
+                <div className="comment">
+                  <div className="comment_user">
+                  <img className="comment_user_avatar" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQiquxzRvxiQGtrn3rlBgGKAWixXBIhPWhOOw&usqp=CAU" alt="" />
+                    <input className="comment_user-input" placeholder="Viết bình luận"></input>
+                  </div>
+                  <div className="comment_others">
+                  <img className="comment_others_avatar" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQztTqQRZ0RaSy0nVuhnzhEx3Rz9N88L8eWJg&usqp=CAU" alt="" />
+                    <div className="comment_others-infor">
+                        <div className="comment_others-infor-cmt">
+                        <p className="comment_others-name">Luận</p>
+                        <span className="comment_others-content">alo12345643223243543543522222222222222222222alo12345643223243543543522222222222222222222
+                        </span>
+                        </div>
+                        <p className="comment_others-action">Thích</p>
+                    </div>
+                  </div>
+                  <div className="comment_others">
+                  <img className="comment_others_avatar" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQztTqQRZ0RaSy0nVuhnzhEx3Rz9N88L8eWJg&usqp=CAU" alt="" />
+                    <div className="comment_others-infor">
+                        <div className="comment_others-infor-cmt">
+                        <p className="comment_others-name">Hiếu
+                      </p>
+                        <span className="comment_others-content">alo12345643223243543543522222222222222222222alo12345643223243543543522222222222222222222
+                        </span>
+                        </div>
+                        <p className="comment_others-action">Thích</p>
+                    </div>
+                  </div>
+                  <div className="comment_view-morer">
+                    <p>Xem thêm bình luận</p>
+                  </div>
                 </div>
             </div>
         </div>
@@ -219,6 +291,9 @@ const Home = () => {
         </div>
       </div>
       </div>
+      
+
+            
     </div>
     
   );
