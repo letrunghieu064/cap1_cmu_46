@@ -1,20 +1,26 @@
 import axios from "axios";
 
-const API_URL = "http://localhost:3000";
+const API_URL = "http://localhost:3000/api/";
 
 const register = (username, email, password) => {
-  return axios.post(API_URL + "/api/v1/register", {
-    username,
-    email,
-    password,
+  return axios.post(API_URL + "v1/register", {
+    user:{
+      username,
+      email,
+      password,
+    }
+
   });
 };
 
 const login = (email, password) => {
   return axios
-    .post(API_URL + "/api/v1/login", {
-      email,
-      password,
+    .post(API_URL + "v1/login", {
+      user:{
+        email,
+        password,
+      }
+
     })
     .then((response) => {
       if (response.data.accessToken) {
@@ -26,7 +32,7 @@ const login = (email, password) => {
 };
 
 const logout = () => {
-  localStorage.removeItem("api/v1/logout");
+  localStorage.removeItem("user");
 };
 
 export default {

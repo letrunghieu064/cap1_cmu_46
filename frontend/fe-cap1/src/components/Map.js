@@ -1,56 +1,31 @@
 import React, { useState, useEffect } from "react";
-import ReactMapGL, { Marker, Popup } from "react-map-gl";
+import ReactMapGL, {
+  Marker,
+  Popup,
+  NavigationControl,
+  FullscreenControl,
+  GeolocateControl,
+} from "react-map-gl";
 // import * as parkDate from "./data/skateboard-parks.json";
 import axios from "axios";
-
+import "mapbox-gl/dist/mapbox-gl.css";
+import Header from "./Header";
 export default function App() {
   const [viewport, setViewport] = useState({
     latitude: 16.0602077,
     longitude: 108.2226407,
     width: "100vw",
     height: "100vh",
-    zoom: 12,
+    zoom: 13,
   });
 
   const [selectedPark, setSelectedPark] = useState(null);
   const [addressmarker, setaddressmarker] = useState([]);
-  console.log("addressmarker", addressmarker);
+
   const [posts, setPosts] = useState([]);
-
-  useEffect(() => {
-    // eslint-disable-next-line array-callback-return
-
-    // eslint-disable-next-line array-callback-return
-
-    const fecthMap = async () => {
-      const newAddress = [];
-      const promise = await posts.map(async (address) => {
-        await axios
-          .get(
-            `https://api.mapbox.com/geocoding/v5/mapbox.places/${address.address}.json?access_token=pk.eyJ1IjoiaGlldXRydW5nbGUiLCJhIjoiY2w5dDdtMmpzMDV5dzN1bGcyZXJ3ZHduaSJ9.DRb427bvxQf-pgmEU8AlAw`
-          )
-          .then(function (response) {
-            newAddress.push({
-              ...address,
-              longitude: response.data.features[0].center[0],
-              latitude: response.data.features[0].center[1],
-            });
-          })
-          .catch(function (error) {
-            // handle error
-            console.log(error);
-          });
-      });
-      await Promise.all(promise);
-      console.log("nmew", newAddress);
-      setaddressmarker(newAddress);
-    };
-    fecthMap();
-  }, [posts]);
-
   useEffect(() => {
     axios
-      .get("http://localhost:5000/api/Project/getpost")
+      .get("http://localhost:5000/api/Post/getaddress")
       .then((response) => {
         return response.data;
       })
@@ -58,6 +33,38 @@ export default function App() {
         setPosts([...result.data]);
       });
   }, []);
+
+  // useEffect(() => {
+  // eslint-disable-next-line array-callback-return
+
+  // eslint-disable-next-line array-callback-return
+
+  //   const fecthMap = async () => {
+  //     const newAddress = [];
+  //     const promise = posts.map(async (address) => {
+  //       await axios
+  //         .get(
+  //           `https://api.mapbox.com/geocoding/v5/mapbox.places/${address.address}550000, Việt Nam.json?access_token=pk.eyJ1IjoiaGlldXRydW5nbGUiLCJhIjoiY2w5dDdtMmpzMDV5dzN1bGcyZXJ3ZHduaSJ9.DRb427bvxQf-pgmEU8AlAw`
+  //         )
+  //         .then((response) => {
+  //           console.log("typeof", typeof response.data.features[0].center[0]);
+  //           newAddress.push({
+  //             ...address,
+  //             longitude: response.data.features[0].center[0],
+  //             latitude: response.data.features[0].center[1],
+  //           });
+  //         })
+  //         .catch((error) => {
+  //           // handle error
+  //           console.log(error);
+  //         });
+  //     });
+  //     await Promise.all(promise);
+  //     console.log("new", newAddress);
+  //     setaddressmarker(newAddress);
+  //   };
+  //   fecthMap();
+  // }, [posts]);
 
   useEffect(() => {
     const listener = (e) => {
@@ -74,6 +81,7 @@ export default function App() {
   // const onclickView = (e) => {};
   return (
     <div>
+      <Header></Header>
       <ReactMapGL
         {...viewport}
         mapboxApiAccessToken="pk.eyJ1IjoiaGlldXRydW5nbGUiLCJhIjoiY2w5dDdtMmpzMDV5dzN1bGcyZXJ3ZHduaSJ9.DRb427bvxQf-pgmEU8AlAw"
@@ -84,16 +92,16 @@ export default function App() {
         // style={{
         //   height: "300px",
         //   width: "600px",
-        //   marginTop: "50px",
+
         //   borderRadius: "15px",
         //   border: "2px solid red",
         // }}
       >
-        {addressmarker.map((park) => (
+        {posts.map((park) => (
           <Marker
             key={park.id}
-            latitude={park.latitude}
-            longitude={park.longitude}
+            latitude={Number(park.latitude)}
+            longitude={Number(park.longitude)}
           >
             <button
               className="marker-btn"
@@ -126,11 +134,12 @@ export default function App() {
                 padding: "0.2em",
               }}
             >
-              <h2>Địa chỉ : {selectedPark.address}</h2>
-              <p>{selectedPark.address}</p>
+              <h2>Địa chỉ : {selectedPark.name}</h2>
+              <p>{selectedPark.name}</p>
             </div>
           </Popup>
         ) : null}
+        {/* <NavigationControl position="bottom-right" /> */}
       </ReactMapGL>
     </div>
   );
