@@ -8,9 +8,10 @@ import Profile from "./Profile";
 import { logout } from "../actions/auth";
 import { clearMessage } from "../actions/message";
 import Admin from "./Admin";
-// import Mapbox from "./Mapbox";
+import Mapbox from "./Mapbox";
 import Map from "./Map";
 import HomeAll from "./HomeAll";
+import Profile1 from "./Profile1";
 export default function Page() {
   const [showModeratorBoard, setShowModeratorBoard] = useState(false);
   const [showAdminBoard, setShowAdminBoard] = useState(false);
@@ -44,7 +45,7 @@ export default function Page() {
   return (
     <div className="App">
       {!isLoggedIn && (
-        <nav className="navbar navbar-expand navbar-dark bg-dark">
+        <nav className="navbar navbar-expand navbar-dark bg-success">
           <Link to={"/"} className="navbar-brand">
             Home
           </Link>
@@ -114,12 +115,14 @@ export default function Page() {
       {/* <div className="container mt-3"> */}
 
       <Routes>
-        <Route path="/" element={<Login/>} />
+        <Route path="/" element={<Login />} />
+        <Route path="/admin" element={<Admin />} />
         <Route path="/home" element={<Home />} />
         <Route path="/map" element={<Map />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/profile" element={<Profile />} />
+        <Route path="/profile" element={<Profile1 />} />
+
         {/* <Route path="/user" element={<BoardUser />} />
               <Route path="/mod" element={<BoardModerator />} />
               <Route path="/admin" element={<BoardAdmin />} /> */}
