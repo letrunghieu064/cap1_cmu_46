@@ -6,11 +6,8 @@ Rails.application.routes.draw do
   }
   namespace :api do
     namespace :v1 do
-      resources :follows
       resources :comment_likes
       resources :likes
-      resources :districts
-      resources :wards
       resources :posts
       resources :users
       resources :comments
