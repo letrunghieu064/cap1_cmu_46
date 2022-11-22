@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_10_20_095444) do
+ActiveRecord::Schema.define(version: 2022_10_21_092014) do
 
   create_table "comment_likes", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3", force: :cascade do |t|
     t.integer "count"
@@ -28,22 +28,6 @@ ActiveRecord::Schema.define(version: 2022_10_20_095444) do
     t.index ["post_id"], name: "index_comments_on_post_id"
   end
 
-  create_table "districts", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3", force: :cascade do |t|
-    t.string "name"
-    t.string "icon_url"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
-  create_table "follows", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3", force: :cascade do |t|
-    t.integer "follower_id"
-    t.integer "following_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["follower_id"], name: "index_follows_on_follower_id"
-    t.index ["following_id"], name: "index_follows_on_following_id"
-  end
-
   create_table "likes", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3", force: :cascade do |t|
     t.bigint "post_id", null: false
     t.bigint "user_id", null: false
@@ -55,62 +39,46 @@ ActiveRecord::Schema.define(version: 2022_10_20_095444) do
 
   create_table "posts", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3", force: :cascade do |t|
     t.string "name"
-    t.string "img_url"
+    t.text "img_url"
     t.string "description"
     t.binary "status"
     t.string "address"
-    t.bigint "users_id", null: false
-    t.bigint "district_id", null: false
+    t.float "longitude"
+    t.float "latitude"
+    t.bigint "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["district_id"], name: "index_posts_on_district_id"
-    t.index ["users_id"], name: "index_posts_on_users_id"
+    t.index ["user_id"], name: "index_posts_on_user_id"
   end
 
   create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3", force: :cascade do |t|
-    t.string "email"
     t.string "first_name"
     t.string "last_name"
     t.string "username"
-    t.string "password_digest"
     t.date "birthday"
-    t.string "url_img"
+    t.text "url_img"
     t.string "phone_number"
     t.string "address"
     t.binary "gender"
     t.string "card_id"
-    t.string "role"
-    t.string "resend_password_token"
-    t.string "resend_password_at"
-    t.string "confirmation_token"
-    t.string "confirmation_at"
-    t.integer "lock_at"
-    t.integer "count_lock"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
+    t.string "confirmation_token"
+    t.datetime "confirmed_at"
+    t.integer "role", default: 0
+    t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
-  end
-
-  create_table "wards", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3", force: :cascade do |t|
-    t.string "name"
-    t.float "longitude"
-    t.float "latitude"
-    t.bigint "district_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["district_id"], name: "index_wards_on_district_id"
   end
 
   add_foreign_key "comment_likes", "comments"
   add_foreign_key "comments", "posts"
   add_foreign_key "likes", "posts"
   add_foreign_key "likes", "users"
-  add_foreign_key "posts", "districts"
-  add_foreign_key "posts", "users", column: "users_id"
-  add_foreign_key "wards", "districts"
+  add_foreign_key "posts", "users"
 end

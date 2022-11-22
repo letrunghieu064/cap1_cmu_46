@@ -1,24 +1,25 @@
 Rails.application.routes.draw do
-  devise_for :users
-  root 'home#index'
-  get 'home/about'
+  # devise_for :users, path: '', path_names: {
+  #   sign_in: 'login',
+  #   sign_out: 'logout',
+  #   registration: 'register'
+  # }
 
- 
-  get    'auth'            => 'home#auth'
- 
-  post   'user_token'      => 'user_token#create'
-  resources :follows
-  resources :comment_likes
-  resources :likesS
-  resources :wards
-  resources :districts
-  resources :posts
-  resources :users
-  resources :comments
-  # get    '/users'          => 'users#index'
-  # get    '/users/current'  => 'users#current'
-  # post   '/users/create'   => 'users#create'
-  # patch  '/user/:id'       => 'users#update'
-  # delete '/user/:id'       => 'users#destroy'
-  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
+  namespace :api do
+    namespace :v1 do
+      resources :comment_likes
+      resources :likes
+      resources :posts
+      resources :users
+      resources :comments
+      resources :sessions
+      post 'auth/register' , to: 'users#register'
+      post 'auth/login' , to: 'users#login'
+      # devise_scope :user do
+      #   post "register", :to => 'registrations#create'
+      #   post "login", :to => 'sessions#create'
+      #   delete "logout", :to => 'sessions#destroy'
+      # end
+    end
+  end
 end

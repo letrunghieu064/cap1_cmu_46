@@ -1,0 +1,123 @@
+.nav {
+  height: 50px;
+  background-color: blue;
+}
+
+body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #93b799;
+}
+
+.controls {
+  height: 40px;
+  background-color: aliceblue;
+  display: flex;
+}
+
+.button-control {
+  width: 200px;
+  height: 40px;
+  /* background-color: #51a25e; */
+}
+
+.btn-manage_user,
+.btn-manage_post,
+.btn-statistic {
+  background-color: #51a25e;
+  margin: auto;
+  width: 200px;
+  height: 40px;
+}
+
+tr {
+  display: table-row;
+  vertical-align: inherit;
+  border-color: inherit;
+}
+
+h2 {
+  margin: 20px;
+  margin-left: 50px;
+  color: #fff;
+  font-weight: bold;
+}
+
+table {
+  background-color: aliceblue;
+  height: 250px;
+  width: 1200px;
+  margin: auto;
+}
+
+th {
+  background-color: aquamarine;
+}
+
+.input-text {
+  background-color: #fff;
+}
+
+.search-user {
+  display: flex;
+  align-items: center;
+  margin-left: 120px;
+}
+
+.btn-search {
+  /* margin: 20px; */
+  width: 100px;
+  height: 40px;
+  border-radius: 10px;
+  border: none;
+  color: #fff;
+  font-weight: bold;
+  background-color: #22a339;
+}
+
+.search-input {
+  display: flex;
+  height: 40px;
+  align-items: center;
+  border-radius: 10px;
+  background-color: #fff;
+  margin: 10px;
+}
+
+.search-icon {
+  margin-left: 10px;
+  width: 20px;
+  height: 20px;
+}
+
+.other-icon {
+  display: flex;
+  margin: 0 10px;
+  justify-content: space-between;
+}
+
+.edit-table,
+.remove-table {
+  width: 20px;
+  height: 20px;
+  color: #22a339;
+  font-weight: bold;
+}
+
+.container-statistic {
+  display: flex;
+  justify-content: space-between;
+}
+
+.table__statistic {
+  background-color: aliceblue;
+  height: 100px;
+  width: 500px;
+  margin: 50px;
+}
+
+.chart-statistic {
+  width: 700px;
+  height: 500px;
+  margin: 50px;
+  background-color: #fff;
+}

@@ -1,0 +1,110 @@
+.box-container {
+  width: 850px;
+  height: 550px;
+  margin: auto;
+  display: flex;
+  margin-top: 100px;
+  /* background-color: #333; */
+}
+
+a {
+  color: #333;
+}
+.box1 {
+  background-color: #ecf0f3;
+  border-radius: 50px 0 0 0;
+  width: 250px;
+}
+
+.box2 {
+  background-color: #ecf0f3;
+  border-radius: 0 0 50px 0;
+  width: 600px;
+  box-shadow: -3px 0px 5px rgb(171, 166, 166);
+}
+
+.image-user {
+  display: flex;
+  justify-content: center;
+  margin-top: 60px;
+}
+
+.img {
+  width: 70px;
+  height: 70px;
+}
+
+.edit-icon {
+  margin-top: 52px;
+  margin-left: -22px;
+  width: 20px;
+  height: 20px;
+  font-weight: bold;
+}
+
+.name {
+  display: inline;
+  font-size: 15px;
+  font-style: italic;
+}
+
+.user-name {
+  text-align: center;
+  margin-top: 20px;
+}
+
+input,
+.input {
+  margin: 10px;
+  background-color: #f8f2f2;
+
+  border-style: hidden;
+}
+
+h1 {
+  color: #328c42;
+  text-align: center;
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+
+.info {
+  width: 550px;
+  margin: auto;
+  margin-top: 40px;
+}
+
+.pass__input {
+  display: flex;
+}
+
+.button {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.btn {
+  margin: 20px;
+  width: 100px;
+  height: 40px;
+  border-radius: 20px;
+  color: #fff;
+  font-weight: bold;
+  background-color: #328c42;
+}
+
+.full-name,
+.user-name__input,
+.email-birth__input,
+.ID-Phone__input,
+.pass__input {
+  display: flex;
+}
+
+.gene {
+  background-color: #f8f2f2;
+  border-radius: 10px;
+  margin: 5px 10px 5px 5px;
+  /* box-shadow: #333; */
+  box-shadow: -2px -1px 2px #888888;
+}
