@@ -30,7 +30,9 @@ class Api::V1::PostsController < ApplicationController
     @post = current_user.posts.build(post_params)
 
     if @post.save
-      render json: @post, status: :created
+      render json: {
+        data: @post
+      }, status: :created
     else
       render json: @post.errors, status: :unprocessable_entity
     end
@@ -39,7 +41,6 @@ class Api::V1::PostsController < ApplicationController
 
   # PATCH/PUT /posts/1 or /posts/1.json
   def update
-    @post = current_user.posts.build(post_params)
     if @post.update(post_params)
       render json: @post
     else

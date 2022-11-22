@@ -14,9 +14,9 @@ Rails.application.routes.draw do
       get 'test' , to: 'users#test'
       put 'users/:id/edit', to: 'users#edit'
       devise_scope :user do
-        # post "register", :to => 'registrations#create'
-        # post "login", :to => 'sessions#create'
-        # delete "logout", :to => 'sessions#destroy'
+        post "register", :to => 'registrations#create'
+        post "login", :to => 'sessions#create'
+        delete "logout", :to => 'sessions#destroy'
 
       end
     end
