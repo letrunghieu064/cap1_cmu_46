@@ -1,6 +1,8 @@
 class Api::V1::UsersController < ApplicationController
   before_action :set_user, only: [ :show, :update, :destroy ]
   skip_before_action :authenticate_request, only: %i[login register]
+  # before_action :authenticate_request, only: [:update]
+
 
   # GET /users or /users.json
   def index
@@ -27,10 +29,21 @@ class Api::V1::UsersController < ApplicationController
 
   end
 
+  def edit
+    user = User.find_by(id: params[:id])
+    if current_user == user
+      user.update(user_params)
+      render json: @user
+    else
+      render json: @user.errors, status: :unprocessable_entity
+    end
+  end
+
   # PATCH/PUT /users/1 or /users/1.json
   def update
-    if current_user.update(user_params)
-      render json: current_user
+    # @user = User.find(params[:id])
+    if @user.update(secure_params)
+      render json: @user
     else
       render json: @user.errors, status: :unprocessable_entity
     end
@@ -68,6 +81,12 @@ class Api::V1::UsersController < ApplicationController
     end
   end
 
+  def test
+    render json: {
+      message: 'You have passed  '
+    }
+  end
+
   private
   # Use callbacks to share common setup or constraints between actions.
   def set_user
@@ -76,6 +95,10 @@ class Api::V1::UsersController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def user_params
-    params.permit(:email, :password, :first_name, :last_name, :username, :birthday, :url_img, :phone_number, :address, :gender, :card_id, :role, :reset_password_token, :reset_password_at, :confirmation_token, :confirmation_at, :encrypted_password)
+    params.require(:user).permit(:email, :password, :first_name, :last_name, :username, :birthday, :url_img, :phone_number, :address, :gender, :card_id, :role, :reset_password_token, :reset_password_at, :confirmation_token, :confirmation_at, :encrypted_password)
+  end
+
+  def secure_params
+    params.require(:user).permit(:email, :first_name, :last_name, :username, :birthday, :url_img, :phone_number, :address, :gender, :card_id, :role)
   end
 end

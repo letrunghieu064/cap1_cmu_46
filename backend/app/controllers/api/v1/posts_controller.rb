@@ -1,7 +1,7 @@
 class Api::V1::PostsController < ApplicationController
   before_action :set_post, only: %i[ show edit update destroy ]
-  before_action :authenticate_user!, except: [:index, :show]
-  before_action :correct_user, only: [:edit, :update, :destroy]
+  # before_action :authenticate_user!, except: [:index, :show]
+  # before_action :correct_user, only: [:edit, :update, :destroy]
 
   # GET /posts or /posts.json
   def index
@@ -39,7 +39,6 @@ class Api::V1::PostsController < ApplicationController
 
   # PATCH/PUT /posts/1 or /posts/1.json
   def update
-    @post = current_user.posts.build(post_params)
     if @post.update(post_params)
       render json: @post
     else
