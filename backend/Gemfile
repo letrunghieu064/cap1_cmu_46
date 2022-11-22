@@ -6,7 +6,7 @@ ruby '3.0.0'
 gem 'rails', '~> 6.0.6'
 gem 'mysql2'
 gem 'devise', '~> 4.8', '>= 4.8.1'
-gem 'devise-jwt', '~> 0.10.0'
+# gem 'devise-jwt', '~> 0.10.0'
 gem 'puma', '~> 4.1'
 gem 'sass-rails', '>= 6'
 gem 'webpacker', '~> 4.0'
@@ -16,13 +16,15 @@ gem 'rack-cors', '~> 1.1', '>= 1.1.1'
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 4.0'
 # Use Active Model has_secure_password
-gem 'bcrypt', '~> 3.1.7'
+# gem 'bcrypt', '~> 3.1.7'
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
 gem 'bootsnap', '>= 1.4.2', require: false
 gem 'active_model_serializers', '~> 0.10.13'
 gem 'geocoder', '~> 1.8', '>= 1.8.1'
-# gem 'jwt'
+gem 'jwt'
+gem 'simple_command', '~> 1.0', '>= 1.0.1'
+gem 'knock'
 # gem 'knock', git: 'https://github.com/nsarno/knock',
 #       branch: 'master', ref: '9214cd027422df8dc31eb67c60032fbbf8fc100b'
 
