@@ -76,7 +76,7 @@ export default function Header() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/api/Project/getpost")
+      .get("http://localhost:3000/api/Project/getpost")
       .then((response) => {
         return response.data;
       })

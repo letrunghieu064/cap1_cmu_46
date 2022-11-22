@@ -1,7 +1,10 @@
 class Api::V1::UsersController < ApplicationController
-  before_action :set_user, only: [ :show, :update, :destroy ]
   skip_before_action :authenticate_request, only: %i[login register]
-  # before_action :authenticate_user!, only: [:edit, :update, :destroy]
+  before_action :set_user, only: [ :show, :update, :destroy ]
+
+  # before_action :authenticate_request, only: [:update]
+
+
   # GET /users or /users.json
   def index
     @users = User.all
@@ -28,13 +31,6 @@ class Api::V1::UsersController < ApplicationController
   end
 
   def edit
-    user = User.find_by(id: params[:id])
-    if current_user == user
-      user.update(user_params)
-      render json: @user
-    else
-      render json: @user.errors, status: :unprocessable_entity
-    end
   end
 
   # PATCH/PUT /users/1 or /users/1.json
@@ -55,7 +51,7 @@ class Api::V1::UsersController < ApplicationController
 
   def register
     @user = User.create(user_params)
-    if @user.valid?
+    if @user.save
       response = { message: 'User created successfully'}
       render json: response, status: :created
     else
@@ -71,8 +67,10 @@ class Api::V1::UsersController < ApplicationController
     command = AuthenticateUser.call(email, password)
     if command.success?
       render json: {
-        access_token: command.result,
+        data: {
+          accessToken: command.result,
         message: 'Login Successful'
+        }
       }
     else
       render json: { error: command.errors }, status: :unauthorized
@@ -96,7 +94,4 @@ class Api::V1::UsersController < ApplicationController
     params.permit(:email, :password, :first_name, :last_name, :username, :birthday, :url_img, :phone_number, :address, :gender, :card_id, :role, :reset_password_token, :reset_password_at, :confirmation_token, :confirmation_at, :encrypted_password)
   end
 
-  def secure_params
-    params.require(:user).permit(:email, :first_name, :last_name, :username, :birthday, :url_img, :phone_number, :address, :gender, :card_id, :role)
-  end
 end
