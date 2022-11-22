@@ -1,11 +1,9 @@
 class User < ApplicationRecord
-  include Devise::JWT::RevocationStrategies::JTIMatcher
-  # has_secure_password
+  has_secure_password
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable,
-         :jwt_authenticatable, jwt_revocation_strategy: self
+         :recoverable, :rememberable, :validatable, :confirmable
 
   validates_presence_of :email
   validates_presence_of :username
@@ -21,22 +19,18 @@ class User < ApplicationRecord
 
   has_many :posts
   has_many :likes
-  # has_many :follows
 
+  alias_method :authenticate, :valid_password?
 
-  def jwt_payload
-    super
-  end
 
   attr_accessor :login
 
-  # def self.find_for_database_authentication warden_condition
-  #   conditions = warden_condition.dup
-  #   login = conditions.delete(:login)
-  #   where(conditions).where(
-  #     ["lower(username) = :value OR lower(email) = :value",
-  #     { value: login.strip.downcase}]).first
-  # end
-
+  def self.find_for_database_authentication warden_condition
+    conditions = warden_condition.dup
+    login = conditions.delete(:login)
+    where(conditions).where(
+      ["lower(username) = :value OR lower(email) = :value",
+      { value: login.strip.downcase}]).first
+  end
 
 end
