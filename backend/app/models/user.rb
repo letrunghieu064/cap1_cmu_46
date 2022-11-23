@@ -1,5 +1,5 @@
 class User < ApplicationRecord
-  has_secure_password
+  # has_secure_password
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
@@ -9,13 +9,18 @@ class User < ApplicationRecord
   validates_presence_of :username
   validates_uniqueness_of :email
   validates_uniqueness_of :username
-  validates_presence_of :password, if: :password_required?
-  validates_confirmation_of :password, if: :password_required?
-  validates :password,
+  # validates_presence_of :password, if: :password_required?
+  # validates_confirmation_of :password, if: :password_required?
+  validates :password, if: :password_required?,
             format: { with: /\A(?=.*\d)(?=.*[A-Z])(?=.*\W)[^ ]{6,}\z/,
                       message: 'Password should have more than 6 characters including 1 uppercase letter, 1 number, 1 special character'
                     }
 
+  enum role:[:user, :admin]
+  after_initialize :set_default_role, if: :new_record?
+  def set_default_role
+    self.role ||= :user
+  end
 
   has_many :posts
   has_many :likes

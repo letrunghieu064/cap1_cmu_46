@@ -1,15 +1,17 @@
 class Api::V1::UsersController < ApplicationController
   skip_before_action :authenticate_request, only: %i[login register]
   before_action :set_user, only: [ :show, :update, :destroy ]
-
-  # before_action :authenticate_request, only: [:update]
-
+  before_action :correct_user, only: [:edit, :update, :destroy]
 
   # GET /users or /users.json
   def index
     @users = User.all
 
     render json: @users
+  end
+
+  def correct_user
+    @user == current_user
   end
 
 
@@ -35,12 +37,16 @@ class Api::V1::UsersController < ApplicationController
 
   # PATCH/PUT /users/1 or /users/1.json
   def update
-    # @user = User.find(params[:id])
-    if @user.update(secure_params)
-      render json: @user
+    if correct_user
+      if @user.update(user_params)
+        render json: @user
+      else
+        render json: @user.errors, status: :unprocessable_entity
+      end
     else
-      render json: @user.errors, status: :unprocessable_entity
+      render json: {message: 'incorrect user'}
     end
+
 
   end
 
