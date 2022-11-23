@@ -92,8 +92,8 @@ const editProfile = async(
 };
 const deletePost = async (id) => {
   await axios
-    .post(
-      API_URL + `/Post/deletePost/:${id}`,
+    .delete(
+      API_URL + `/v1/posts/:${id}`,
 
       { headers: JSON.stringify(authHeader()) }
     )
@@ -106,7 +106,7 @@ const deletePost = async (id) => {
 const createComment = async (id, descripstion) => {
   await axios
     .post(
-      `/api/Post/createComment:${id}`,
+      `/v1/Post/createComment:${id}`,
       { descripstion },
       { headers: JSON.stringify(authHeader()) }
     )
