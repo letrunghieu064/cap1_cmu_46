@@ -22,8 +22,9 @@ class User < ApplicationRecord
     self.role ||= :user
   end
 
-  has_many :posts
-  has_many :likes
+  has_many :posts, dependent: :destroy
+  has_many :likes, dependent: :destroy
+  has_many :comments, dependent: :destroy
 
   alias_method :authenticate, :valid_password?
 
@@ -36,6 +37,29 @@ class User < ApplicationRecord
     where(conditions).where(
       ["lower(username) = :value OR lower(email) = :value",
       { value: login.strip.downcase}]).first
+  end
+
+  def send_password_reset
+    self.reset_password_token = generate_base64_token
+    self.reset_password_sent_at = Time.zone.now
+    save!
+    # UserMailer.password_reset(self).deliver_now
+  end
+
+  def password_token_valid?
+    (self.reset_password_sent_at) > (Time.zone.now) - 1.hour
+  end
+
+  def reset_password(password)
+    self.reset_password_token = nil
+    self.password = password
+    save!
+  end
+
+  private
+
+  def generate_base64_token
+    test = SecureRandom.urlsafe_base64
   end
 
 

@@ -23,9 +23,11 @@ ActiveRecord::Schema.define(version: 2022_10_21_092014) do
   create_table "comments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3", force: :cascade do |t|
     t.string "description"
     t.bigint "post_id", null: false
+    t.bigint "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["post_id"], name: "index_comments_on_post_id"
+    t.index ["user_id"], name: "index_comments_on_user_id"
   end
 
   create_table "likes", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3", force: :cascade do |t|
@@ -41,7 +43,7 @@ ActiveRecord::Schema.define(version: 2022_10_21_092014) do
     t.string "name"
     t.text "img_url"
     t.string "description"
-    t.binary "status"
+    t.integer "status", default: 0
     t.string "address"
     t.float "longitude"
     t.float "latitude"
@@ -78,6 +80,7 @@ ActiveRecord::Schema.define(version: 2022_10_21_092014) do
 
   add_foreign_key "comment_likes", "comments"
   add_foreign_key "comments", "posts"
+  add_foreign_key "comments", "users"
   add_foreign_key "likes", "posts"
   add_foreign_key "likes", "users"
   add_foreign_key "posts", "users"

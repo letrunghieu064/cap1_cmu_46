@@ -1,7 +1,7 @@
 class Api::V1::UsersController < ApplicationController
   skip_before_action :authenticate_request, only: %i[login register]
-  before_action :set_user, only: [ :show, :update, :destroy ]
-  before_action :correct_user, only: [:edit, :update, :destroy]
+  before_action :set_user, only: [ :show, :update ]
+  before_action :correct_user, only: [:edit, :update]
 
   # GET /users or /users.json
   def index
@@ -44,16 +44,16 @@ class Api::V1::UsersController < ApplicationController
         render json: @user.errors, status: :unprocessable_entity
       end
     else
-      render json: {message: 'incorrect user'}
+      render json: {message: 'Incorrect user'}
     end
 
 
   end
 
   # DELETE /users/1 or /users/1.json
-  def destroy
-    @user.destroy
-  end
+  # def destroy
+  #   @user.destroy
+  # end
 
   def register
     @user = User.create(user_params)
@@ -73,9 +73,9 @@ class Api::V1::UsersController < ApplicationController
     command = AuthenticateUser.call(email, password)
     if command.success?
       render json: {
+        message: 'Login Successful',
         data: {
-          accessToken: command.result,
-        message: 'Login Successful'
+          accessToken: command.result
         }
       }
     else
