@@ -14,11 +14,19 @@ Rails.application.routes.draw do
       post 'auth/login' , to: 'users#login'
       get 'test' , to: 'users#test'
       put 'users', to: 'users#update'
+      post 'password/forgot', to: 'password#forgot'
+      post 'password/reset', to: 'password#reset'
       devise_scope :user do
         # post "register", :to => 'registrations#create'
         # post "login", :to => 'sessions#create'
         # delete "logout", :to => 'sessions#destroy'
         # put "users/:id", to: "registrations#update"
+      end
+      namespace :admin do
+        delete 'users/:id', to: 'users#destroy'
+        put 'posts/:id', to: 'posts#update'
+        delete 'posts/:id', to: 'posts#destroy'
+        delete 'comments/:id', to: 'comments#destroy'
       end
     end
   end

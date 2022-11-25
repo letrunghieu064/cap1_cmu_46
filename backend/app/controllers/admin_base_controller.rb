@@ -1,4 +1,4 @@
-class ApplicationController < ActionController::API
+class AdminBaseController < ActionController::API
   include ActionController::RequestForgeryProtection
   protect_from_forgery with: :null_session
   skip_before_action :verify_authenticity_token
@@ -14,7 +14,7 @@ class ApplicationController < ActionController::API
   private
   def authenticate_request
     @current_user = AuthorizeApiRequest.call(request.headers).result
-    render json: { error: 'Not Authorized' }, status: 401 unless @current_user
+    render json: { error: 'Not Authorized' }, status: 401 unless @current_user.admin?
   end
 
   protected
@@ -22,6 +22,6 @@ class ApplicationController < ActionController::API
     devise_parameter_sanitizer.permit(:sign_up,
       keys: [:username, :email, :password])
     devise_parameter_sanitizer.permit(:sign_in,
-      keys: [:login, :password])
+      keys: [:login, :password,])
   end
 end

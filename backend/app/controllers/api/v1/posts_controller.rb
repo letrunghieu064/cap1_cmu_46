@@ -1,12 +1,11 @@
 class Api::V1::PostsController < ApplicationController
   before_action :set_post, only: %i[ show edit update destroy ]
   before_action :authenticate_request
-  before_action :correct_user, only: [:edit, :update, :destroy]
-
+  before_action :correct_user, only: [ :update, :destroy]
 
   # GET /posts or /posts.json
   def index
-    @posts = Post.all
+    @posts = Post.all.includes(:user, :comments, :likes)
 
     render json: @posts
   end
@@ -29,7 +28,6 @@ class Api::V1::PostsController < ApplicationController
   def create
     # @post = Post.new(post_params)
     @post = current_user.posts.build(post_params)
-
     if @post.save
       render json: {
         data: @post
@@ -44,12 +42,12 @@ class Api::V1::PostsController < ApplicationController
   def update
     if correct_user
       if @post.update(post_params)
-        render json: @post
+        render json: { data: @post}
       else
         render json: @post.errors, status: :unprocessable_entity
       end
     else
-      render json: {message: 'incorrect user'}
+      render json: {message: 'Incorrect user'}
     end
   end
 
@@ -57,17 +55,15 @@ class Api::V1::PostsController < ApplicationController
   def destroy
     if correct_user
       @post.destroy
-      render json: {message: 'delete post successfully'}, status: :ok
+      render json: {message: 'Delete post successfully'}, status: :ok
     else
-      render json: {message: 'incorrect user'}
+      render json: {message: 'Incorrect user'}
     end
   end
 
   def correct_user
     @post = current_user.posts.find_by(id: params[:id])
   end
-
-
 
   private
     # Use callbacks to share common setup or constraints between actions.

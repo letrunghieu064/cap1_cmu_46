@@ -4,7 +4,7 @@ class CreatePosts < ActiveRecord::Migration[6.0]
       t.string :name
       t.text :img_url
       t.string :description
-      t.binary :status
+      t.integer :status, default: 0
       t.string :address
       t.float :longitude
       t.float :latitude
