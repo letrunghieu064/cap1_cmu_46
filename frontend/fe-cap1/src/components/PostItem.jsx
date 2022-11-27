@@ -85,7 +85,7 @@ export default function PostItem({ post, onDelete }) {
 
     console.log("response", response);
     if (response !== 200) {
-      alert(" xoá không thành công ");
+      alert(" xoá không thành công , bạn không thể xóa bình luận của người khác");
     }
     if (response === 200) {
       onDeleteComment(id);
@@ -103,7 +103,7 @@ export default function PostItem({ post, onDelete }) {
           alt={post.name}
         />
         <div className="new-header_infor">
-          <p className="new-header_infor-name">{post.user.username}</p>
+          <p className="new-header_infor-name">{post.name}</p>
           <div className="new-header_infor-time">
             <span>{post.created_at.toString().slice(0, 10)}</span>
             <BiWorld className="new-header_infor-earth"></BiWorld>
@@ -199,7 +199,7 @@ export default function PostItem({ post, onDelete }) {
                 <div className="comment_others-infor-cmt">
                   <p className="comment_others-name">Hiếu</p>
                   <span className="comment_others-content">
-                    {com.descripstion}
+                    {com.description}
                   </span>
                 </div>
                 <p className="comment_others-action">Thích</p>
@@ -220,7 +220,7 @@ export default function PostItem({ post, onDelete }) {
                   chỉnh sửa
                 </p>
                 <span className="comment_others-action">
-                  {com.createdAt.toString().slice(0, 10)}
+                  {com.created_at.toString().slice(0, 10)}
                 </span>
               </div>
             </div>

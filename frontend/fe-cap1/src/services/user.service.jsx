@@ -84,7 +84,7 @@ const deletePost = async (id) => {
 const deleteAdminPost = async (id) => {
   console.log("id", id);
   const res = await axios
-    .delete(API_URL + `/Post/deletePost/${id}`, {}, { headers: authHeader() })
+    .delete(API_URL + `/admin/posts/${id}`, { headers: authHeader() })
     .then((response) => {
       if (response) {
         return response.data.statusCode;
@@ -103,21 +103,23 @@ const editComment = async (id) => {
     });
   return res;
 };
-const createComment = async (id, descripstion) => {
+const createComment = async (post_id, description) => {
+  console.log("id",post_id)
   const res = await axios
     .post(
-      API_URL + `/Post/createComment`,
-      { id, descripstion },
+      API_URL + `/comments`,
+      { post_id,description },
       { headers: authHeader() }
     )
     .then((response) => {
+      console.log("responre",response.data.data)
       return response.data.data;
     });
   return res;
 };
 const deleteComment = async (id) => {
   const res = await axios
-    .delete(API_URL + `/Post/deleteComment/${id}`, { headers: authHeader() })
+    .delete(API_URL + `/comments/${id}`, { headers: authHeader() })
     .then((response) => {
       console.log("respo,", response.data.statusCode);
       return response.data.statusCode;
@@ -126,16 +128,16 @@ const deleteComment = async (id) => {
 };
 const getComments = async (id) => {
   const res = await axios
-    .get(API_URL + `/Post/getComments`, { id }, { headers: authHeader() })
+    .get(API_URL + `/posts/${id}`, { headers: authHeader() })
     .then((response) => {
-      console.log("comment", response.data.data);
-      return response.data.data;
+      console.log("comment", response.data.comments);
+      return response.data.comments;
     });
   return res;
 };
 const getAllUser = async () => {
   const res = await axios
-    .get(API_URL + `/User/getUsers`, { headers: authHeader() })
+    .get(API_URL + `/users`, { headers: authHeader() })
     .then((response) => {
       return response.data.data;
     })
@@ -146,7 +148,7 @@ const getAllUser = async () => {
 };
 const deleteUser = async (id) => {
   const res = await axios
-    .delete(API_URL + `/User/deleteUser/${id}`, { headers: authHeader() })
+    .delete(API_URL + `/admin/users/${id}`, { headers: authHeader() })
     .then((response) => {
       console.log("respo,", response.data.statusCode);
       return response.data.statusCode;
@@ -176,4 +178,5 @@ export default {
   getAllUser,
   deleteUser,
   createLike,
+  deleteAdminPost
 };

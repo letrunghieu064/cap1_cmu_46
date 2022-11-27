@@ -136,7 +136,7 @@ export default function App() {
                 padding: "0.2em",
               }}
             >
-              <h2>Địa chỉ : {selectedPark.name}</h2>
+              <h6>Địa chỉ : {selectedPark.address}</h6>
               <p>{selectedPark.name}</p>
               <img
                 src={selectedPark.img_url}

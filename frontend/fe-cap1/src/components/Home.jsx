@@ -35,7 +35,7 @@ const Home = () => {
     setCreateModal(!createModal);
   };
   const handleAdmin = () => {
-    if (currentUser.role === "admin") {
+    if (currentUser.data.role === "admin") {
       window.location.replace("/admin");
     } else {
       alert("Bạn Không Có Quyền Vào Trang này");
@@ -80,7 +80,6 @@ const Home = () => {
     axios
       .get("http://localhost:3000/api/v1/posts",{ headers: authHeader() })
       .then((response) => {
-        console.log("getdata",response.data)
         return response.data;
       })
       .then((result) => {

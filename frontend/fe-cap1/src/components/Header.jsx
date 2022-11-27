@@ -30,13 +30,15 @@ export default function Header() {
   const { isLoggedIn } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const { Post } = useSelector((state) => state.post);
-
+  console.log("currentUse",currentUser )
   console.log("post", +Post);
 
   const handleAdmin = () => {
-    if (currentUser.role === "admin") {
+   
+    if (currentUser.data.role === "admin") {
       window.location.replace("/admin");
     } else {
+      
       alert("Bạn Không Có Quyền Vào Trang này");
     }
   };

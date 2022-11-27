@@ -16,7 +16,7 @@ export default function PostCreate({ onClose, callbackCreateSuccess }) {
     longitude: 0,
     latitude: 0,
   });
-
+  console.log("dât khiemn", data)
   const [listAddr, setListAddr] = useState([]);
   console.log("listAddr", listAddr);
   const handleChange = (e) => {
@@ -57,8 +57,7 @@ export default function PostCreate({ onClose, callbackCreateSuccess }) {
 
   const HandleCreatePost = async () => {
     console.log("data", data);
-    const res = await dispatch(CreatePost({ ...data }));
-
+    const res = await  dispatch(CreatePost({ ...data }));
     callbackCreateSuccess && callbackCreateSuccess(res);
     onClose && onClose();
   };

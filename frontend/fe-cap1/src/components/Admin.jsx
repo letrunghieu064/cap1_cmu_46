@@ -4,7 +4,7 @@ import { FiEdit, FiSearch, FiTrash } from "react-icons/fi";
 import userService from "../services/user.service";
 import Header from "./Header";
 import axios from "axios";
-
+import authHeader from "../services/auth-header";
 const Admin = () => {
   const [tab, setTab] = useState("user");
 
@@ -27,18 +27,26 @@ const Admin = () => {
     fetchData();
   }, []);
   useEffect(() => {
-    axios
-      .get("http://localhost:5000/api/Project/getpost")
+    const fetchData=async ()=>{
+  const result= await  axios
+      .get("http://localhost:3000/api/v1/posts",{ headers: authHeader() })
       .then((response) => {
         return response.data;
       })
       .then((result) => {
-        const postlist = [...result.data];
-        setaddpost(postlist);
-        console.log(postlist);
+        // console.log("data",result);
+        // const postlist = [...result];
+        // setaddpost(postlist);
+        return result;
+        
       });
+      console.log("data",result);
+      const postlist = [...result];
+      setaddpost(postlist);
+    }
+    fetchData();
   }, []);
-  const onDelete = (id) => {
+  const onDeleteUser = (id) => {
     const user = users.filter((item) => item.id !== id);
     setUsers(user);
   };
@@ -50,9 +58,24 @@ const Admin = () => {
       alert(" xoá không thành công ");
     }
     if (response === 200) {
-      onDelete(id);
+      onDeleteUser(id);
     }
   };
+  const onDeletePost = (id) => {
+    const post = addpost.filter((item) => item.id !== id);
+    setaddpost(post);
+  };
+  const handleDeletePost = async (id)=>{
+    const response = await userService.deleteAdminPost(id);
+
+    console.log("response", response);
+    if (response !== 200) {
+      alert(" xoá không thành công ");
+    }
+    if (response === 200) {
+      onDeletePost(id);
+    }
+  }
   return (
     <div>
       <Header></Header>
@@ -199,12 +222,13 @@ const Admin = () => {
                   <th> Name</th>
                   <th>Descripstion</th>
                   <th>Address</th>
+                  <th>other</th>
                 </tr>
                 {addpost.map((post) => (
                   <tr>
                     <td>{post.id}</td>
                     <td>{post.name}</td>
-                    <td>{post.descripstion}</td>
+                    <td>{post.description}</td>
                     <td>{post.address}</td>
                     <td>
                       <div className="other-icon">
@@ -219,7 +243,7 @@ const Admin = () => {
                             <FiTrash
                               className="remove-table"
                               onClick={() => {
-                                handleDeleteUser(post.id);
+                                handleDeletePost(post.id);
                               }}
                             ></FiTrash>
                           </a>
