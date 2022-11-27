@@ -26,17 +26,21 @@ export default function Header() {
   const [enterPopup, setEnterPopup] = useState(false);
   const [enteredSearch, setEnteredSearch] = useState(false);
   const [addpost, setaddpost] = useState([]);
-
+  const { user: currentUser } = useSelector((state) => state.auth);
   const { isLoggedIn } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const { Post } = useSelector((state) => state.post);
 
   console.log("post", +Post);
 
-  const handleAdmin = (e) => {
-    e.preventDefault();
-    window.location.replace("/admin");
+  const handleAdmin = () => {
+    if (currentUser.role === "admin") {
+      window.location.replace("/admin");
+    } else {
+      alert("Bạn Không Có Quyền Vào Trang này");
+    }
   };
+
   const onHandleProfile = (e) => {
     setprofile(!profile);
     if (profile) {

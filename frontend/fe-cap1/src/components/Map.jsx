@@ -10,6 +10,7 @@ import ReactMapGL, {
 import axios from "axios";
 import "mapbox-gl/dist/mapbox-gl.css";
 import Header from "./Header";
+import authHeader from "../services/auth-header";
 export default function App() {
   const [viewport, setViewport] = useState({
     latitude: 16.0602077,
@@ -25,12 +26,13 @@ export default function App() {
   const [posts, setPosts] = useState([]);
   useEffect(() => {
     axios
-      .get("http://localhost:5000/api/Post/getaddress")
+      .get("http://localhost:3000/api/v1/posts",{ headers: authHeader() })
       .then((response) => {
         return response.data;
       })
       .then((result) => {
-        setPosts([...result.data]);
+        console.log("ressult",result)
+        setPosts([...result]);
       });
   }, []);
 
@@ -136,6 +138,10 @@ export default function App() {
             >
               <h2>Địa chỉ : {selectedPark.name}</h2>
               <p>{selectedPark.name}</p>
+              <img
+                src={selectedPark.img_url}
+                alt={selectedPark.img_url}
+              />
             </div>
           </Popup>
         ) : null}

@@ -9,7 +9,6 @@ const EditProfile = () => {
 
   const [fisrtName, setFisrtName] = useState("");
   const [lastName, setLastName] = useState("");
-  const [userName, setUserName] = useState("");
   const [gender, setGenDer] = useState("Female");
   const [email, setEmail] = useState("");
   const [birthDay, setBirthDay] = useState("");
@@ -18,9 +17,12 @@ const EditProfile = () => {
   const [address, setAddress] = useState("");
   const [imgurl, setImgUrl] = useState("");
   const handleSudmit = () => {
+    console.log("curent",currentUser.data.id)
     alert("bạn có chắc chắn lưu không");
+    
     return userService
       .editProfile(
+        currentUser.data.id,
         fisrtName,
         lastName,
         gender,
@@ -63,7 +65,7 @@ const EditProfile = () => {
           </div>
           <input type="file" onChange={handleUploadIamge} />
           <div className="user-name">
-            <h3 className="name">{currentUser.username}</h3>
+            <h3 className="name">{currentUser.data.username}</h3>
           </div>
         </div>
 
@@ -95,7 +97,7 @@ const EditProfile = () => {
               <div className="gene name-input">
                 <input
                   type="text"
-                  placeholder={currentUser.username}
+                  placeholder={currentUser.data.username}
                   size="47"
                 ></input>
               </div>
@@ -119,7 +121,7 @@ const EditProfile = () => {
               <div className="gene email">
                 <input
                   type="text"
-                  placeholder={currentUser.email}
+                  placeholder={currentUser.data.email}
                   size="39"
                   value={email}
                   onChange={(e) => {

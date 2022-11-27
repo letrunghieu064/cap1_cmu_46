@@ -3,7 +3,7 @@ export default function authHeader() {
 
   if (user && user.accessToken) {
     // for Node.js Express back-end
-    return { Authorization: `Bearer ${user.accessToken}` };
+    return { authorization: `Bearer ${user.accessToken}` };
   } else {
     return {};
   }

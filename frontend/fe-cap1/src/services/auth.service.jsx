@@ -1,27 +1,24 @@
 import axios from "axios";
 
-const API_URL = "http://localhost:3000";
+const API_URL = "http://localhost:3000/api/v1";
 
 const register = (username, email, password) => {
-  return axios.post(API_URL + "/user", {
-   
+  return axios.post(API_URL + "/auth/register", {
+    username,
     email,
     password,
-    
   });
 };
 
-const login = (username, password) => {
+const login = (email, password) => {
   return axios
-    .post(API_URL + "/login", {
-     
-      email:username,
+    .post(API_URL + "/auth/login", {
+      email,
       password,
-      
     })
     .then((response) => {
-      if (response.accessToken) {
-        localStorage.setItem("user", JSON.stringify(response.data));
+      if (response.data.data.accessToken) {
+        localStorage.setItem("user", JSON.stringify(response.data.data));
       }
 
       return response.data;

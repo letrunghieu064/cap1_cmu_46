@@ -460,6 +460,10 @@ opacity: 0.9;
   display: flex;
   align-items: center;
 }
+.user__modal--body-item a{
+  width: 100%;
+  display: flex;
+}
 .user__modal--body-icon{
   margin-right: 16px;
   font-size: 36px;
