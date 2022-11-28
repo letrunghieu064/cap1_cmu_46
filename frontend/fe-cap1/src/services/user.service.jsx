@@ -155,14 +155,15 @@ const deleteUser = async (id) => {
     });
   return res;
 };
-const createLike = async (count) => {
+const createLike = async (id) => {
   const res = await axios
-    .post(API_URL + `/Post/createLike`, { count }, { headers: authHeader() })
+    .post(API_URL + `/comments/${id}`,  { headers: authHeader() })
     .then((response) => {
       return response.data.data;
     });
   return res;
 };
+
 export default {
   getPublicContent,
   getUserBoard,
