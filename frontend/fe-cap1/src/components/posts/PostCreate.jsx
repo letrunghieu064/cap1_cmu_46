@@ -46,7 +46,7 @@ export default function PostCreate({ onClose, callbackCreateSuccess }) {
     const addr = e.target.value;
     if (addr) {
       const add = await axios.get(
-        `https://maps.google.com/maps/api/geocode/json?address=${addr}&key=AIzaSyCJqoJ7R8kjKZARpU89L-_GZEE9OV43e80`
+        `https://maps.google.com/maps/api/geocode/json?address=${addr}&key=${process.env.REACT_APP_MAP_API_KEY}`
       );
 
       if (add && add.data && add.data.results) setListAddr(add.data.results);
