@@ -5,6 +5,7 @@ import userService from "../services/user.service";
 import Header from "./Header";
 import axios from "axios";
 import authHeader from "../services/auth-header";
+import Exportexcel from '../util/constants/Exportexcel'
 const Admin = () => {
   const [tab, setTab] = useState("user");
 
@@ -215,6 +216,7 @@ const Admin = () => {
         <div className="manage__post">
           <div className="title-post">
             <h2>Post List</h2>
+                                    
             <div className="table-container">
               <table border="5" valign="middle">
                 <tr>
@@ -248,6 +250,7 @@ const Admin = () => {
                             ></FiTrash>
                           </a>
                         </div>
+                        <button classname="btn btn-success"> hehee</button>    
                       </div>
                     </td>
                   </tr>
