@@ -18,10 +18,12 @@
 }
 .nav-left {
   flex: 1;
+  margin-top: 0;
 }
 .nav-align{
   display: flex;
   justify-content: center;
+  align-items: center;
   height: 100%;
   flex: 1;
 }
@@ -617,4 +619,12 @@ opacity: 0.9;
 }
 .comment_view-morer p:hover{
   opacity: 0.9;
+}
+.user__modal--body-item:hover a{
+  text-decoration: none;
+  color: #40c057;
+}
+.user__modal--body-item:hover p,
+.user__modal--body-item:hover svg{
+  color: #40c057;
 }

@@ -27,7 +27,7 @@ const CreatePost = async (data) => {
       return response.data;
     })
     .then((response) => {
-      return response.data;
+      return response;
     });
 
   return res;
@@ -92,11 +92,12 @@ const deleteAdminPost = async (id) => {
     });
   return res;
 };
-const editComment = async (id) => {
-  console.log("id", id);
+const editComment = async (id,description) => {
+  console.log("id", id,description);
   const res = await axios
-    .delete(API_URL + `/Post/editComment/${id}`, { headers: authHeader() })
+    .delete(API_URL + `/Post/editComment/${id}`, {description},{ headers: authHeader() })
     .then((response) => {
+      console.log("hi",response)
       if (response) {
         return response.data.statusCode;
       }
@@ -163,6 +164,7 @@ const createLike = async (id) => {
     });
   return res;
 };
+
 
 export default {
   getPublicContent,

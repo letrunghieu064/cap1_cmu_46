@@ -6,6 +6,8 @@ import Header from "./Header";
 import axios from "axios";
 import authHeader from "../services/auth-header";
 import Exportexcel from '../util/constants/Exportexcel'
+  
+import { CiUser } from "react-icons/ci";
 const Admin = () => {
   const [tab, setTab] = useState("user");
 
@@ -77,47 +79,53 @@ const Admin = () => {
       onDeletePost(id);
     }
   }
+  let handleOnClickExport= async()=>{
+    alert("kakak")
+    console.log("",addpost)
+    if(addpost){
+      await Exportexcel.exportExcel(addpost,"danh sách post","list")
+    }
+  }
   return (
-    <div>
+    <div >
       <Header></Header>
-      <div className="controls">
-        <div className="button-control">
-          <button
-            type="button"
+      <div className="container-user-body">
+      <div className="container-user">
+      <ul className="controls">
+        <li className="button-control controls-item">
+            <CiUser></CiUser>
+          <p
             className="btn-manage_user"
             onClick={() => handleTab("user")}
           >
             Manage User
-          </button>
-        </div>
-        <div className="button-control">
-          <button
+          </p>
+        </li>
+        <li className="button-control controls-item">
+          <p
             type="button"
             className="btn-manage_post"
             onClick={() => handleTab("posts")}
           >
             Manage Post
-          </button>
-        </div>
-        <div className="button-control">
-          <button
+          </p>
+        </li>
+        <li className="button-control controls-item">
+          <p
             type="button"
             className="btn-statistic"
             onClick={() => handleTab("statistic")}
           >
             Statistic
-          </button>
-        </div>
+          </p>
+        </li>
+      </ul>
       </div>
 
       {/* phần này gắn với button Manage User */}
       {tab === "user" ? (
         <div className="manage__user">
-          <div className="title-list">
-            <h2>User List</h2>
-          </div>
-
-          <div>
+          <div className="table-user"> 
             <div className="search-user">
               <div className="search-btn">
                 <button type="button" className="btn-search">
@@ -250,7 +258,7 @@ const Admin = () => {
                             ></FiTrash>
                           </a>
                         </div>
-                        <button classname="btn btn-success"> hehee</button>    
+                        <button classname="btn btn-success" onClick={()=>{handleOnClickExport()}}> hehee</button>    
                       </div>
                     </td>
                   </tr>
@@ -262,6 +270,8 @@ const Admin = () => {
       ) : (
         <Fragment></Fragment>
       )}
+      </div>
+      
 
       {/* phần này gắn với button Manage Post, hiếu bỏ bài post vào ha
       <div className="manage__post">

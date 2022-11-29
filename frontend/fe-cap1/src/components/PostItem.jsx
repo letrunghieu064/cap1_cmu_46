@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, Fragment } from "react";
 
 import { CiTrash } from "react-icons/ci";
 import { CiPickerEmpty } from "react-icons/ci";
@@ -54,7 +54,7 @@ export default function PostItem({ post, onDelete }) {
   };
 
   
-  
+  if(!post) return <Fragment/>
 
   return (
     <div className="home-body_news">

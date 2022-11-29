@@ -23,6 +23,7 @@ const Comment = ({ postId }) => {
       alert("bạn chưa bình luận");
     } else {
       const res = await userService.createComment(postId, writerComment);
+      console.log("res",res)
       setComments([{ ...res }, ...comments]);
     }
   };
@@ -110,14 +111,14 @@ const CommentItem = ({ data, handleDeleteComment, handleEditComment }) => {
       
       setIsLoading(true);
       //call api update comment
+      
       setTimeout(() => {
         setIsLoading(false);
         setComment({
           ...comment,
           hasEdit: false,
         });
-      }, 2000)
-      
+      }, 1000)
     }
   };
 
@@ -167,7 +168,7 @@ const CommentItem = ({ data, handleDeleteComment, handleEditComment }) => {
       />
       <div className="comment_others-infor">
         <div className="comment_others-infor-cmt">
-          <p className="comment_others-name">Hiếu</p>
+          <p className="comment_others-name">{comment?.user?.username}</p>
           <span className="comment_others-content">{comment.description}</span>
         </div>
         <p className="comment_others-action">Thích</p>
@@ -188,7 +189,7 @@ const CommentItem = ({ data, handleDeleteComment, handleEditComment }) => {
           chỉnh sửa
         </p>
         <span className="comment_others-action">
-          {comment.created_at.toString().slice(0, 10)}
+          {comment?.created_at?.toString().slice(0, 10)}
         </span>
       </div>
     </div>

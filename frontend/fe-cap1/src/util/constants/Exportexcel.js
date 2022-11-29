@@ -1,6 +1,6 @@
 import * as XLSX from "xlsx/xlsx.mjs"
-class Exportexcel{
-  static exportExcel(data,nameSheet,nameFile){
+const  exportExcel = (data,nameSheet,nameFile)=>{
+  {
     return new Promise ((resolve,reject)=>{
         var wb=XLSX.utils.book_new()
         var ws=XLSX.utils.json_to_sheet(data)
@@ -9,4 +9,8 @@ class Exportexcel{
         resolve("oke")
     })
   }
+}
+
+export default {
+  exportExcel
 }
