@@ -2,10 +2,12 @@ import React, { useRef, useState } from "react";
 import { CreatePost } from "../../actions/post";
 import { TfiClose } from "react-icons/tfi";
 import { CiLocationOn } from "react-icons/ci";
-import { useDispatch } from "react-redux";
+import { useDispatch ,useSelector} from "react-redux";
+
 import axios from "axios";
 
 export default function PostCreate({ onClose, callbackCreateSuccess }) {
+  const { user: currentUser } = useSelector((state) => state.auth);
   const inputAddressRef = useRef(null);
   const dispatch = useDispatch();
   const [data, setData] = useState({
@@ -60,6 +62,7 @@ export default function PostCreate({ onClose, callbackCreateSuccess }) {
     const res = await  dispatch(CreatePost({ ...data }));
     callbackCreateSuccess && callbackCreateSuccess(res);
     onClose && onClose();
+  
   };
 
   const handleChooseAddress = async (item) => {
@@ -89,7 +92,7 @@ export default function PostCreate({ onClose, callbackCreateSuccess }) {
             src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQiquxzRvxiQGtrn3rlBgGKAWixXBIhPWhOOw&usqp=CAU"
             alt=""
           />
-          <p>Lê Thị Kim Ngân</p>
+          <p>{currentUser.data.username}</p>
         </div>
         <input type="file" onChange={handleUploadIamge} />
         <input

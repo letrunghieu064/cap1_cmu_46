@@ -6,15 +6,18 @@ const Comment = ({ postId }) => {
   const [writerComment, setWriterComment] = useState("");
 
   useEffect(() => {
+  
     const res = userService
       .getComments(postId)
       .then((comment) => {
+        console.log("comments",comment)
         setComments(comment);
         return comment;
       })
       .catch((error) => {
         console.error(error);
       });
+    
   }, [postId]);
 
   const handleWriterComment = async (e) => {
@@ -23,7 +26,7 @@ const Comment = ({ postId }) => {
       alert("bạn chưa bình luận");
     } else {
       const res = await userService.createComment(postId, writerComment);
-      console.log("res",res)
+      console.log("res1",res)
       setComments([{ ...res }, ...comments]);
     }
   };
@@ -111,14 +114,27 @@ const CommentItem = ({ data, handleDeleteComment, handleEditComment }) => {
       
       setIsLoading(true);
       //call api update comment
-      
-      setTimeout(() => {
-        setIsLoading(false);
+      console.log("data",comment.description)
+      const response=  await userService.editComment(comment.id,comment.description)
+      if (response !== 200) {
+        alert(
+          " chỉnh sửa không thành công "
+        );
+      }
+      if (response === 200) {
+          setIsLoading(false);
         setComment({
           ...comment,
           hasEdit: false,
         });
-      }, 1000)
+      }
+      // setTimeout(() => {
+      //   setIsLoading(false);
+      //   setComment({
+      //     ...comment,
+      //     hasEdit: false,
+      //   });
+      // }, 1000)
     }
   };
 
@@ -137,14 +153,14 @@ const CommentItem = ({ data, handleDeleteComment, handleEditComment }) => {
       <div className="comment_user">
         <img
           className="comment_user_avatar"
-          src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQiquxzRvxiQGtrn3rlBgGKAWixXBIhPWhOOw&usqp=CAU"
+          src={comment?.user?.url_img || "https://jp.boxhoidap.com/boxfiles/cach-de-anh-dai-dien-dep--f85ddf18094383e085fb97258c9c8d87.wepb"}
           alt=""
         />
         <input
           className="comment_user-input"
           placeholder="Viết bình luận"
           // ref={refInputComment}
-          value={comment.description}
+          value={comment?.description}
           onChange={(e) => {
             setComment({...comment, description: e.target.value});
           }}
@@ -163,7 +179,7 @@ const CommentItem = ({ data, handleDeleteComment, handleEditComment }) => {
     <div className="comment_others">
       <img
         className="comment_others_avatar"
-        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQztTqQRZ0RaSy0nVuhnzhEx3Rz9N88L8eWJg&usqp=CAU"
+        src={comment?.user?.url_img || "https://jp.boxhoidap.com/boxfiles/cach-de-anh-dai-dien-dep--f85ddf18094383e085fb97258c9c8d87.wepb"}
         alt=""
       />
       <div className="comment_others-infor">
@@ -171,7 +187,7 @@ const CommentItem = ({ data, handleDeleteComment, handleEditComment }) => {
           <p className="comment_others-name">{comment?.user?.username}</p>
           <span className="comment_others-content">{comment.description}</span>
         </div>
-        <p className="comment_others-action">Thích</p>
+        <p className="comment_others-action"> Thích</p>
         <p
           className="comment_others-action"
           onClick={() => {

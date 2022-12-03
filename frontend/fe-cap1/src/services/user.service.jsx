@@ -34,31 +34,30 @@ const CreatePost = async (data) => {
 };
 const editProfile = async (
   id,
+  email,
   first_name,
   last_name,
-  genger,
-  email,
+  username,
+  url_img,
   birthday,
-  card_id,
-  phonenumber,
+  phone_number,
   address,
-  imgurl
+  gender,
+  card_id 
 ) => {
   const res = await axios
     .put(
-      API_URL + `/users/${id}`,
-
-      {
-        id,
+      API_URL + `/users/${id}`,  
+      { email,
         first_name,
         last_name,
-        gender : genger,
-        email,
+        username,
+        url_img,
         birthday,
-        card_id,
-        phonenumber,
+        phone_number,
         address,
-        img_url: imgurl,
+        gender,
+        card_id
       },
       { headers: authHeader() }
     )
@@ -95,10 +94,11 @@ const deleteAdminPost = async (id) => {
 const editComment = async (id,description) => {
   console.log("id", id,description);
   const res = await axios
-    .delete(API_URL + `/Post/editComment/${id}`, {description},{ headers: authHeader() })
+    .put(API_URL + `/comments/${id}`, {description},{ headers: authHeader() })
     .then((response) => {
       console.log("hi",response)
       if (response) {
+        console.log("rescmoment",response.data.statusCode)
         return response.data.statusCode;
       }
     });
@@ -114,7 +114,7 @@ const createComment = async (post_id, description) => {
     )
     .then((response) => {
       console.log("responre",response.data.data)
-      return response.data.data;
+      return response.data;
     });
   return res;
 };
@@ -164,6 +164,18 @@ const createLike = async (id) => {
     });
   return res;
 };
+const getUser = async (id)=>{
+  const res = await axios
+    .get(API_URL + `/users/${id}`, { headers: authHeader() })
+    .then((response) => {
+      return response.data;
+    })
+    .then((response) => {
+      return response;
+    });
+  return res;
+}
+
 
 
 export default {
@@ -181,5 +193,6 @@ export default {
   getAllUser,
   deleteUser,
   createLike,
-  deleteAdminPost
+  deleteAdminPost,
+  getUser
 };

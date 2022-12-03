@@ -9,16 +9,23 @@ import { BiWorld } from "react-icons/bi";
 import { BiDotsHorizontalRounded } from "react-icons/bi";
 import Comment from "./comment/Comment";
 import userService from "../services/user.service";
-
+import EditPost from "./EditPost/EditPost";
 export default function PostItem({ post, onDelete }) {
  // const { posts } = useSelector((state) => state.post);
   const [chosePost, setChosepost] = useState(false);
   const [comment, setComment] = useState(false);
-  
-  const [like, setLike] = useState(false);
+  const [createModal,setCreateModal]=useState(false);
+  const [like, setLike] = useState(0);
+  const [postItem,setPostItem]=useState([])
   // const refInputComment = useRef(null);
-  
-
+  const handleCreateModal =(e)=>{
+   
+    setPostItem(post)
+    console.log("hasggs",postItem)
+    setCreateModal(!createModal)
+  }
+  // const posts=[...post]
+  // console.log("post,",posts)
 
   const handleComment = (e) => {
     setComment(!comment);
@@ -29,7 +36,8 @@ export default function PostItem({ post, onDelete }) {
     setChosepost(!chosePost);
   };
   const hanldeLike = (e) => {
-    setLike(!like);
+    setLike(like+1);
+
     if (like) {
      const res = userService.createLike(like);
     } else {
@@ -62,8 +70,8 @@ export default function PostItem({ post, onDelete }) {
         <img
           class="new-header_img"
           className="new-header_img"
-          src={post.img_url}
-          alt={post.name}
+          src={post?.user?.url_img || "https://jp.boxhoidap.com/boxfiles/cach-de-anh-dai-dien-dep--f85ddf18094383e085fb97258c9c8d87.wepb"}
+          // alt={post.name}
         />
         <div className="new-header_infor">
           <p className="new-header_infor-name">{post?.user?.username}</p>
@@ -88,7 +96,7 @@ export default function PostItem({ post, onDelete }) {
                   <CiTrash className="post_action-icon"></CiTrash>
                 </li>
                 <li className="post_action-item">
-                  <p>Chỉnh Sửa</p>
+                  <p onClick={handleCreateModal}>Chỉnh Sửa </p>
                   <CiPickerEmpty className="post_action-icon"></CiPickerEmpty>
                 </li>
               </ul>
@@ -112,7 +120,7 @@ export default function PostItem({ post, onDelete }) {
         <div className="new-action">
           <AiTwotoneLike className="new-actions-icon"></AiTwotoneLike>
           <p className="new-actions-text" onClick={hanldeLike}>
-            Thích
+            {like} Thích
           </p>
         </div>
         <div className="new-action" onClick={handleComment}>
@@ -128,6 +136,12 @@ export default function PostItem({ post, onDelete }) {
       {comment && 
       <Comment postId={post.id} /> }
       {/* comment */}
+      { createModal &&(
+        <EditPost  onClose={handleCreateModal} postItem={postItem} >
+        </EditPost>
+
+      )}
+
     </div>
   );
 }

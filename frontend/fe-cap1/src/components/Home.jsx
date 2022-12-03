@@ -183,7 +183,7 @@ const Home = () => {
             <li className="body_left-item">
               <a href="#" className="body_left-item_link">
                 <BiUserCircle className="body_left-item-icon"> </BiUserCircle>
-                <p>Lê Thị Kim Ngân</p>
+                <p>{currentUser .data.username}</p>
               </a>
             </li>
             <li className="body_left-item">
@@ -200,7 +200,7 @@ const Home = () => {
             <div id="home-body_post-input" className="home-body_post-input">
               <img
                 style={{ width: "200", height: "200" }}
-                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQiquxzRvxiQGtrn3rlBgGKAWixXBIhPWhOOw&usqp=CAU"
+                src="https://jp.boxhoidap.com/boxfiles/cach-de-anh-dai-dien-dep--f85ddf18094383e085fb97258c9c8d87.wepb"
                 alt=""
                 class=""
               />
