@@ -9,7 +9,7 @@ import { BiWorld } from "react-icons/bi";
 import { BiDotsHorizontalRounded } from "react-icons/bi";
 import Comment from "./comment/Comment";
 import userService from "../services/user.service";
-import EditPost from "./EditPost/EditPost";
+import EditPost from "./editpost/EditPost";
 export default function PostItem({ post, onDelete }) {
  // const { posts } = useSelector((state) => state.post);
   const [chosePost, setChosepost] = useState(false);
@@ -18,6 +18,7 @@ export default function PostItem({ post, onDelete }) {
   const [like, setLike] = useState(0);
   const [postItem,setPostItem]=useState([])
   // const refInputComment = useRef(null);
+  const [checklike,setCheckLike]=useState(false)
   const handleCreateModal =(e)=>{
    
     setPostItem(post)
@@ -36,9 +37,20 @@ export default function PostItem({ post, onDelete }) {
     setChosepost(!chosePost);
   };
   const hanldeLike = (e) => {
+    setCheckLike(!checklike)
+    if(checklike)
+    { 
     setLike(like+1);
+    }
+    else{
+      if(like >0){
+      setLike(like -1);}
+      else{
+        setLike(like)
+      }
 
-    if (like) {
+    }
+    if (checklike) {
      const res = userService.createLike(like);
     } else {
     }

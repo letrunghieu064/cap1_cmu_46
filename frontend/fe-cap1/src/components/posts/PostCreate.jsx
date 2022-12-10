@@ -3,7 +3,7 @@ import { CreatePost } from "../../actions/post";
 import { TfiClose } from "react-icons/tfi";
 import { CiLocationOn } from "react-icons/ci";
 import { useDispatch ,useSelector} from "react-redux";
-
+import "./PostCreate.css";
 import axios from "axios";
 
 export default function PostCreate({ onClose, callbackCreateSuccess }) {
@@ -18,6 +18,7 @@ export default function PostCreate({ onClose, callbackCreateSuccess }) {
     longitude: 0,
     latitude: 0,
   });
+  const [error,setError]=useState(false);
   console.log("dât khiemn", data)
   const [listAddr, setListAddr] = useState([]);
   console.log("listAddr", listAddr);
@@ -42,7 +43,16 @@ export default function PostCreate({ onClose, callbackCreateSuccess }) {
       };
     }
   };
-
+  const required = (value) => {
+    if (!value) {
+      return (
+        <div className="validate__input" role="alert">
+          This field is required!
+        </div>
+      );
+    }
+  };
+  
   const handleChangeAddress = async (e) => {
     // debounce
     const addr = e.target.value;
@@ -59,10 +69,14 @@ export default function PostCreate({ onClose, callbackCreateSuccess }) {
 
   const HandleCreatePost = async () => {
     console.log("data", data);
+    if(data.address.length ===0 || data.description.length === 0 || data.name.length ===0){
+      setError(true)
+    }
+    else{
     const res = await  dispatch(CreatePost({ ...data }));
     callbackCreateSuccess && callbackCreateSuccess(res);
     onClose && onClose();
-  
+    }
   };
 
   const handleChooseAddress = async (item) => {
@@ -89,18 +103,23 @@ export default function PostCreate({ onClose, callbackCreateSuccess }) {
           <img
             class="header__user-img"
             className="new-header_img"
-            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQiquxzRvxiQGtrn3rlBgGKAWixXBIhPWhOOw&usqp=CAU"
+            src={currentUser?.data?.url_img || "https://jp.boxhoidap.com/boxfiles/cach-de-anh-dai-dien-dep--f85ddf18094383e085fb97258c9c8d87.wepb"}
             alt=""
           />
           <p>{currentUser.data.username}</p>
         </div>
         <input type="file" onChange={handleUploadIamge} />
         <input
+          className="input_Name"
           name="name"
           id="name"
           onChange={handleChange}
           placeholder="nhập tên bài post"
+          value={data.name}
+          validations={required}
         ></input>
+        {error&& data.name.length <=0 ?
+        <label className="l1 l2">name can not be Empty</label> :" "}
         <div className="create--header-content">
           <textarea
             className="header-content-textarae"
@@ -109,6 +128,8 @@ export default function PostCreate({ onClose, callbackCreateSuccess }) {
             onChange={handleChange}
           ></textarea>
         </div>
+        {error&& data.description.length <=0 ?
+        <label className="l3">description can not be Empty</label> :" "}
         <div className="create__content">
           <input
             placeholder="Nhập địa chỉ ( số và tên đường , quận, thành phố)"
@@ -120,6 +141,8 @@ export default function PostCreate({ onClose, callbackCreateSuccess }) {
             onChange={handleChangeAddress}
           />
         </div>
+        {error&& data.address.length <=0 ?
+        <label className="l3" >address can not be Empty</label> :" "}
         <ul>
           {listAddr &&
             listAddr.length > 0 &&

@@ -20,6 +20,7 @@ import { CgProfile } from "react-icons/cg";
 import { CgLogOut } from "react-icons/cg";
 import { logout } from "../actions/auth";
 import { useDispatch, useSelector } from "react-redux";
+// import Person from "../person/Person"
 
 import PostItem from "./PostItem";
 import PostCreate from "./posts/PostCreate";
@@ -181,7 +182,7 @@ const Home = () => {
         <div className="home-body_left">
           <ul className="body_left-list">
             <li className="body_left-item">
-              <a href="#" className="body_left-item_link">
+              <a href="/person" className="body_left-item_link">
                 <BiUserCircle className="body_left-item-icon"> </BiUserCircle>
                 <p>{currentUser .data.username}</p>
               </a>
@@ -206,7 +207,7 @@ const Home = () => {
               />
               <input
                 id="inputPost"
-                placeholder="Ngân ơi, bạn cần hỗ trợ gì?"
+                placeholder={currentUser?.data?.username +", bạn cần hỗ trợ gì?"}
                 type="text"
                 className="inputPost"
                 onClick={handleCreateModal}

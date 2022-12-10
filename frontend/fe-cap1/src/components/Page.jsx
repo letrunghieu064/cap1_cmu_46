@@ -12,6 +12,7 @@ import Mapbox from "./Mapbox";
 import Map from "./Map";
 // import HomeAll from "./HomeAll";
 import Profile1 from "./Profile1";
+import Person from "./person/Person";
 export default function Page() {
   const [showModeratorBoard, setShowModeratorBoard] = useState(false);
   const [showAdminBoard, setShowAdminBoard] = useState(false);
@@ -122,6 +123,7 @@ export default function Page() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/profile" element={<Profile1 />} />
+        <Route path="/person" element={<Person/>} />
 
         {/* <Route path="/user" element={<BoardUser />} />
               <Route path="/mod" element={<BoardModerator />} />

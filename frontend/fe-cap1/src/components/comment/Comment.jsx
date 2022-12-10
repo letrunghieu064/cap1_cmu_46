@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
 import userService from "../../services/user.service";
-
+import { useSelector} from "react-redux";
+import "./Comment.css";
 const Comment = ({ postId }) => {
   const [comments, setComments] = useState([]);
   const [writerComment, setWriterComment] = useState("");
-
+  const { user: currentUser } = useSelector((state) => state.auth);
+  const [error,setError]=useState(false);
   useEffect(() => {
   
     const res = userService
@@ -22,8 +24,8 @@ const Comment = ({ postId }) => {
 
   const handleWriterComment = async (e) => {
     e.preventDefault();
-    if (writerComment === "") {
-      alert("bạn chưa bình luận");
+    if (writerComment.length=== 0) {
+     setError(true)
     } else {
       const res = await userService.createComment(postId, writerComment);
       console.log("res1",res)
@@ -67,18 +69,19 @@ const Comment = ({ postId }) => {
       <div className="comment_user">
         <img
           className="comment_user_avatar"
-          src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQiquxzRvxiQGtrn3rlBgGKAWixXBIhPWhOOw&usqp=CAU"
+          src={currentUser?.data?.url_img || "https://jp.boxhoidap.com/boxfiles/cach-de-anh-dai-dien-dep--f85ddf18094383e085fb97258c9c8d87.wepb"}
           alt=""
         />
         <input
           className="comment_user-input"
-          placeholder="Viết bình luận"
-          // ref={refInputComment}
+          placeholder= { currentUser?.data?.username + " bạn đang nghĩ gì ?"} 
+          // ref={refInputComment} 
           value={writerComment}
           onChange={(e) => {
             setWriterComment(e.target.value);
           }}
         ></input>
+        
         <button
           class="btn btn-primary"
           type="submit"
@@ -87,6 +90,8 @@ const Comment = ({ postId }) => {
           Bình
         </button>
       </div>
+      {error&& writerComment.length <=0 ?
+        <label id="errorComment">comment can not be Empty</label> :" "}
       {comments.map((com, index) => (
         <CommentItem
           data={com}
@@ -105,11 +110,11 @@ const Comment = ({ postId }) => {
 const CommentItem = ({ data, handleDeleteComment, handleEditComment }) => {
   const [comment, setComment] = useState(data);
   const [isLoading, setIsLoading] = useState(false);
-
+  const [error,setError]=useState(false);
   const handleWriterComment = async (e) => {
     e.preventDefault();
-    if (comment.description === "") {
-      alert("bạn chưa bình luận");
+    if (comment.description.length === 0) {
+      setError(true);
     } else {
       
       setIsLoading(true);
@@ -165,6 +170,8 @@ const CommentItem = ({ data, handleDeleteComment, handleEditComment }) => {
             setComment({...comment, description: e.target.value});
           }}
         ></input>
+         {error&& comment.description.length <=0 ?
+        <label>comment can not be Empty</label> :" "}
         <button
           class="btn btn-primary"
           type="submit"
@@ -185,7 +192,7 @@ const CommentItem = ({ data, handleDeleteComment, handleEditComment }) => {
       <div className="comment_others-infor">
         <div className="comment_others-infor-cmt">
           <p className="comment_others-name">{comment?.user?.username}</p>
-          <span className="comment_others-content">{comment.description}</span>
+          <span className="comment_others-content">{comment?.description}</span>
         </div>
         <p className="comment_others-action"> Thích</p>
         <p

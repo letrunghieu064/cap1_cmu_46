@@ -9,31 +9,48 @@ const EditProfile = () => {
   const currentUser = useSelector((state) => state.auth);
   console.log(" user khiem", currentUser.user.data)
   const idUser = currentUser.user.data.id;
-  const [data, setData] = useState({})
-  const [email,setEmail] = useState(currentUser.user.data.email)
-  const [first_name,setFirstName] = useState(currentUser.user.data.first_name)
-  const [last_name,setLastName] = useState(currentUser.user.data.last_name)
-  const [username,setUserName] = useState(currentUser.user.data.username)
-  const [birthday,setBirthDay] = useState(currentUser.user.data.birthday)
-  const [url_img,setURLImg] = useState(currentUser.user.data.url_img)
-  const [phone_number,setPhoneNumber] = useState(currentUser.user.data.phone_number)
-  const [address,setAddress] = useState(currentUser.user.data.address)
-  const [gender,setGender] = useState(currentUser.user.data.gender)
-  const [card_id,setCardID] = useState(currentUser.user.data.card_id)
-  const [dataSendFinal,setDataSendFinal] = useState({})
-  let dataSend = {
-    email,
-    first_name,
-    last_name,
-    username,
-    birthday,
-    phone_number,
-    address,
-    gender,
-    card_id
-  }
+  const [data, setData] = useState({
+    email:"",
+    first_name:"",
+    last_name:"",
+    username:"",
+    birthday:"",
+    phone_number:"",
+    address:"",
+    gender:"",
+    card_id:"",
+    url_img:""
+  })
+  // const [email,setEmail] = useState("")
+  // const [first_name,setFirstName] = useState("")
+  // const [last_name,setLastName] = useState("")
+  // const [username,setUserName] = useState("")
+  // const [birthday,setBirthDay] = useState("")
+  //const [url_img,setURLImg] = useState("")
+  // const [phone_number,setPhoneNumber] = useState("")
+  // const [address,setAddress] = useState("")
+  // const [gender,setGender] = useState("")
+  // const [card_id,setCardID] = useState("")
+  // const [dataSendFinal,setDataSendFinal] = useState({})
+  // let dataSend = {
+  //   email,
+  //   first_name,
+  //   last_name,
+  //   username,
+  //   birthday,
+  //   phone_number,
+  //   address,
+  //   gender,
+  //   card_id
+  // }
   
-
+  const handleChange = (e) => {
+    console.log("test", e.target.value);
+    setData({
+     // ...data,
+      [e.target.name]: e.target.value,
+    });
+  };
   // const handleSudmit = () => {
   //   // console.log("curent",currentUser.data.id)
   //   alert("bạn có chắc chắn lưu không");
@@ -60,23 +77,35 @@ const EditProfile = () => {
       const reader = new FileReader();
       reader.readAsDataURL(file);
       reader.onloadend = function () {
-        console.log("img url khiem", reader.result)
-        setURLImg(reader.result );
+        setData({
+          ...data,
+          url_img: reader.result,
+        });
       };
     }
   };
   useEffect(() => {
     const fetchData = async () => {
       const res = await userService.getUser(idUser);
-      setData(res);
+      console.log("res",res)
+      setData({
+        email:res.email,
+        first_name:res.first_name,
+        last_name:res.last_name,
+        username:res.username,
+        birthday:res.birthday,
+        phone_number:res.phone_number,
+        address:res.address,
+        gender:res.gender,
+        card_id:res.card_id
+      });
     };
     fetchData();
   }, []);
 
   const updateProfile =async (e) => {
     e.preventDefault()
-    setDataSendFinal(dataSend)
-    console.log("da ta send final", dataSendFinal);
+   
     // const formData = new FormData()
     // formData.append('name', name)
     // axios
@@ -85,21 +114,13 @@ const EditProfile = () => {
       .editProfile(
         currentUser.user.data.id,
         // dataSendFinal
-        email,
-        first_name,
-        last_name,
-        username,
-        url_img,
-        birthday,
-        phone_number,
-        address,
-        gender,
-        card_id
+        {...data}
       )
       console.log("res update", res)
   }
   return (
-    <form onSubmit={updateProfile}>
+    // <form onSubmit={updateProfile}>
+      <div>
       <Header></Header>
       <div className="box-container">
         <div className="box1">
@@ -128,10 +149,9 @@ const EditProfile = () => {
                   type="text"
                   placeholder="First Name"
                   name="first_name"
-                  defaultValue={data.first_name}
-                  value={first_name}
+                  value={data.first_name}
                   size="27"
-                  onChange={e => setFirstName(e.target.value)}
+                  onChange={e => handleChange(e.target.value)}
                 ></input>
               </div>
               <div className="gene last-name">
@@ -140,9 +160,8 @@ const EditProfile = () => {
                   name="last_Name"
                   placeholder="Last Name"
                   size="27"
-                  defaultValue={data.last_name}
-                  value={last_name}
-                  onChange={e => setLastName(e.target.value)}
+                  value={data?.last_name}
+                  onChange={e => handleChange(e.target.value)}
                 ></input>
               </div>
             </div>
@@ -152,10 +171,10 @@ const EditProfile = () => {
                 <input
                   type="text"
                   size="47"
+                  placeholder="Username"
                   name="username"
-                  defaultValue={data.username}
-                  value={username}
-                  onChange={e => setUserName(e.target.value)}
+                  value={data?.username}
+                  onChange={e => handleChange(e.target.value)}
                 ></input>
               </div>
               <div className="gene gender">
@@ -163,7 +182,7 @@ const EditProfile = () => {
                   className="input"
                   name="gender"
                   onChange={(e) => {
-                    setGender(e.target.value);
+                    handleChange(e.target.value);
                   }}
                 >
                   <option value="Female">Nữ</option>
@@ -178,9 +197,8 @@ const EditProfile = () => {
                   placeholder="abc@gmail.com"
                   size="39"
                   name="email"
-                  value={email}
-                  defaultValue={data.email}
-                  onChange={e => setEmail(e.target.value)}
+                  value={data?.email}
+                  onChange={e => handleChange(e.target.value)}
                 ></input>
               </div>
               <div className="gene birthday">
@@ -188,9 +206,8 @@ const EditProfile = () => {
                   className="birthday__input"
                   type="date"
                   name="birthday"
-                  defaultValue={data.birthday}
-                  value={birthday}
-                  onChange={e => setBirthDay(e.target.value)}
+                  value={data.birthday}
+                  onChange={e => handleChange(e.target.value)}
                 ></input>
               </div>
             </div>
@@ -201,9 +218,8 @@ const EditProfile = () => {
                   type="text"
                   placeholder="ID Card"
                   size="27"
-                  defaultValue={data.card_id}
-                  value={card_id}
-                  onChange={e => setCardID(e.target.value)}
+                  value={data?.card_id}
+                  onChange={e => handleChange(e.target.value)}
                 ></input>
               </div>
       
@@ -212,9 +228,8 @@ const EditProfile = () => {
                   type="text"
                   placeholder="Phone Number"
                   size="27"
-                  defaultValue={data.phone_number}
-                  value={phone_number}
-                  onChange={e => setPhoneNumber(e.target.value)}
+                  value={data?.phone_number}
+                  onChange={e => handleChange(e.target.value)}
                 ></input>
       
               </div>
@@ -226,13 +241,13 @@ const EditProfile = () => {
                 type="text"
                 placeholder="Address"
                 size="58"
-                defaultValue={data.address}
-                onChange={e => setAddress(e.target.value)}
+                value={data?.address}
+                onChange={e => handleChange(e.target.value)}
               ></input>
             </div>
           </div>
           <div className="button">
-            <button type="submit"class="btn btn-save " >
+            <button type="submit"class="btn btn-save "  onClick={updateProfile}>
               Save
             </button>
             <button type="button" class="btn btn-cancel">
@@ -240,7 +255,7 @@ const EditProfile = () => {
             </button>
           </div>
         </div>
-    </form>
+     </div>
   );
 };
 
