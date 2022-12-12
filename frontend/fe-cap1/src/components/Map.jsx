@@ -22,6 +22,8 @@ export default function App() {
 
   const [selectedPark, setSelectedPark] = useState(null);
   const [addressmarker, setaddressmarker] = useState([]);
+  const [modal,setModal]= useState(false)
+  
 
   const [posts, setPosts] = useState([]);
   useEffect(() => {
@@ -35,6 +37,10 @@ export default function App() {
         setPosts([...result]);
       });
   }, []);
+  const handleCreateModal =()=>{
+    console.log("modal",modal)
+    setModal(!modal)
+  }
 
   // useEffect(() => {
   // eslint-disable-next-line array-callback-return
@@ -84,6 +90,7 @@ export default function App() {
   return (
     <div>
       <Header></Header>
+     
       <ReactMapGL
         {...viewport}
         mapboxApiAccessToken="pk.eyJ1IjoiaGlldXRydW5nbGUiLCJhIjoiY2w5dDdtMmpzMDV5dzN1bGcyZXJ3ZHduaSJ9.DRb427bvxQf-pgmEU8AlAw"
@@ -91,19 +98,21 @@ export default function App() {
         onViewportChange={(viewport) => {
           setViewport(viewport);
         }}
-        // style={{
-        //   height: "300px",
-        //   width: "600px",
+        style={{
+          height: "300px",
+          width: "600px",
 
-        //   borderRadius: "15px",
-        //   border: "2px solid red",
-        // }}
+           borderRadius: "15px",
+          // border: "2px solid red",
+
+        }}
       >
         {posts.map((park) => (
           <Marker
             key={park.id}
             latitude={Number(park.latitude)}
             longitude={Number(park.longitude)}
+            onClick={handleCreateModal}
           >
             <button
               className="marker-btn"
@@ -113,6 +122,7 @@ export default function App() {
               }}
             >
               <img
+                onClick={handleCreateModal}
                 src="https://freesvg.org/img/Map-Warning-Icon.png"
                 alt="https://freesvg.org/img/Map-Warning-Icon.png"
               />
@@ -136,8 +146,8 @@ export default function App() {
                 padding: "0.2em",
               }}
             >
-              <h6>Địa chỉ : {selectedPark.address}</h6>
-              <p>{selectedPark.name}</p>
+              <h6>Địa chỉ : {selectedPark?.address}</h6>
+              <p>description :{ selectedPark?.description}</p>
               <img
                 src={selectedPark.img_url}
                 alt={selectedPark.img_url}
@@ -146,7 +156,45 @@ export default function App() {
           </Popup>
         ) : null}
         {/* <NavigationControl position="bottom-right" /> */}
+       
       </ReactMapGL>
+      {modal && (<div className="modal">
+        <div className="overplay">
+
+        </div>
+        <div className="modal-content">
+          <h2>sahfjshdfjsdhfh</h2>
+          <p>Basic Information
+Member Since:
+March 2022
+Business Type:
+Exporter/Importer
+Location:
+UNITED ARAB EMIRATES
+Joined Categories
+Adhesives and Sealants
+Alcoholic Drinks
+Animal Feed
+Animal/Vegetable Fats and Oils
+Barley
+Basmati Rice
+Beans and Pulses
+Beverages
+Canola Oil
+Carbon Black
+Carpets and Textile Floor Coverings
+Cereals
+Coconut Oil
+Coffee and Tea
+Corn Oil
+Cotton
+Designer Jewellery
+Detergents
+Drinking Water
+Dyes and Pigments</p>
+        </div>
+      </div>)}
+      
     </div>
   );
 }

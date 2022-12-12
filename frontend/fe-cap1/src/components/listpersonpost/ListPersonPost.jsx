@@ -1,81 +1,121 @@
-import React from "react";
+import React ,{useState,useEffect}from "react";
 import "./ListPersonPost.css";
-import axios from "axios";
-
+import userService from "../../services/user.service";
+// import axios from "axios";
+import { useSelector } from "react-redux";
+import PersonPost from "../personPost/PersonPost";
 export default function ListPersonPost() {
-  
+  const handleClickEdit =(e)=>{
+    e.preventDefault();
+   
+    window.location.replace("/profile");
+    
+  }
+  const [posts,setPosts]=useState([])
+  const [data, setData] = useState({
+    email:"",
+    first_name:"",
+    last_name:"",
+    username:"",
+    birthday:"",
+    phone_number:"",
+    address:"",
+    gender:"",
+    card_id:"",
+    url_img:""
+  })
+  const onDelete = (id) => {
+    const newPosts = posts.filter((item) => item.id !== id);
+    setPosts(newPosts);
+  };
+  const callbackpost =(postitem)=>{
+    const newPosts = posts.map(el => {   
+      if(el.id === postitem.id) { 
+          el=postitem;
+      }
+      return el;
+    })
+    setPosts(newPosts)
+  }
+  const { user: currentUser } = useSelector((state) => state.auth);
+  useEffect(() => {
+    const fetchData = async () => {
+      const res = await userService.getUser(currentUser?.data?.id);
+      console.log("res",res)
+      setData({
+        email:res.email,
+        first_name:res.first_name,
+        last_name:res.last_name,
+        username:res.username,
+        birthday:res.birthday,
+        phone_number:res.phone_number,
+        address:res.address,
+        gender:res.gender,
+        card_id:res.card_id
+      });
+      setPosts(res.posts)
+    };
+    fetchData();
+    
+  }, []);
 
   return (
 
    <div>
   <div className="header-profile">
-    <img className="header-profile-img" src="https://ps.w.org/user-avatar-reloaded/assets/icon-256x256.png?rev=2540745" alt />
-    <h1 className="header-profile-namesuer">Lê Kim Ngân</h1>
+    <img className="header-profile-img" src={data?.url_img || "https://jp.boxhoidap.com/boxfiles/cach-de-anh-dai-dien-dep--f85ddf18094383e085fb97258c9c8d87.wepb"} alt="" />
+    <h1 className="header-profile-namesuer">{currentUser?.data?.username}</h1>
   </div>
   <div className="body-profile">
     <div className="body-profile-left">
       <ul className="profile-left-info">
         <li className="profile-left-info-item">
           <h4 className="profile-left-title">Full Name</h4>
-          <p className="profile-infoo">Le Kim Ngan</p>
+          <p className="profile-infoo">{data.first_name +" "}  {data.last_name}</p>
         </li>
         <li className="profile-left-info-item">
           <h4 className="profile-left-title">User Name</h4>
-          <p className="profile-infoo">nganle263</p>
+          <p className="profile-infoo">{data.username}</p>
         </li>
         <li className="profile-left-info-item">
           <h4 className="profile-left-title">Gender</h4>
-          <p className="profile-infoo">Female</p>
+          <p className="profile-infoo">{data.gender}</p>
         </li>
         <li className="profile-left-info-item">
           <h4 className="profile-left-title">Birthday</h4>
-          <p className="profile-infoo">26/03/2001</p>
+          <p className="profile-infoo">{data.birthday}</p>
         </li>
         <li className="profile-left-info-item">
           <h4 className="profile-left-title">ID Card</h4>
-          <p className="profile-infoo">206377355</p>
+          <p className="profile-infoo">{data.card_id}</p>
         </li>
         <li className="profile-left-info-item">
           <h4 className="profile-left-title">Phone Number</h4>
-          <p className="profile-infoo">0777969552</p>
+          <p className="profile-infoo">{data.phone_number}</p>
         </li>
         <li className="profile-left-info-item">
           <h4 className="profile-left-title">Email Address</h4>
-          <p className="profile-infoo">kimngan2603@gmail.com</p>
+          <p className="profile-infoo">{data.email}</p>
         </li>
         <li className="profile-left-info-item">
           <h4 className="profile-left-title">Address</h4>
-          <p className="profile-infoo">20 Ham Nghi/Thac Gian/Thanh Khe/Da Nang</p>
+          <p className="profile-infoo">{data.address}</p>
         </li>
       </ul>
-      <button className="buttono-profile-edit">
+      <a className="buttono-profile-edit" onClick={handleClickEdit}>
         Edit
-      </button>
+      </a>
     </div>
-    <div className="body-profile-right">
-      <div className="body-profile-header">
-        <img src="https://ps.w.org/user-avatar-reloaded/assets/icon-256x256.png?rev=2540745" alt /> 
-        <div>
-          <p>Le Kim Ngan</p>
-          <p className="time-post-profile">1 giờ</p>
-        </div>      
-      </div>
-      <div className="body-profile-content">
-        <p>Ngan ngan Ngan ngan Ngan ngan Ngan ngan Ngan ngan Ngan ngan Ngan ngan Ngan ngan Ngan ngan Ngan ngan Ngan ngan Ngan ngan Ngan ngan Ngan ngan Ngan ngan Ngan ngan Ngan ngan Ngan ngan Ngan ngan Ngan ngan Ngan ngan Ngan ngan Ngan ngan</p>
-        {/* <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTS51RWFkvb4NHdZ1CS7Tsl2492hU4climikA&usqp=CAU" alt />
-        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTS51RWFkvb4NHdZ1CS7Tsl2492hU4climikA&usqp=CAU" alt />
-        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTS51RWFkvb4NHdZ1CS7Tsl2492hU4climikA&usqp=CAU" alt />
-        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTS51RWFkvb4NHdZ1CS7Tsl2492hU4climikA&usqp=CAU" alt />
-        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTS51RWFkvb4NHdZ1CS7Tsl2492hU4climikA&usqp=CAU" alt />
-        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTS51RWFkvb4NHdZ1CS7Tsl2492hU4climikA&usqp=CAU" alt />
-        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTS51RWFkvb4NHdZ1CS7Tsl2492hU4climikA&usqp=CAU" alt />
-        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTS51RWFkvb4NHdZ1CS7Tsl2492hU4climikA&usqp=CAU" alt />
-        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTS51RWFkvb4NHdZ1CS7Tsl2492hU4climikA&usqp=CAU" alt /> */}
-        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTS51RWFkvb4NHdZ1CS7Tsl2492hU4climikA&usqp=CAU" alt />
-      </div>
-    </div>
-  </div></div>
-
-
+    {posts.map((post, index) => (
+            <PersonPost
+            onDelete={onDelete}
+            callbackpost ={callbackpost}
+              data={data}
+              post={post}
+              key={`post-item-${index}`}
+            />
+          ))}
+  </div>
+  </div>
   );
 }

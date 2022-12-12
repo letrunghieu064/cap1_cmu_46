@@ -1,25 +1,24 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState ,useEffect} from "react";
 import { CreatePost } from "../../actions/post";
 import { TfiClose } from "react-icons/tfi";
 import { CiLocationOn } from "react-icons/ci";
 import { useDispatch ,useSelector} from "react-redux";
-
+import userService from "../../services/user.service";
 import axios from "axios";
 
-export default function EditPost({ onClose, postItem }) {
+export default function EditPost({ onClose, postItem ,callbackCreateSuccess}) {
   const { user: currentUser } = useSelector((state) => state.auth);
   const inputAddressRef = useRef(null);
-  const dispatch = useDispatch();
-  const [post,setPost]=useState({})
   const [data, setData] = useState({
-    description: "",
-    name: "",
+    id:postItem.id,
+    description: postItem.description,
+    name: postItem.name,
     address: "",
-    img_url: "",
-    longitude: 0,
-    latitude: 0,
+    img_url: postItem.img_url,
+    longitude: postItem.longitude,
+    latitude: postItem.latitude,
   });
-  console.log("dât khiemn", postItem)
+ 
   const [listAddr, setListAddr] = useState([]);
   console.log("listAddr", listAddr);
   const handleChange = (e) => {
@@ -59,9 +58,10 @@ export default function EditPost({ onClose, postItem }) {
   };
 
   const HandleEditPost = async () => {
-    console.log("data", data);
-    const res = await  dispatch(CreatePost({ ...data }));
-    // callbackCreateSuccess && callbackCreateSuccess(res);
+    console.log("postItem.id", data.id);
+    const res = await  userService.editPost(data.id,{...data})
+     callbackCreateSuccess && callbackCreateSuccess(res);
+    console.log("res",res)
     onClose && onClose();
   
   };
@@ -77,6 +77,8 @@ export default function EditPost({ onClose, postItem }) {
     //document.getElementById("address").value = item.formatted_address;
     inputAddressRef.current.value = item.formatted_address;
   };
+ 
+
 
   return (
     <div id="create_modal" className="open create_modal">
@@ -90,15 +92,16 @@ export default function EditPost({ onClose, postItem }) {
           <img
             class="header__user-img"
             className="new-header_img"
-            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQiquxzRvxiQGtrn3rlBgGKAWixXBIhPWhOOw&usqp=CAU"
+            src={currentUser?.data?.url_img || "https://jp.boxhoidap.com/boxfiles/cach-de-anh-dai-dien-dep--f85ddf18094383e085fb97258c9c8d87.wepb"}
             alt=""
           />
           <p>{currentUser.data.username}</p>
         </div>
-        <input type="file" onChange={handleUploadIamge} />
+        <input type="file"  onChange={handleUploadIamge}  />
         <input
           name="name"
           id="name"
+          value={data.name}
           onChange={handleChange}
           placeholder="nhập tên bài post"
         ></input>
@@ -107,6 +110,7 @@ export default function EditPost({ onClose, postItem }) {
             className="header-content-textarae"
             id="description"
             name="description"
+            value={data.description}
             onChange={handleChange}
           ></textarea>
         </div>
@@ -117,6 +121,7 @@ export default function EditPost({ onClose, postItem }) {
             id="address"
             ref={inputAddressRef}
             name="address"
+            value={data.address}
             className="create__content-input"
             onChange={handleChangeAddress}
           />
@@ -138,7 +143,7 @@ export default function EditPost({ onClose, postItem }) {
         </div>
         <div className="create__submit">
           <button className="create__submit-submit" onClick={HandleEditPost}>
-            Đăng
+            Lưu
           </button>
         </div>
       </div>

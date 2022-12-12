@@ -7,8 +7,8 @@ import userService from "../services/user.service";
 import axios from "axios";
 const EditProfile = () => {
   const currentUser = useSelector((state) => state.auth);
-  console.log(" user khiem", currentUser.user.data)
-  const idUser = currentUser.user.data.id;
+   console.log(" user khiem", currentUser?.user?.data)
+  const idUser = currentUser?.user?.data?.id;
   const [data, setData] = useState({
     email:"",
     first_name:"",
@@ -136,7 +136,7 @@ const EditProfile = () => {
           </div>
           <input type="file" onChange={handleUploadIamge} />
           <div className="user-name">
-            <h3 className="name">{currentUser.user.data.username}</h3>
+            <h3 className="name">{currentUser?.user?.data?.username}</h3>
           </div>
         </div>
 

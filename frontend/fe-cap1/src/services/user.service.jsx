@@ -175,6 +175,14 @@ const getUser = async (id)=>{
     });
   return res;
 }
+const editPost = async (id,data)=>{
+  const res = await axios 
+  .put(API_URL + `/posts/${id}`, { ...data }, { headers: authHeader() })
+  .then((response) => {
+    return response.data;
+  });
+return res;
+}
 
 
 
@@ -194,5 +202,6 @@ export default {
   deleteUser,
   createLike,
   deleteAdminPost,
-  getUser
+  getUser,
+  editPost
 };

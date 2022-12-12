@@ -89,7 +89,7 @@ const Admin = () => {
   return (
     <div >
       <Header></Header>
-      <div className="container-user-body">
+      {/* <div className="container-user-body">
       <div className="container-user">
       <ul className="controls">
         <li className="button-control controls-item">
@@ -120,10 +120,10 @@ const Admin = () => {
           </p>
         </li>
       </ul>
-      </div>
+      </div> */}
 
       {/* phần này gắn với button Manage User */}
-      {tab === "user" ? (
+      {/* {tab === "user" ? (
         <div className="manage__user">
           <div className="table-user"> 
             <div className="search-user">
@@ -270,17 +270,117 @@ const Admin = () => {
       ) : (
         <Fragment></Fragment>
       )}
-      </div>
-      
-
-      {/* phần này gắn với button Manage Post, hiếu bỏ bài post vào ha
-      <div className="manage__post">
-        <div className="title-post">
-          <h2>Post List</h2>
-        </div>
       </div> */}
+      <div className="container-dashboard">
+  <nav className="nav-dashboard">
+    <ul>
+      <li>
+        <a className="dashboard-link-a" href="#"   onClick={() => handleTab("user")} >
+          <i className="fas fa-menorah" />
+          <span className="nav-item">Manager User</span>
+        </a>
+      </li>
+      <li>
+        <a className="dashboard-link-a" href="#">
+          <i className="fas fa-comment" />
+          <span className="nav-item"  onClick={() => handleTab("posts")} >Manager Post</span>
+        </a>
+      </li>
+     
+    </ul>
+  </nav>
+  {tab === "user" ? ( <section className="main-dashboard">
+    <section className="attendance">
+      <div className="attendance-list">
+        <form action>
+          <input className="dashboard-form-search-input" placeholder="Tìm kiếm user" type="text" />
+          <button className="dashboard-form-search-button">Search</button>
+        </form>
+        <table className="table-dashboard">
+          <thead>
+            <tr> 
+              <th>ID</th>
+              <th>User Name</th>
+              <th>Full Name</th>
+              <th>Gender</th>
+              <th>Birthday</th>
+              <th>Email</th>
+              <th>ID Card</th>
+              <th>Phone Number</th>
+              <th>Address</th>
+              <th>Other</th>
+              <th />
+            </tr>
+          </thead>
+          <tbody>
+          {users.map((user) => (
+            <tr className="active">
+              <td>{user.id}</td>
+              <td>{user.username}</td>
+              <td>{user?.first_name +" "} {user?.last_name} </td>
+              <td>{user.gender}</td>
+              <td>{user.birthday}</td>
+              <td>{user.email}</td>
+              <td>{user.phoneNumber}</td>
+              <td>{user.card_id}</td>
+              <td>Quang Nam</td>
+              <td>
+                <button  onClick={() => {
+                                handleDeleteUser(user.id);
+                              }} >Delete</button>
+              </td>
+            </tr>
+          ))}
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </section> ) :tab === "posts" ? (<section className="main-dashboard">
+    <section className="attendance">
+   
+      <div className="attendance-list">
+        <form action>
+          <input className="dashboard-form-search-input" placeholder="Tìm kiếm bài post" type="text" />
+          <button className="dashboard-form-search-button">Search</button>
+          <button classname="btn btn-success" onClick={()=>{handleOnClickExport()}}> Export File</button>  
+        </form>
+        <table className="table-dashboard">
+          <thead>
+            <tr> 
+              <th>ID</th>
+              <th> Name</th>
+              <th>Description</th>
+              <th>Address</th>
+              <th>Other</th>
+             
+              <th />
+            </tr>
+          </thead>
+          <tbody>
+          {addpost.map((post) => (
+            <tr className="active">
+              <td>{post.id}</td>
+              <td>{post.name}</td>
+              <td>{post.description}</td>
+              <td>{post.address}</td>
+              <td>
+                <button  onClick={() => {
+                                handleDeletePost(post.id);
+                              }} >Delete</button>
+              </td>
+            </tr>
+          ))}
+           
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </section>):(
+        <Fragment></Fragment>
+      )}
+  
+</div>
 
-      {/* phần này gắn với button Statistic */}
     </div>
   );
 };
