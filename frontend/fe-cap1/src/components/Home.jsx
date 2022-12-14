@@ -13,15 +13,11 @@ import { FcClock } from "react-icons/fc";
 import { FcVideoCall } from "react-icons/fc";
 import { FcPicture } from "react-icons/fc";
 import { SlEmotsmile } from "react-icons/sl";
-
 import { BiGroup } from "react-icons/bi";
-
 import { CgProfile } from "react-icons/cg";
 import { CgLogOut } from "react-icons/cg";
 import { logout } from "../actions/auth";
 import { useDispatch, useSelector } from "react-redux";
-// import Person from "../person/Person"
-
 import PostItem from "./PostItem";
 import PostCreate from "./posts/PostCreate";
 const Home = () => {

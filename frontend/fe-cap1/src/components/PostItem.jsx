@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, Fragment } from "react";
-
+import { useSelector } from "react-redux";
 import { CiTrash } from "react-icons/ci";
 import { CiPickerEmpty } from "react-icons/ci";
 import { AiTwotoneLike } from "react-icons/ai";
@@ -11,20 +11,21 @@ import Comment from "./comment/Comment";
 import userService from "../services/user.service";
 import EditPost from "./editpost/EditPost";
 export default function PostItem({ post, onDelete }) {
- // const { posts } = useSelector((state) => state.post);
+  // const { posts } = useSelector((state) => state.post);
   const [chosePost, setChosepost] = useState(false);
   const [comment, setComment] = useState(false);
-  const [createModal,setCreateModal]=useState(false);
+  const [createModal, setCreateModal] = useState(false);
   const [like, setLike] = useState(0);
-  const [postItem,setPostItem]=useState([])
-  // const refInputComment = useRef(null);
-  const [checklike,setCheckLike]=useState(false)
-  const handleCreateModal =(e)=>{
-   
-    setPostItem(post)
-    console.log("hasggs",postItem)
-    setCreateModal(!createModal)
-  }
+  const [postItem, setPostItems] = useState([]);
+  const { user: currentUser } = useSelector((state) => state.auth);
+  const [checklike, setCheckLike] = useState(false);
+  const [likes, setLikes] = useState([]);
+  const [postitem,setPostItem]=useState()
+  const handleCreateModal = (e) => {
+    setPostItems(post);
+    console.log("hasggs", postItem);
+    setCreateModal(!createModal);
+  };
   // const posts=[...post]
   // console.log("post,",posts)
 
@@ -33,29 +34,42 @@ export default function PostItem({ post, onDelete }) {
   };
   const handleChose = (e) => {
     e.preventDefault();
-  
+
     setChosepost(!chosePost);
   };
-  const hanldeLike = (e) => {
-    setCheckLike(!checklike)
-    if(checklike)
-    { 
-    setLike(like+1);
-    }
-    else{
-      if(like >0){
-      setLike(like -1);}
-      else{
-        setLike(like)
-      }
-
-    }
+  const sumArray =  () => {
+    setPostItem(post)
+    let sum = 0;
+    console.log("likes1", postitem);
+  //  const  newArr = likes.filter( (item) =>{
+   
+  //     return newArr.includes(item.user_id) ? '' : newArr.push(item)
+  //   })
+    
+    // console.log("likes2", newArr);
+    likes.map((value) =>{
+      if(value.post_id ==  postitem?.id)
+        sum += 1;
+        
+    });
+   
+    return sum;
+  };
+  const hanldeLike = async (post_id) => {
+    setCheckLike(!checklike);
     if (checklike) {
-     const res = userService.createLike(like);
+     
+      const res = await userService.createLike(currentUser?.data?.id, post_id);
+      setLike(sumArray);
+      console.log("like", res);
     } else {
+      if (like > 0) {
+        setLike(sumArray);
+      } else {
+        setLike(sumArray);
+      }
     }
   };
-  
 
   const handleDeletePost = async (id) => {
     const response = await userService.deletePost(id);
@@ -72,9 +86,38 @@ export default function PostItem({ post, onDelete }) {
     // if true
     // onDelete(id);
   };
+  useEffect(() => {
+    setLike(sumArray);
+   const   frechData = async () => {
+      const res = await userService
+        .getLikes()
+        .then((likes) => {
+          return likes;
+        })
+        .then((likes) => {
+          setLikes(likes)
+          return likes;
+         
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+     return res;
+     
+    };
+   
+    frechData();
+   
+  }, []);
 
-  
-  if(!post) return <Fragment/>
+  // }
+  // if (checklike) {
+  // console.log("like",currentUser?.data?.id,post_id)
+  //  const res = userService.createLike(currentUser?.data?.id,post_id);
+  // } else {
+  // }
+
+  if (!post) return <Fragment />;
 
   return (
     <div className="home-body_news">
@@ -82,13 +125,16 @@ export default function PostItem({ post, onDelete }) {
         <img
           class="new-header_img"
           className="new-header_img"
-          src={post?.user?.url_img || "https://jp.boxhoidap.com/boxfiles/cach-de-anh-dai-dien-dep--f85ddf18094383e085fb97258c9c8d87.wepb"}
+          src={
+            post?.user?.url_img ||
+            "https://jp.boxhoidap.com/boxfiles/cach-de-anh-dai-dien-dep--f85ddf18094383e085fb97258c9c8d87.wepb"
+          }
           // alt={post.name}
         />
         <div className="new-header_infor">
           <p className="new-header_infor-name">{post?.user?.username}</p>
           <div className="new-header_infor-time">
-            <span>{post.created_at.toString().slice(0, 10)}</span>
+            <span>{post?.created_at?.toString().slice(0, 10)}</span>
             <BiWorld className="new-header_infor-earth"></BiWorld>
           </div>
         </div>
@@ -120,12 +166,12 @@ export default function PostItem({ post, onDelete }) {
       </BiDotsHorizontalRounded> */}
       </div>
       <div className="new-content">
-        <p>{post.description}</p>
+        <p>{post?.description}</p>
         <img
           style={{ width: "450px", height: "400" }}
           className="new-content_img"
-          src={post.img_url}
-          alt={post.img_url}
+          src={post?.img_url}
+          alt={post?.img_url}
         />
       </div>
       <div className="new-actions">
@@ -145,15 +191,11 @@ export default function PostItem({ post, onDelete }) {
         </div>
       </div>
       {/* comment */}
-      {comment && 
-      <Comment postId={post.id} /> }
+      {comment && <Comment postId={post.id} />}
       {/* comment */}
-      { createModal &&(
-        <EditPost  onClose={handleCreateModal} postItem={postItem} >
-        </EditPost>
-
+      {createModal && (
+        <EditPost onClose={handleCreateModal} postItem={postItem}></EditPost>
       )}
-
     </div>
   );
 }

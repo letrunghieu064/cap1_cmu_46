@@ -4,50 +4,29 @@ import { FiEdit } from "react-icons/fi";
 import { useSelector } from "react-redux";
 import Header from "./Header";
 import userService from "../services/user.service";
+import Person from "./person/Person";
 import axios from "axios";
 const EditProfile = () => {
   const currentUser = useSelector((state) => state.auth);
-   console.log(" user khiem", currentUser?.user?.data)
+  console.log(" user khiem", currentUser?.user?.data);
   const idUser = currentUser?.user?.data?.id;
   const [data, setData] = useState({
-    email:"",
-    first_name:"",
-    last_name:"",
-    username:"",
-    birthday:"",
-    phone_number:"",
-    address:"",
-    gender:"",
-    card_id:"",
-    url_img:""
-  })
-  // const [email,setEmail] = useState("")
-  // const [first_name,setFirstName] = useState("")
-  // const [last_name,setLastName] = useState("")
-  // const [username,setUserName] = useState("")
-  // const [birthday,setBirthDay] = useState("")
-  //const [url_img,setURLImg] = useState("")
-  // const [phone_number,setPhoneNumber] = useState("")
-  // const [address,setAddress] = useState("")
-  // const [gender,setGender] = useState("")
-  // const [card_id,setCardID] = useState("")
-  // const [dataSendFinal,setDataSendFinal] = useState({})
-  // let dataSend = {
-  //   email,
-  //   first_name,
-  //   last_name,
-  //   username,
-  //   birthday,
-  //   phone_number,
-  //   address,
-  //   gender,
-  //   card_id
-  // }
-  
+    email: "",
+    first_name: "",
+    last_name: "",
+    username: "",
+    birthday: "",
+    phone_number: "",
+    address: "",
+    gender: "",
+    card_id: "",
+    url_img: "",
+  });
+
   const handleChange = (e) => {
     console.log("test", e.target.value);
     setData({
-     // ...data,
+      ...data,
       [e.target.name]: e.target.value,
     });
   };
@@ -71,6 +50,18 @@ const EditProfile = () => {
   //     [e.target.name]: e.target.value,
   //   });
   // };
+  const validatePhoneNumber = () => {
+    const PHONE_REGEX = new RegExp(
+      /"^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$"/
+    );
+    if (data.phone_number === "") {
+      <label className="l3">address can not be Empty</label>;
+    } else if (!PHONE_REGEX.test(data.phone_number)) {
+      <label className="l3">not a number</label>;
+    } else if (data.phone_number.length < 10) {
+      <label className="l3">lesser 10 character </label>;
+    }
+  };
   const handleUploadIamge = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -87,175 +78,196 @@ const EditProfile = () => {
   useEffect(() => {
     const fetchData = async () => {
       const res = await userService.getUser(idUser);
-      console.log("res",res)
+      console.log("res", res);
       setData({
-        email:res.email,
-        first_name:res.first_name,
-        last_name:res.last_name,
-        username:res.username,
-        birthday:res.birthday,
-        phone_number:res.phone_number,
-        address:res.address,
-        gender:res.gender,
-        card_id:res.card_id
+        email: res.email,
+        first_name: res.first_name,
+        last_name: res.last_name,
+        username: res.username,
+        birthday: res.birthday,
+        phone_number: res.phone_number,
+        address: res.address,
+        gender: res.gender,
+        card_id: res.card_id,
       });
     };
     fetchData();
   }, []);
 
-  const updateProfile =async (e) => {
-    e.preventDefault()
-   
-    // const formData = new FormData()
-    // formData.append('name', name)
-    // axios
-    
-     const res = await userService
-      .editProfile(
-        currentUser.user.data.id,
-        // dataSendFinal
-        {...data}
-      )
-      console.log("res update", res)
-  }
+  const updateProfile = async (e) => {
+    e.preventDefault();
+    console.log("data", data);
+    const res = await userService.editProfile(currentUser.user.data.id, {
+      ...data,
+    });
+    console.log("data1", res);
+  };
+  const Comback = (e) => {
+    e.preventDefault();
+    window.location.replace("/Person");
+  };
+  const Cancel = async () => {
+    const res = await userService.getUser(idUser);
+    setData({
+      email: res.email,
+      first_name: res.first_name,
+      last_name: res.last_name,
+      username: res.username,
+      birthday: res.birthday,
+      phone_number: res.phone_number,
+      address: res.address,
+      gender: res.gender,
+      card_id: res.card_id,
+    });
+  };
   return (
-    // <form onSubmit={updateProfile}>
-      <div>
+    <div>
       <Header></Header>
-      <div className="box-container">
-        <div className="box1">
-          <div className="image-user">
-            <img
-              className="img"
-              src="https://jp.boxhoidap.com/boxfiles/cach-de-anh-dai-dien-dep--f85ddf18094383e085fb97258c9c8d87.wepb"
-              alt="avt"
-            ></img>
-            <a href="">
-              <FiEdit className="edit-icon"></FiEdit>
-            </a>
+      <div className="edit-profile-container">
+        <div className="edit-profile-container-left">
+          <div className="edit-profile-container-left-img">
+            <div>
+              <label htmlFor="edit-profile-container-left-inputfile">
+                <img
+                  src={
+                    data?.url_img ||
+                    "https://jp.boxhoidap.com/boxfiles/cach-de-anh-dai-dien-dep--f85ddf18094383e085fb97258c9c8d87.wepb"
+                  }
+                  alt
+                />
+              </label>
+            </div>
           </div>
-          <input type="file" onChange={handleUploadIamge} />
-          <div className="user-name">
-            <h3 className="name">{currentUser?.user?.data?.username}</h3>
+          <div className="edit-profile-container-left-role">
+            <h3>Admin</h3>
+            <input type="file" id="edit-profile-container-left-inputfile" />
           </div>
         </div>
-
-        <div className="box2">
-          <h1 className="edit-text">Edit Profile</h1>
-          <div className="info">
-            <div className="full-name">
-              <div className="gene firt-name ">
+        <div className="edit-profile-container-right">
+          <h1 className="edit-profile-container-right-header">Edit profile</h1>
+          <div className="edit-profile-container-right-body">
+            <div className="edit-profile-container-right-body-left">
+              <div className="container-right-body-item">
+                <span>First Name </span>
                 <input
                   type="text"
                   placeholder="First Name"
                   name="first_name"
                   value={data.first_name}
-                  size="27"
-                  onChange={e => handleChange(e.target.value)}
-                ></input>
+                  onChange={handleChange}
+                />
               </div>
-              <div className="gene last-name">
+              <div className="container-right-body-item">
+                <span>Last Name </span>
                 <input
                   type="text"
-                  name="last_Name"
                   placeholder="Last Name"
-                  size="27"
-                  value={data?.last_name}
-                  onChange={e => handleChange(e.target.value)}
-                ></input>
+                  name="last_name"
+                  value={data.last_name}
+                  onChange={handleChange}
+                />
+              </div>
+              <div className="container-right-body-item">
+                <span>User Name </span>
+                <input
+                  placeholder="Username"
+                  value={data.username}
+                  type="text"
+                  onChange={handleChange}
+                />
+              </div>
+              <div className="container-right-body-item">
+                <span>Phone Number </span>
+                <input
+                  type="text"
+                  placeholder="Phone Number"
+                  name="phone_number"
+                  value={data?.phone_number}
+                  onChange={handleChange}
+                />
               </div>
             </div>
-
-            <div className="user-name__input">
-              <div className="gene name-input">
-                <input
-                  type="text"
-                  size="47"
-                  placeholder="Username"
-                  name="username"
-                  value={data?.username}
-                  onChange={e => handleChange(e.target.value)}
-                ></input>
+            <div className="edit-profile-container-right-body-right">
+              <div className="container-right-body-right-item">
+                <div className="container-right-body-item">
+                  <span>Address </span>
+                  <input
+                    type="text"
+                    placeholder="Address"
+                    name="address"
+                    value={data?.address}
+                    onChange={handleChange}
+                  />
+                </div>
+                <div className="container-right-body-item">
+                  <span>Card id </span>
+                  <input
+                    type="text"
+                    placeholder="Card id"
+                    name="card_id"
+                    value={data?.card_id}
+                    onChange={handleChange}
+                  />
+                </div>
+                <div className="container-right-body-item">
+                  <span>Email </span>
+                  <input placeholder="email" type="text" value={data.email} />
+                </div>
+                <div className="container-right-body-item">
+                  <span>Date Of Birth </span>
+                  <input
+                    placeholder="Date Of Birth"
+                    type="date"
+                    name="birthday"
+                    value={data?.birthday}
+                    onChange={handleChange}
+                  />
+                </div>
               </div>
-              <div className="gene gender">
+            </div>
+            <div className="edit-profile-container-right-body-bottom">
+              <div className="container-right-body-bottom-gender">
+                <span>Gender</span>
                 <select
                   className="input"
                   name="gender"
-                  onChange={(e) => {
-                    handleChange(e.target.value);
-                  }}
+                  onChange={
+                    handleChange
+                  }
                 >
                   <option value="Female">Nữ</option>
                   <option value="Male">Nam</option>
                   <option value="Other">Khác</option>
                 </select>
               </div>
-            </div>
-              <div className="gene genhandleUploadIamgeil">
-                <input
-                  type="text"
-                  placeholder="abc@gmail.com"
-                  size="39"
-                  name="email"
-                  value={data?.email}
-                  onChange={e => handleChange(e.target.value)}
-                ></input>
+              <div className="container-right-body-bottom-submit">
+                <a
+                  href
+                  className="container-right-body-bottom-submit-cancel"
+                  onClick={Comback}
+                >
+                  Quay lại
+                </a>
+                <a
+                  href
+                  className="container-right-body-bottom-submit-cancel"
+                  onClick={Cancel}
+                >
+                  Cancel
+                </a>
+                <a
+                  href
+                  className="container-right-body-bottom-submit-ok"
+                  onClick={updateProfile}
+                >
+                  Update
+                </a>
               </div>
-              <div className="gene birthday">
-                <input
-                  className="birthday__input"
-                  type="date"
-                  name="birthday"
-                  value={data.birthday}
-                  onChange={e => handleChange(e.target.value)}
-                ></input>
-              </div>
             </div>
-
-            <div className="ID-Phone__input">
-              <div className="gene id-card">
-                <input
-                  type="text"
-                  placeholder="ID Card"
-                  size="27"
-                  value={data?.card_id}
-                  onChange={e => handleChange(e.target.value)}
-                ></input>
-              </div>
-      
-              <div className="gene phone">
-                <input
-                  type="text"
-                  placeholder="Phone Number"
-                  size="27"
-                  value={data?.phone_number}
-                  onChange={e => handleChange(e.target.value)}
-                ></input>
-      
-              </div>
-      
-            </div>
-
-            <div className="gene address__input">
-              <input
-                type="text"
-                placeholder="Address"
-                size="58"
-                value={data?.address}
-                onChange={e => handleChange(e.target.value)}
-              ></input>
-            </div>
-          </div>
-          <div className="button">
-            <button type="submit"class="btn btn-save "  onClick={updateProfile}>
-              Save
-            </button>
-            <button type="button" class="btn btn-cancel">
-              Cancel
-            </button>
           </div>
         </div>
-     </div>
+      </div>
+    </div>
   );
 };
 

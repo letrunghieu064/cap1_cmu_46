@@ -34,30 +34,13 @@ const CreatePost = async (data) => {
 };
 const editProfile = async (
   id,
-  email,
-  first_name,
-  last_name,
-  username,
-  url_img,
-  birthday,
-  phone_number,
-  address,
-  gender,
-  card_id 
+  data
 ) => {
   const res = await axios
     .put(
       API_URL + `/users/${id}`,  
-      { email,
-        first_name,
-        last_name,
-        username,
-        url_img,
-        birthday,
-        phone_number,
-        address,
-        gender,
-        card_id
+      { 
+        ...data
       },
       { headers: authHeader() }
     )
@@ -156,11 +139,11 @@ const deleteUser = async (id) => {
     });
   return res;
 };
-const createLike = async (id) => {
+const createLike = async (id,post_id) => {
   const res = await axios
-    .post(API_URL + `/comments/${id}`,  { headers: authHeader() })
+    .post(API_URL + `/likes`, {id,post_id} ,{ headers: authHeader() })
     .then((response) => {
-      return response.data.data;
+      return response.data;
     });
   return res;
 };
@@ -178,6 +161,14 @@ const getUser = async (id)=>{
 const editPost = async (id,data)=>{
   const res = await axios 
   .put(API_URL + `/posts/${id}`, { ...data }, { headers: authHeader() })
+  .then((response) => {
+    return response.data;
+  });
+return res;
+}
+const getLikes =async ()=>{
+  const res = await axios 
+  .get(API_URL + `/likes`,  { headers: authHeader() })
   .then((response) => {
     return response.data;
   });
@@ -203,5 +194,7 @@ export default {
   createLike,
   deleteAdminPost,
   getUser,
-  editPost
+  editPost,
+  createLike,
+  getLikes
 };

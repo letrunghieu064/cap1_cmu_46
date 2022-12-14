@@ -18,6 +18,7 @@ export default function EditPost({ onClose, postItem ,callbackCreateSuccess}) {
     longitude: postItem.longitude,
     latitude: postItem.latitude,
   });
+  const [error,setError]=useState(false);
  
   const [listAddr, setListAddr] = useState([]);
   console.log("listAddr", listAddr);
@@ -59,11 +60,15 @@ export default function EditPost({ onClose, postItem ,callbackCreateSuccess}) {
 
   const HandleEditPost = async () => {
     console.log("postItem.id", data.id);
+    if(data.address.length ===0 || data.description.length === 0 || data.name.length ===0){
+      setError(true)
+    }
+    else{
     const res = await  userService.editPost(data.id,{...data})
      callbackCreateSuccess && callbackCreateSuccess(res);
     console.log("res",res)
     onClose && onClose();
-  
+  }
   };
 
   const handleChooseAddress = async (item) => {
@@ -105,6 +110,8 @@ export default function EditPost({ onClose, postItem ,callbackCreateSuccess}) {
           onChange={handleChange}
           placeholder="nhập tên bài post"
         ></input>
+         {error&& data.name.length <=0 ?
+        <label className="l1 l2">name can not be Empty</label> :" "}
         <div className="create--header-content">
           <textarea
             className="header-content-textarae"
@@ -114,6 +121,8 @@ export default function EditPost({ onClose, postItem ,callbackCreateSuccess}) {
             onChange={handleChange}
           ></textarea>
         </div>
+        {error&& data.description.length <=0 ?
+        <label className="l3">description can not be Empty</label> :" "}
         <div className="create__content">
           <input
             placeholder="Nhập địa chỉ ( số và tên đường , quận, thành phố)"
@@ -121,11 +130,13 @@ export default function EditPost({ onClose, postItem ,callbackCreateSuccess}) {
             id="address"
             ref={inputAddressRef}
             name="address"
-            value={data.address}
             className="create__content-input"
             onChange={handleChangeAddress}
           />
+           {error&& data.description.length <=0 ?
+        <label className="l3">address can not be Empty</label> :" "}
         </div>
+       
         <ul>
           {listAddr &&
             listAddr.length > 0 &&
