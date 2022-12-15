@@ -20,6 +20,8 @@ import { logout } from "../actions/auth";
 import { useDispatch, useSelector } from "react-redux";
 import PostItem from "./PostItem";
 import PostCreate from "./posts/PostCreate";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 const Home = () => {
   const [enterPopup, setEnterPopup] = useState(false);
   const [createModal, setCreateModal] = useState(false);
@@ -35,7 +37,9 @@ const Home = () => {
     if (currentUser.data.role === "admin") {
       window.location.replace("/admin");
     } else {
-      alert("Bạn Không Có Quyền Vào Trang này");
+      toast.warning('Warning Notification !', {
+        position: toast.POSITION.TOP_RIGHT})
+
     }
   };
 
@@ -152,7 +156,9 @@ const Home = () => {
                     <ul className="user__modal--body-list">
                       <li className="user__modal--body-item">
                         <a href="#" onClick={handleAdmin}>
+                        <ToastContainer />
                           <p>Admin</p>
+
                           <BiGroup className="user__modal--body-icon"></BiGroup>
                         </a>
                       </li>

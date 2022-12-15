@@ -17,7 +17,8 @@ import { CgLogOut } from "react-icons/cg";
 import { logout } from "../actions/auth";
 import { useDispatch, useSelector } from "react-redux";
 import { CreatePost } from "../actions/post";
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 export default function Header() {
   const [address, setaddress] = useState("");
   const [descripstion, setdescripstion] = useState("");
@@ -39,7 +40,9 @@ export default function Header() {
       window.location.replace("/admin");
     } else {
       
-      alert("Bạn Không Có Quyền Vào Trang này");
+      toast.warning('Warning Notification !', {
+        position: toast.POSITION.TOP_RIGHTxxxx
+    });
     }
   };
 
@@ -157,6 +160,7 @@ export default function Header() {
                   <ul className="user__modal--body-list">
                     <li className="user__modal--body-item">
                       <p onClick={handleAdmin}>Admin</p>
+                      <ToastContainer />
                       <BiGroup className="user__modal--body-icon"></BiGroup>
                     </li>
                     <li
