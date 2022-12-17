@@ -6,7 +6,8 @@ import Header from "./Header";
 import axios from "axios";
 import authHeader from "../services/auth-header";
 import Exportexcel from '../util/constants/Exportexcel'
-  
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { CiUser } from "react-icons/ci";
 const Admin = () => {
   const [tab, setTab] = useState("user");
@@ -58,9 +59,14 @@ const Admin = () => {
 
     console.log("response", response);
     if (response !== 200) {
-      alert(" xoá không thành công ");
+      toast.error('Delete not Success!', {
+        position: toast.POSITION.TOP_RIGHT
+    });
     }
     if (response === 200) {
+      toast.success('Delete Success', {
+      position: toast.POSITION.TOP_RIGHT
+      });
       onDeleteUser(id);
     }
   };
@@ -73,16 +79,24 @@ const Admin = () => {
 
     console.log("response", response);
     if (response !== 200) {
-      alert(" xoá không thành công ");
+      toast.error('Delete not Success!', {
+        position: toast.POSITION.TOP_RIGHT
+    });
     }
     if (response === 200) {
+      toast.success('Delete Success', {
+      position: toast.POSITION.TOP_RIGHT
+    });
       onDeletePost(id);
     }
   }
   let handleOnClickExport= async()=>{
-    alert("kakak")
+   
     console.log("",addpost)
     if(addpost){
+      toast.success('Export File Cuscess!', {
+        position: toast.POSITION.TOP_RIGHT
+    });
       await Exportexcel.exportExcel(addpost,"danh sách post","list")
     }
   }
@@ -349,6 +363,7 @@ const Admin = () => {
             <tr> 
               <th>ID</th>
               <th> Name</th>
+              
               <th>Description</th>
               <th>Address</th>
               <th>Other</th>

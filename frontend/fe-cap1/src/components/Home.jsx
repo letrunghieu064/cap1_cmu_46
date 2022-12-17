@@ -37,8 +37,9 @@ const Home = () => {
     if (currentUser.data.role === "admin") {
       window.location.replace("/admin");
     } else {
-      toast.warning('Warning Notification !', {
-        position: toast.POSITION.TOP_RIGHT})
+      toast.error('not a ADMIN !', {
+        position: toast.POSITION.TOP_RIGHT
+    });
 
     }
   };

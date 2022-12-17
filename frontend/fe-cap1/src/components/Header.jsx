@@ -40,8 +40,8 @@ export default function Header() {
       window.location.replace("/admin");
     } else {
       
-      toast.warning('Warning Notification !', {
-        position: toast.POSITION.TOP_RIGHTxxxx
+      toast.error('not a ADMIN !', {
+        position: toast.POSITION.TOP_RIGHT
     });
     }
   };

@@ -344,7 +344,7 @@ const Register = () => {
             </div>
           )}
 
-          {message && (
+          {message &&(
             <div className="form-login">
               <div
                 className={
@@ -352,7 +352,7 @@ const Register = () => {
                 }
                 role="alert"
               >
-                {message.email[0]}
+                { message || message.email[0]}
               </div>
             </div>
           )}

@@ -8,7 +8,6 @@ import Profile from "./Profile";
 import { logout } from "../actions/auth";
 import { clearMessage } from "../actions/message";
 import Admin from "./Admin";
-import Mapbox from "./Mapbox";
 import Map from "./Map";
 // import HomeAll from "./HomeAll";
 import Profile1 from "./Profile1";
@@ -48,12 +47,12 @@ export default function Page() {
       {!isLoggedIn && (
         <nav className="navbar navbar-expand navbar-dark bg-success">
           <Link to={"/"} className="navbar-brand">
-            Home
+           
           </Link>
           <div className="navbar-nav mr-auto">
             <li className="nav-item">
               <Link to={"/home"} className="nav-link">
-                Home
+                
               </Link>
             </li>
 

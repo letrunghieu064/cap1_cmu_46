@@ -10,6 +10,8 @@ import { BiDotsHorizontalRounded } from "react-icons/bi";
 import Comment from "./comment/Comment";
 import userService from "../services/user.service";
 import EditPost from "./editpost/EditPost";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 export default function PostItem({ post, onDelete }) {
   // const { posts } = useSelector((state) => state.post);
   const [chosePost, setChosepost] = useState(false);
@@ -75,7 +77,9 @@ export default function PostItem({ post, onDelete }) {
     const response = await userService.deletePost(id);
     console.log("res", response);
     if (response !== 200) {
-      alert(" xoá không thành công ");
+      toast.error('Post is not of you!', {
+        position: toast.POSITION.TOP_CENTER
+    });
     }
     if (response === 200) {
       onDelete(id);
