@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./Profile.css";
 import { FiEdit } from "react-icons/fi";
+import Input from "react-validation/build/input";
 import { useSelector } from "react-redux";
 import Header from "./Header";
 import userService from "../services/user.service";
@@ -14,6 +15,8 @@ const EditProfile = () => {
   const idUser = currentUser?.user?.data?.id;
   const [error, setError] = useState(0);
   const [errorCard, setErrorCard] = useState(false);
+  const [errorlastname,setErrorLastName]=useState(0)
+  const [errorfirstname,setErrorfirstName]=useState(0)
   const [data, setData] = useState({
     email: "",
     first_name: "",
@@ -29,6 +32,12 @@ const EditProfile = () => {
 
   const handleChange = (e) => {
     console.log("test", e.target.value);
+    if(errorlastname===1){
+      setErrorLastName(3)
+   }
+   if(errorfirstname===1){
+    setErrorfirstName(3)
+ }
     setData({
       ...data,
       [e.target.name]: e.target.value,
@@ -71,6 +80,50 @@ const EditProfile = () => {
     return true;
    
   };
+  const validateLastName = () => {
+    const PHONE_REGEX = new RegExp(
+      /^[a-zA-Z]+$/
+    );
+    if (data?.last_name === "") {
+      setErrorLastName(0);
+      return false;
+    } else if (!PHONE_REGEX.test(data?.last_name)) {
+      setErrorLastName(1);
+      return false;
+    } else if (data?.last_name?.length > 15  ) {
+      setErrorLastName(2);
+      return false;
+    }
+    return true;
+   
+  };
+  const validateCharacter=(char)=>{
+    const Char_REGEX = new RegExp(
+      /^[a-zA-Z]+$/
+    );
+    if (!Char_REGEX.test(char)){
+        return true;
+    }
+    return false ;
+  }
+  const validateFirstName = () => {
+    const PHONE_REGEX = new RegExp(
+      /^[a-zA-Z]+$/
+    );
+    if (data?.first_name === "") {
+      setErrorfirstName(0);
+      return false;
+    } else if (!PHONE_REGEX.test(data?.first_name)) {
+      setErrorfirstName(1);
+      return false;
+    } else if (data?.first_name?.length > 15  ) {
+      setErrorfirstName(2);
+      return false;
+    }
+    return true;
+   
+  };
+
   const validateCardId = () => {
     if ( data?.card_id?.length !== 12  ) {
       setErrorCard(true);
@@ -114,10 +167,14 @@ const EditProfile = () => {
   const updateProfile = async (e) => {
     e.preventDefault();
     console.log("data", data);
+   
      validatePhoneNumber();
      validateCardId();
      console.log("check", validatePhoneNumber(),validateCardId());
-    if (validatePhoneNumber() &&  validateCardId() ) {
+    
+    
+     
+    if (validatePhoneNumber() &&  validateCardId() &&  validateLastName() && validateFirstName()) {
     
       const res = await userService.editProfile(currentUser.user.data.id, {
         ...data,
@@ -189,6 +246,9 @@ const EditProfile = () => {
                   value={data.first_name}
                   onChange={handleChange}
                 />
+                  {errorfirstname ===0  && data?.first_name?.length <=0 ?(
+                <label id="errorComment">do not leave the first name blank </label> ): errorfirstname ===1 &&  data?.first_name?.length >0?
+              ( <label id="errorComment">not character</label>): errorfirstname ===2 && data?.first_name?.length >15 ? ( <label id="errorComment">first name  more than 15 characters </label>) :""}
               </div>
               <div className="container-right-body-item">
                 <span>Last Name </span>
@@ -199,6 +259,9 @@ const EditProfile = () => {
                   value={data.last_name}
                   onChange={handleChange}
                 />
+                  {errorlastname ===0  && data?.last_name?.length <=0 ?(
+                <label id="errorComment">do not leave the last name blank </label> ): errorlastname ===1 &&  data?.last_name?.length >0 ?
+              ( <label id="errorComment">not character</label>): errorlastname ===2 && data?.last_name?.length >15 ? ( <label id="errorComment">last name  more than 15 characters </label>) :""}
               </div>
               <div className="container-right-body-item">
                 <span>User Name </span>
@@ -219,8 +282,8 @@ const EditProfile = () => {
                   onChange={handleChange}
                 />
                 {error ===0  && data?.phone_number?.length <=0 ?(
-                <label id="errorComment">không để  trống phone number </label> ): error ===1 ?
-              ( <label id="errorComment">không phải số </label>): error ===2 && data?.phone_number?.length !==10 ? ( <label id="errorComment">số điện thoại không ít và  hơn 10 kí tự </label>) :""}
+                <label id="errorComment">do not leave the phone number blank </label> ): error ===1 ?
+              ( <label id="errorComment">not numbers</label>): error ===2 && data?.phone_number?.length !==10 ? ( <label id="errorComment">phone number no less and more than 10 number </label>) :""}
               </div>
             </div>
             <div className="edit-profile-container-right-body-right">
@@ -244,7 +307,7 @@ const EditProfile = () => {
                     value={data?.card_id}
                     onChange={handleChange}
                   />
-                  {errorCard && data.card_id.length !==12  ? (<label id="errorComment">CardID phải có 12 kí tự  </label> ):""}
+                  {errorCard && data.card_id.length !==12  ? (<label id="errorComment">CardID must have 12 characters </label> ):""}
                 </div>
                 <div className="container-right-body-item">
                   <span>Email </span>
@@ -266,9 +329,9 @@ const EditProfile = () => {
               <div className="container-right-body-bottom-gender">
                 <span>Gender</span>
                 <select className="input" name="gender" onChange={handleChange}>
-                  <option value="Female">Nữ</option>
-                  <option value="Male">Nam</option>
-                  <option value="Other">Khác</option>
+                  <option value="Female">Female</option>
+                  <option value="Male">Male</option>
+                  <option value="Other">Other</option>
                 </select>
               </div>
               <div className="container-right-body-bottom-submit">

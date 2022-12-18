@@ -1,0 +1,78 @@
+*{
+  margin: 0;
+  padding: 0;
+}
+.modal-content{
+  padding: 20px;
+  text-align: left;
+}
+.modal-content-map-header,
+.modal-content-map-footer{
+  display: flex;
+  justify-content: space-between;
+ 
+}
+.modal-content-map-header-left,
+.modal-content-map-header-right,
+.modal-content-map-footer-left,
+.modal-content-map-footer-right{
+  display: flex;
+  align-items: center;
+}
+.modal-content-map-header-left p,
+.modal-content-map-header-right p,
+.modal-content-map-footer-left p,
+.modal-content-map-footer-right p{
+  margin: 0;
+  padding: 0;
+}
+.modal-content-map-header-left-icon{
+  font-size: 36px;
+}
+.modal-content-map-header-left p{
+  color: #999;
+  margin-left: 6px;
+  font-weight: 100;
+  font-size: 14px;
+}
+.modal-content-map-header-right-icon{
+  color: black;
+  font-size: 24px;
+  margin-right: 6px;
+}
+.modal-content-map-header-right p{
+  color: black;
+  font-weight: bold;
+}
+.modal-content-map-body{
+  padding: 9px 0;
+}
+.modal-content-map-body p{
+  font-weight: 300;
+  font-family: "Poppins", sans-serif;
+}
+.modal-content-map-footer-left p,
+.modal-content-map-footer-right p{
+  margin: 0  6px;
+  color: #666;
+  font-size: 12px;
+}
+.modal-content-map-footer-left:hover,
+.modal-content-map-footer-right:hover{
+  cursor: pointer;
+}
+.modal-content-item{
+  margin: 10px 0;
+  position: relative;
+}
+.modal-content-item::before{
+  position: absolute;
+  content: '';
+  border-bottom: 0.7px solid rgb(176, 174, 174);
+  width: 100%;
+  display: block;
+  bottom: -10px;
+}
+.modal-content-map-body img {
+  width: 100%;
+}
