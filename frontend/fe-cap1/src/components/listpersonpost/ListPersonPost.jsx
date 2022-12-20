@@ -71,35 +71,35 @@ export default function ListPersonPost() {
       <ul className="profile-left-info">
         <li className="profile-left-info-item">
           <h4 className="profile-left-title">Full Name</h4>
-          <p className="profile-infoo">{data.first_name +" "}  {data.last_name}</p>
+          <p className="profile-infoo">{data?.first_name +" "}  {data?.last_name}</p>
         </li>
         <li className="profile-left-info-item">
           <h4 className="profile-left-title">User Name</h4>
-          <p className="profile-infoo">{data.username}</p>
+          <p className="profile-infoo">{data?.username}</p>
         </li>
         <li className="profile-left-info-item">
           <h4 className="profile-left-title">Gender</h4>
-          <p className="profile-infoo">{data.gender}</p>
+          <p className="profile-infoo">{data?.gender}</p>
         </li>
         <li className="profile-left-info-item">
           <h4 className="profile-left-title">Birthday</h4>
-          <p className="profile-infoo">{data.birthday}</p>
+          <p className="profile-infoo">{data?.birthday}</p>
         </li>
         <li className="profile-left-info-item">
           <h4 className="profile-left-title">ID Card</h4>
-          <p className="profile-infoo">{data.card_id}</p>
+          <p className="profile-infoo">{data?.card_id}</p>
         </li>
         <li className="profile-left-info-item">
           <h4 className="profile-left-title">Phone Number</h4>
-          <p className="profile-infoo">{data.phone_number}</p>
+          <p className="profile-infoo">{data?.phone_number}</p>
         </li>
         <li className="profile-left-info-item">
           <h4 className="profile-left-title">Email Address</h4>
-          <p className="profile-infoo">{data.email}</p>
+          <p className="profile-infoo">{data?.email}</p>
         </li>
         <li className="profile-left-info-item">
           <h4 className="profile-left-title">Address</h4>
-          <p className="profile-infoo">{data.address}</p>
+          <p className="profile-infoo">{data?.address}</p>
         </li>
       </ul>
       <a className="buttono-profile-edit" onClick={handleClickEdit}>

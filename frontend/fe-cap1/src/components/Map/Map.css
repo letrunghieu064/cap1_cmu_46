@@ -76,3 +76,186 @@
 .modal-content-map-body img {
   width: 100%;
 }
+.modal-content-comment{
+  /* display:inline-block; */
+  z-index: 3000;
+  position:relative;
+  background-color:#e9ecef;
+  
+  margin:20px 0 0 0;
+  box-shadow: 0 25px 50px 0 rgb(0 0 0 / 20%);
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px 0px;
+  /* margin-left:-300px; */
+  width: 400px;
+  border-radius: 10px;
+
+}
+.modal-content-comment-header-icon{
+  font-size: 24px;
+
+}
+.modal-content-comment-header{
+  padding: 20px;
+  background-color:#fff;
+  display:flex;
+  justify-content:flex-start;
+  align-items:center;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+.modal-content-comment-header-left{
+  display:flex;
+  align-items:center;
+
+}
+.modal-content-comment-header-left p{
+  color:black;
+  margin:0 0 0 4px;
+  }
+.modal-content-comment-header-right{
+  display:flex;
+  align-items:center;
+  margin:0 0 0 20px;
+}
+.modal-content-comment-header-right p {
+  margin:0 0 0 4px;
+  color:#346afe;
+  font-weight:bold;
+}
+.modal-content-comment-content-title{
+  padding: 20px;
+  display:flex;
+  align-items:center;
+}
+.modal-content-comment-content-title-icon{
+  font-size: 24px;
+  background-color:red;
+  width:40px;
+  height:40px;
+  padding:6px;
+  color:white;
+  border-radius: 50%;
+  }
+.modal-content-comment-content-title p{
+  color:#66757f;
+  margin:0 0 0 10px;
+  }
+.modal-content-comment-content-title h2{
+  font-size: 16px;
+  margin:0 0 0 6px;
+  font-family: 'Museo Sans Cyrl 900',Helvetica,Arial,sans-serif;
+    color: #346afe;
+}
+.modal-content-comment-content-body{
+  padding: 0 20px;
+  text-align: left;
+  position:relative;
+}
+/* .modal-content-comment-content-body::before{
+  position: absolute;
+  content: '';
+  border-bottom: 0.7px solid rgb(176, 174, 174);
+  width: 100%;
+  display: block;
+  bottom: 0;
+  left:0;
+} */
+.modal-content-comment-content-comment-write{
+  position:relative;
+}
+.modal-content-comment-content-comment-write::after{
+  position: absolute;
+  content: '';
+  border-bottom: 0.5px solid rgb(176, 174, 174);
+  width: 90%;
+  display: block;
+  top: 0;
+  left:5%;
+}
+.modal-content-comment-content-body button{
+  display:block;
+  margin:10px auto;
+  text-align: center;
+  background: #346afe;
+  padding: 8px 4px;
+  border-radius: 6px;
+  color:white;
+  font-weight:bold;
+  font-size: 14px;
+}
+.modal-content-comment-content-comment-write{
+  padding:10px 20px;
+  display:flex;
+  align-items:center;
+  justify-content: space-around;
+}
+.modal-content-comment-content-comment-write img{
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+}
+.modal-content-comment-content-comment-write button{
+  background: #346afe;
+  border-radius: 6px;
+  padding: 8px 4px;
+  color:white;
+  font-weight:bold;
+}
+.modal-content-comment-content-comment-write  textarea{
+  padding:5px 5px 5px 10px;  
+  box-sizing: border-box;
+  margin:0 8px;
+}
+.modal-content-comment-content-comment-read{
+  display:flex;
+  align-items:flex-start;
+  padding:10px 20px;
+}
+.modal-content-comment-content-comment-read img {
+  width:50px;
+  height:50px;
+  border-radius: 50%;
+}
+.modal-content-comment-content-comment-read-letter{
+  text-align: left;
+  margin:0 0 0 8px;
+}
+.modal-content-comment-content-comment-read-letter p{
+  margin:0;  
+}
+.comment-content-comment-read-letter-name{
+  font-weight:bold;
+  color: rgb(16, 130, 210);
+}
+.comment-content-comment-read-letter-time{
+  font-size: 14px;
+}
+.modal-content-comment-header-left:hover,
+.modal-content-comment-header-right:hover{
+  cursor: pointer;
+}
+.modal-content-comment-header-left:hover p{
+  color:#346afe;
+  }
+button:hover{
+  opacity:0.9;
+}
+.modalwar-content-titer-header::after{
+  position: absolute;
+  content: '';
+  border-bottom: 0.7px solid rgb(176, 174, 174);
+  width: 100%;
+  display: block;
+  bottom: 0;
+  left:0;
+}
+.modalwar-content-titer-header {
+  position:relative
+}
+.modalwar-content-titer-header h3,
+.modalwar-content-titer-header p{
+margin:0  
+}
+.modalwar-content-titer-header h3{
+  font-weight:bold;
+}

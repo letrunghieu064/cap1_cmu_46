@@ -90,7 +90,7 @@ export default function EditPost({ onClose, postItem ,callbackCreateSuccess}) {
       <div onClick={onClose} className="modal-overplay"></div>
       <div className="modal--body">
         <div className="create--header">
-          <p className="create--title">Tạo bài viết</p>
+          <p className="create--title">Chỉnh sửa  bài viết</p>
           <TfiClose className="create--close" onClick={onClose}></TfiClose>
         </div>
         <div className="create--header__user">
@@ -133,7 +133,7 @@ export default function EditPost({ onClose, postItem ,callbackCreateSuccess}) {
             className="create__content-input"
             onChange={handleChangeAddress}
           />
-           {error&& data.description.length <=0 ?
+           {error&& data.address.length <=0 ?
         <label className="l3">address can not be Empty</label> :" "}
         </div>
        

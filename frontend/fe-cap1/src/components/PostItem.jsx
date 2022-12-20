@@ -62,8 +62,9 @@ export default function PostItem({ post, onDelete }) {
     if (checklike) {
      
       const res = await userService.createLike(currentUser?.data?.id, post_id);
-      setLike(sumArray);
       console.log("like", res);
+      setLike(sumArray);
+      
     } else {
       if (like > 0) {
         setLike(sumArray);

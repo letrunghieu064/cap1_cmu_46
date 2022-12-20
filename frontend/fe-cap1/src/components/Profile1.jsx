@@ -32,12 +32,18 @@ const EditProfile = () => {
 
   const handleChange = (e) => {
     console.log("test", e.target.value);
-    if(errorlastname===1){
+    if(errorlastname===1 && data?.last_name.length <=0){
       setErrorLastName(3)
    }
-   if(errorfirstname===1){
+   if(errorfirstname===1 && data?.first_name.length <=0){
     setErrorfirstName(3)
+
  }
+ if(error===1 && data?.phone_number.length <=0){
+  setError(3)
+
+}
+ 
     setData({
       ...data,
       [e.target.name]: e.target.value,
@@ -82,7 +88,7 @@ const EditProfile = () => {
   };
   const validateLastName = () => {
     const PHONE_REGEX = new RegExp(
-      /^[a-zA-Z]+$/
+      /^[A-ZÀÁẠẢÃÂẦẤẬẨẪĂẰẮẶẲẴÈÉẸẺẼÊỀẾỆỂỄÌÍỊỈĨÒÓỌỎÕÔỒỐỘỔỖƠỜỚỢỞỠÙÚỤỦŨƯỪỨỰỬỮỲÝỴỶỸĐ][a-zàáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳýỵỷỹđ]*(?:[ ][A-ZÀÁẠẢÃÂẦẤẬẨẪĂẰẮẶẲẴÈÉẸẺẼÊỀẾỆỂỄÌÍỊỈĨÒÓỌỎÕÔỒỐỘỔỖƠỜỚỢỞỠÙÚỤỦŨƯỪỨỰỬỮỲÝỴỶỸĐ][a-zàáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳýỵỷỹđ]*)*$/
     );
     if (data?.last_name === "") {
       setErrorLastName(0);
@@ -108,7 +114,7 @@ const EditProfile = () => {
   }
   const validateFirstName = () => {
     const PHONE_REGEX = new RegExp(
-      /^[a-zA-Z]+$/
+      /^[A-ZÀÁẠẢÃÂẦẤẬẨẪĂẰẮẶẲẴÈÉẸẺẼÊỀẾỆỂỄÌÍỊỈĨÒÓỌỎÕÔỒỐỘỔỖƠỜỚỢỞỠÙÚỤỦŨƯỪỨỰỬỮỲÝỴỶỸĐ][a-zàáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳýỵỷỹđ]*(?:[ ][A-ZÀÁẠẢÃÂẦẤẬẨẪĂẰẮẶẲẴÈÉẸẺẼÊỀẾỆỂỄÌÍỊỈĨÒÓỌỎÕÔỒỐỘỔỖƠỜỚỢỞỠÙÚỤỦŨƯỪỨỰỬỮỲÝỴỶỸĐ][a-zàáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳýỵỷỹđ]*)*$/
     );
     if (data?.first_name === "") {
       setErrorfirstName(0);
@@ -282,7 +288,7 @@ const EditProfile = () => {
                   onChange={handleChange}
                 />
                 {error ===0  && data?.phone_number?.length <=0 ?(
-                <label id="errorComment">do not leave the phone number blank </label> ): error ===1 ?
+                <label id="errorComment">do not leave the phone number blank </label> ): error ===1 && data?.phone_number.length >0?
               ( <label id="errorComment">not numbers</label>): error ===2 && data?.phone_number?.length !==10 ? ( <label id="errorComment">phone number no less and more than 10 number </label>) :""}
               </div>
             </div>

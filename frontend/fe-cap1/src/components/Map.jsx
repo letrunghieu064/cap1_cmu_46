@@ -19,6 +19,8 @@ import PostItem from "./PostItem";
 import { CiChat1 } from "react-icons/ci";
 import { CiShare1 } from "react-icons/ci";
 import { CiShare2 } from "react-icons/ci";
+import { CiLocationOn } from "react-icons/ci";
+import { FaSkull } from "react-icons/fa";
 export default function App() {
   const [viewport, setViewport] = useState({
     latitude: 16.0602077,
@@ -121,7 +123,7 @@ export default function App() {
         style={{
           height: "920px",
           width: "100%",
-          overflow: "hidden",
+          // overflow: "hidden",
           borderRadius: "5px",
           border: "1px solid green",
         }}
@@ -197,9 +199,19 @@ export default function App() {
           }}
         >
           
-          <div className="overplay"></div>
-         
+          {/* <div className="overlays">
+          </div>
+          */}
           <div className="modal-content">
+            <div className="modalwar-content-titer-header">
+            <div className="modalwar-content-titer-header-left">
+                <h3>News Live</h3>
+                <p>Updated on 20/12/2022 22:06:51</p>
+              </div>
+              <div className="modalwar-content-titer-header-right">
+              
+              </div>
+            </div>
           {posts.map((post,index)=>(
             <div className="modal-content-item">
             <div className="modal-content-map-header">
@@ -258,22 +270,80 @@ export default function App() {
             </div>
             </div>
           </div>
-         
+          
           </div>
-          <div className="modal-content-comment" 
-           style={{
+          <div className="modal" style={{
             display: "block",
-            height: "620px",
-            marginTop:"200px",
+            height: "920px",
+            marginTop:"60px",
+            marginRight:"499px",
             width: "420px",
-            center: "auto",
+            left: "auto",
             right: "0px",
-            overflowY: "scroll",
+            // overflowY: "scroll",
             
-          }}
-          >
-            <p>hsagdhsgfhdgsfgdsfhgdhsfghdsgfhdsgsdhfgshg</p>
+          }}>
+              <div className="overplay modal-content-comment">
+                <div className="modal-content-comment-header">
+                    <div className="modal-content-comment-header-left">
+                    <CiShare1 className="modal-content-comment-header-icon"></CiShare1>
+                    <p>Source</p>
+                    </div>
+                    <div className="modal-content-comment-header-right">
+                    <CiLocationOn className="modal-content-comment-header-icon"> </CiLocationOn>
+                      <p>On live map</p>
+                    </div>
+                    
+                </div>
+                <div className="modal-content-comment-content"> 
+                <div className="modal-content-comment-content-title"> 
+                  <FaSkull className="modal-content-comment-content-title-icon"></FaSkull>
+                  <p>25 minutes ago - </p>
+                  <h2> 55°35′N 46°51′E</h2>
+                </div>
+                <div className="modal-content-comment-content-body">
+                    <p>
+                    Three people were killedne was injured in an explosion on the Urengoy-Pomary-Uzhgorod gas pipeline in Chuvashia
+                    </p>
+                    <button>Show Comment</button>
+                </div>
+                <div className="modal-content-comment-content-comment">
+                <div className="modal-content-comment-content-comment-body">
+                    <div className="modal-content-comment-content-comment-write">
+                      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRiGxpPkOa9f5LzIgUoOswNCmnIA_DwaufG-A&usqp=CAU" />
+                      <textarea placeholder="Join the discussion..."></textarea>
+                      <button>Comment</button>
+                    </div>
+                    <div className="modal-content-comment-content-comment-read">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRiGxpPkOa9f5LzIgUoOswNCmnIA_DwaufG-A&usqp=CAU" />
+                    <div className="modal-content-comment-content-comment-read-letter">
+                      <p className="comment-content-comment-read-letter-name">Hieu Lee</p>
+                      <p className="comment-content-comment-read-letter-time">11 minutes ago</p>
+                      <p className="comment-content-comment-read-letter-writed"> Hôm qua mới nhậu ở đây luôn, sợ quá</p>
+                    </div>
+                    </div>
+                    <div className="modal-content-comment-content-comment-read">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRiGxpPkOa9f5LzIgUoOswNCmnIA_DwaufG-A&usqp=CAU" />
+                    <div className="modal-content-comment-content-comment-read-letter">
+                      <p className="comment-content-comment-read-letter-name">Hieu Lee</p>
+                      <p className="comment-content-comment-read-letter-time">11 minutes ago</p>
+                      <p className="comment-content-comment-read-letter-writed"> Hôm qua mới nhậu ở đây luôn, sợ quá</p>
+                    </div>
+                    </div>
+                    <div className="modal-content-comment-content-comment-read">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRiGxpPkOa9f5LzIgUoOswNCmnIA_DwaufG-A&usqp=CAU" />
+                    <div className="modal-content-comment-content-comment-read-letter">
+                      <p className="comment-content-comment-read-letter-name">Hieu Lee</p>
+                      <p className="comment-content-comment-read-letter-time">11 minutes ago</p>
+                      <p className="comment-content-comment-read-letter-writed"> Hôm qua mới nhậu ở đây luôn, sợ quá</p>
+                    </div>
+                    </div>
+                </div>
+                </div>
+                </div>
+              </div>
         </div>
+         
       {/* )} */}
     </div>
   );

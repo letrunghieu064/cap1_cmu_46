@@ -352,7 +352,7 @@ const Register = () => {
                 }
                 role="alert"
               >
-                { message || message.email[0]}
+                { message }
               </div>
             </div>
           )}
