@@ -16,6 +16,7 @@ Rails.application.routes.draw do
       put 'users', to: 'users#update'
       post 'password/forgot', to: 'password#forgot'
       post 'password/reset', to: 'password#reset'
+      post 'search', to: 'posts#search'
       devise_scope :user do
         # post "register", :to => 'registrations#create'
         # post "login", :to => 'sessions#create'

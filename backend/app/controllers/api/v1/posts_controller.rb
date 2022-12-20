@@ -65,6 +65,19 @@ class Api::V1::PostsController < ApplicationController
     @post = current_user.posts.find_by(id: params[:id])
   end
 
+  def search
+    find params[:name]
+  end
+
+  def find(name)
+    post = Post.where("name like ?", "%#{name}%")
+    if post
+      render json: post
+    else
+      render json: {message: 'Post name does not exists'}
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_post
