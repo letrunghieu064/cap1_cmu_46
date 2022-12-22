@@ -174,6 +174,23 @@ const getLikes =async ()=>{
   });
 return res;
 }
+const searchPost = async(name)=>{
+  const res = await axios.post(API_URL + `/search`,{name }, { headers: authHeader() })
+  .then((response)=>{
+    return response.data;
+    
+  })
+  return res;
+}
+const searchUser = async(username)=>{
+  const res = await axios.post(API_URL + `/user/search`,{username }, { headers: authHeader() })
+  .then((response)=>{
+    return response.data;
+    
+  })
+  return res;
+}
+
 
 
 
@@ -196,5 +213,7 @@ export default {
   getUser,
   editPost,
   createLike,
-  getLikes
+  getLikes,
+  searchPost,
+  searchUser
 };

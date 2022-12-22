@@ -21,6 +21,7 @@ import { CiShare1 } from "react-icons/ci";
 import { CiShare2 } from "react-icons/ci";
 import { CiLocationOn } from "react-icons/ci";
 import { FaSkull } from "react-icons/fa";
+import MapPost from "./mappost/MapPost";
 export default function App() {
   const [viewport, setViewport] = useState({
     latitude: 16.0602077,
@@ -33,8 +34,9 @@ export default function App() {
   const [selectedPark, setSelectedPark] = useState(null);
   const [addressmarker, setaddressmarker] = useState([]);
   const [modal, setModal] = useState(false);
-
+  const [createmappost,setCreateMapPost]=useState(false);
   const [posts, setPosts] = useState([]);
+  const [post,setPost]=useState(null);
   useEffect(() => {
     toast.promise(
       axios
@@ -66,10 +68,15 @@ export default function App() {
     //     setPosts([...result]);
     //   })
   }, []);
+  
   const handleCreateModal = () => {
     console.log("modal", modal);
     setModal(!modal);
   };
+  const handlePost =()=>{
+    setPost(null);
+   }
+
 
   // useEffect(() => {
   // eslint-disable-next-line array-callback-return
@@ -232,7 +239,7 @@ export default function App() {
               <div className="modal-content-map-footer">
             <div className="modal-content-map-footer-left">
             <CiChat1 className="modal-content-map-footer-left-icon"></CiChat1>
-              <p>Comments</p>
+              <p onClick={()=>{setPost(post)}}>Comments</p>
               </div>
               <div className="modal-content-map-footer-right">
               <p>Tell friends</p>
@@ -260,7 +267,7 @@ export default function App() {
               <div className="modal-content-map-footer">
             <div className="modal-content-map-footer-left">
             <CiChat1 className="modal-content-map-footer-left-icon"></CiChat1>
-              <p>Comments</p>
+              <p onClick={()=>{setCreateMapPost(!modal)}}>Comments</p>
               </div>
               <div className="modal-content-map-footer-right">
               <p>Tell friends</p>
@@ -272,7 +279,7 @@ export default function App() {
           </div>
           
           </div>
-          <div className="modal" style={{
+          {/* <div className="modal" style={{
             display: "block",
             height: "920px",
             marginTop:"60px",
@@ -342,7 +349,9 @@ export default function App() {
                 </div>
                 </div>
               </div>
-        </div>
+        </div> */}
+        {post && (<MapPost  post={post} onClose={handlePost}></MapPost>)}
+        
          
       {/* )} */}
     </div>

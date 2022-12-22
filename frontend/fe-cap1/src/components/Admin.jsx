@@ -11,7 +11,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { CiUser } from "react-icons/ci";
 const Admin = () => {
   const [tab, setTab] = useState("user");
-
+  const [inputsearch,setInputSearch] =useState("");
   const [users, setUsers] = useState([]);
   const [addpost, setaddpost] = useState([]);
   const handleTab = (value) => {
@@ -100,191 +100,28 @@ const Admin = () => {
       await Exportexcel.exportExcel(addpost,"danh sách post","list")
     }
   }
+  const handleChange = async(e)=>{
+    if(inputsearch.length===0){
+      
+      setaddpost(addpost);
+    }
+    setInputSearch(e.target.value)
+    console.log("ess",inputsearch.length)
+   
+  }
+  const SearchPost= async()=>{
+    console.log("input",inputsearch)
+    const response = await userService.searchPost(inputsearch);
+    setaddpost(response);
+  }
+  const SearchUser= async()=>{
+    console.log("input",inputsearch)
+    const response = await userService.searchUser(inputsearch);
+    setUsers(response);
+  }
   return (
     <div >
       <Header></Header>
-      {/* <div className="container-user-body">
-      <div className="container-user">
-      <ul className="controls">
-        <li className="button-control controls-item">
-            <CiUser></CiUser>
-          <p
-            className="btn-manage_user"
-            onClick={() => handleTab("user")}
-          >
-            Manage User
-          </p>
-        </li>
-        <li className="button-control controls-item">
-          <p
-            type="button"
-            className="btn-manage_post"
-            onClick={() => handleTab("posts")}
-          >
-            Manage Post
-          </p>
-        </li>
-        <li className="button-control controls-item">
-          <p
-            type="button"
-            className="btn-statistic"
-            onClick={() => handleTab("statistic")}
-          >
-            Statistic
-          </p>
-        </li>
-      </ul>
-      </div> */}
-
-      {/* phần này gắn với button Manage User */}
-      {/* {tab === "user" ? (
-        <div className="manage__user">
-          <div className="table-user"> 
-            <div className="search-user">
-              <div className="search-btn">
-                <button type="button" className="btn-search">
-                  Search
-                </button>
-              </div>
-              <div className="search-input">
-                <div>
-                  <FiSearch className="search-icon"></FiSearch>
-                </div>
-                <input className="input-text" type="text" size="50"></input>
-              </div>
-            </div>
-
-            <div className="table-container">
-              <table border="5" valign="middle">
-                <tr>
-                  <th>User Name</th>
-                  <th>Full Name</th>
-                  <th>Gender</th>
-                  <th>Birthday</th>
-                  <th>Email</th>
-                  <th>ID Card</th>
-                  <th>Phone Number</th>
-                  <th>Address</th>
-                  <th>Other</th>
-                </tr>
-                {users.map((user) => (
-                  <tr>
-                    <td>{user.id}</td>
-                    <td>{user.username}</td>
-                    <td>{user.gender}</td>
-                    <td>{user.birthday}</td>
-                    <td>{user.email}</td>
-                    <td>{user.phoneNumber}</td>
-                    <td>{user.card_id}</td>
-                    <td>Quang Nam</td>
-                    <td>
-                      <div className="other-icon">
-                        <div>
-                          <a href="#">
-                            <FiTrash
-                              className="remove-table"
-                              onClick={() => {
-                                handleDeleteUser(user.id);
-                              }}
-                            ></FiTrash>
-                          </a>
-                        </div>
-                      </div>
-                    </td>
-                  </tr>
-                ))}
-              </table>
-            </div>
-          </div>
-        </div>
-      ) : tab === "statistic" ? (
-        <div className="manage__statistic">
-          <div className="title-statistic">
-            <h2>Statistic</h2>
-            <div className="container-statistic">
-              <div className="amount-statistic">
-                <table className="table__statistic" border="5" valign="middle">
-                  <tr>
-                    <th>District</th>
-                    <th>Amount</th>
-                  </tr>
-                  <tr>
-                    <td>Thanh Khe</td>
-                    <td>3</td>
-                  </tr>
-                  <tr>
-                    <td>Hai Chau</td>
-                    <td>2</td>
-                  </tr>
-                  <tr>
-                    <td>Lien Chieu</td>
-                    <td>4</td>
-                  </tr>
-                  <tr>
-                    <td>Ngu Hanh Son</td>
-                    <td>5</td>
-                  </tr>
-                  <tr>
-                    <td>Son Tra</td>
-                    <td>2</td>
-                  </tr>
-                </table>
-              </div>
-              <div className="chart-statistic">BIỂU ĐỒ</div>
-            </div>
-          </div>
-        </div>
-      ) : tab === "posts" ? (
-        <div className="manage__post">
-          <div className="title-post">
-            <h2>Post List</h2>
-                                    
-            <div className="table-container">
-              <table border="5" valign="middle">
-                <tr>
-                  <th> Id</th>
-                  <th> Name</th>
-                  <th>Descripstion</th>
-                  <th>Address</th>
-                  <th>other</th>
-                </tr>
-                {addpost.map((post) => (
-                  <tr>
-                    <td>{post.id}</td>
-                    <td>{post.name}</td>
-                    <td>{post.description}</td>
-                    <td>{post.address}</td>
-                    <td>
-                      <div className="other-icon">
-                        <div>
-                          <a href="#">
-                            <FiEdit className="edit-table"></FiEdit>
-                          </a>
-                        </div>
-
-                        <div>
-                          <a href="#">
-                            <FiTrash
-                              className="remove-table"
-                              onClick={() => {
-                                handleDeletePost(post.id);
-                              }}
-                            ></FiTrash>
-                          </a>
-                        </div>
-                        <button classname="btn btn-success" onClick={()=>{handleOnClickExport()}}> hehee</button>    
-                      </div>
-                    </td>
-                  </tr>
-                ))}
-              </table>
-            </div>
-          </div>
-        </div>
-      ) : (
-        <Fragment></Fragment>
-      )}
-      </div> */}
       <div className="container-dashboard">
   <nav className="nav-dashboard">
     <ul>
@@ -307,8 +144,8 @@ const Admin = () => {
     <section className="attendance">
       <div className="attendance-list">
         <form action>
-          <input className="dashboard-form-search-input" placeholder="Tìm kiếm user" type="text" />
-          <button className="dashboard-form-search-button">Search</button>
+          <input className="dashboard-form-search-input" placeholder="Tìm kiếm user" type="text" value ={inputsearch} onChange={handleChange} />
+          <button className="dashboard-form-search-button" onClick={SearchUser} >Search</button>
         </form>
         <table className="table-dashboard">
           <thead>
@@ -354,8 +191,8 @@ const Admin = () => {
    
       <div className="attendance-list">
         <form action>
-          <input className="dashboard-form-search-input" placeholder="Tìm kiếm bài post" type="text" />
-          <button className="dashboard-form-search-button">Search</button>
+          <input className="dashboard-form-search-input" placeholder="Tìm kiếm bài post" type="text" value ={inputsearch} onChange={handleChange}/>
+          <button className="dashboard-form-search-button" onClick={SearchPost}>Search</button>
           <button classname="btn btn-success" onClick={()=>{handleOnClickExport()}}> Export File</button>  
         </form>
         <table className="table-dashboard">
