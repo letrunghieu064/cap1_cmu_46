@@ -58,11 +58,11 @@ export default function PostItem({ post, onDelete }) {
     return sum;
   };
   const hanldeLike = async (post_id) => {
-    setCheckLike(!checklike);
+   
     if (checklike) {
      
       const res = await userService.createLike(currentUser?.data?.id, post_id);
-      console.log("like", res);
+      console.log("like", currentUser?.data?.id);
       setLike(sumArray);
       
     } else {

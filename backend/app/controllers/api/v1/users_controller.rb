@@ -1,14 +1,17 @@
 class Api::V1::UsersController < ApplicationController
-  before_action :set_user, only: [ :show, :update, :destroy ]
   skip_before_action :authenticate_request, only: %i[login register]
-  before_action :authenticate_request, only: [:update]
-
+  before_action :set_user, only: [ :show, :update ]
+  before_action :correct_user, only: [:edit, :update]
 
   # GET /users or /users.json
   def index
     @users = User.all
 
-    render json: @users
+    render json: {data: @users}
+  end
+
+  def correct_user
+    @user == current_user
   end
 
 
@@ -30,38 +33,35 @@ class Api::V1::UsersController < ApplicationController
   end
 
   def edit
-    user = User.find_by(id: params[:id])
-    if current_user == user
-      user.update(user_params)
-      render json: @user
-    else
-      render json: @user.errors, status: :unprocessable_entity
-    end
   end
 
   # PATCH/PUT /users/1 or /users/1.json
   def update
-    # @user = User.find(params[:id])
-    if @user.update(secure_params)
-      render json: @user
+    if correct_user
+      if @user.update(user_params)
+        render json: {statusCode:200,data: @user}
+      else
+        render json: @user.errors, status: :unprocessable_entity
+      end
     else
-      render json: @user.errors, status: :unprocessable_entity
+      render json: {message: 'Incorrect user'}
     end
+
 
   end
 
   # DELETE /users/1 or /users/1.json
-  def destroy
-    @user.destroy
-  end
+  # def destroy
+  #   @user.destroy
+  # end
 
   def register
     @user = User.create(user_params)
-    if @user.valid?
+    if @user.save
       response = { message: 'User created successfully'}
       render json: response, status: :created
     else
-      render json: @user.errors, status: :unprocessable_entity
+      render json:{ message: 'has already been taken'}, status: :unprocessable_entity
     end
   end
 
@@ -73,12 +73,15 @@ class Api::V1::UsersController < ApplicationController
     command = AuthenticateUser.call(email, password)
     if command.success?
       render json: {
-        access_token: command.result,
-        message: 'Login Successful'
+        message: 'Login Successful',
+        data: {data: user_infor ,accessToken: command.result}
       }
     else
-      render json: { error: command.errors }, status: :unauthorized
+      render json: { message: "error email or password"}, status: :unauthorized
     end
+  end
+  def user_infor 
+    user = User.find_by(email: params[:email])
   end
 
   def test
@@ -86,7 +89,18 @@ class Api::V1::UsersController < ApplicationController
       message: 'You have passed  '
     }
   end
-
+  def search
+    find params[:username]
+  end
+  
+  def find(username)
+    user = User.where("username like ?", "%#{username}%")
+    if user
+      render json: user
+    else
+      render json: {message: 'Username name does not exists'}
+    end
+  end
   private
   # Use callbacks to share common setup or constraints between actions.
   def set_user
@@ -98,7 +112,4 @@ class Api::V1::UsersController < ApplicationController
     params.permit(:email, :password, :first_name, :last_name, :username, :birthday, :url_img, :phone_number, :address, :gender, :card_id, :role, :reset_password_token, :reset_password_at, :confirmation_token, :confirmation_at, :encrypted_password)
   end
 
-  def secure_params
-    params.permit(:email, :first_name, :last_name, :username, :birthday, :url_img, :phone_number, :address, :gender, :card_id, :role)
-  end
 end

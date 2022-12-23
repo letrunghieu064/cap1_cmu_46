@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect ,useRef} from "react";
 import userService from "../../services/user.service";
 import { useSelector } from "react-redux";
 import "./Comment.css";
@@ -9,7 +9,7 @@ const Comment = ({ postId }) => {
   const [writerComment, setWriterComment] = useState("");
   const { user: currentUser } = useSelector((state) => state.auth);
   const [error, setError] = useState(false);
-
+  const inputCommentRef = useRef(null);
   useEffect(() => {
     const res = userService
       .getComments(postId)
@@ -29,9 +29,11 @@ const Comment = ({ postId }) => {
       setError(true);
     } else {
       const res = await userService.createComment(postId, writerComment);
-
+      
       const newComments = [...comments];
       newComments.unshift(res);
+      
+      inputCommentRef.current.value = "";
       setComments(newComments);
     }
   };
@@ -89,6 +91,7 @@ const Comment = ({ postId }) => {
           placeholder={currentUser?.data?.username + " bạn đang nghĩ gì ?"}
           // ref={refInputComment}
           value={writerComment}
+          ref={inputCommentRef}
           onChange={(e) => {
             setWriterComment(e.target.value);
           }}
@@ -190,6 +193,7 @@ const CommentItem = ({ data, handleDeleteComment, handleEditComment ,handlEditSu
           className="comment_user-input"
           placeholder="Viết bình luận"
           // ref={refInputComment}
+          
           value={comment?.description}
           onChange={(e) => {
             setComment({ ...comment, description: e.target.value });

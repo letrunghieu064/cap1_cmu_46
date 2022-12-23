@@ -1,11 +1,13 @@
 class Api::V1::CommentsController < ApplicationController
-  before_action :set_comment, only: %i[ show edit update destroy ]
+  before_action :set_comment, only: %i[ show update destroy ]
+  before_action :authenticate_request
+  before_action :correct_user, only: [ :update, :destroy]
 
   # GET /comments or /comments.json
   def index
     @comments = Comment.all
 
-    render json: @comments
+    render json: {data: @comments}
   end
 
   # GET /comments/1 or /comments/1.json
@@ -13,62 +15,53 @@ class Api::V1::CommentsController < ApplicationController
     render json: @comment
   end
 
+
   # GET /comments/new
-  def new
-    @comment = Comment.new
-  end
+  # def new
+  #   @comment = Comment.new
+  # end
 
   # GET /comments/1/edit
-  def edit
-  end
+  # def edit
+  # end
 
   # POST /comments or /comments.json
   def create
-    @comment = Comment.new(comment_params)
-
+    @comment = current_user.comments.new(comment_params)
     if @comment.save
-      render json: @comment, status: :created
+      render json: Comment.last, status: :created
     else
       render json: @comment.errors, status: :unprocessable_entity
     end
 
-    # respond_to do |format|
-    #   if @comment.save
-    #     format.html { redirect_to comment_url(@comment), notice: "Comment was successfully created." }
-    #     format.json { render :show, status: :created, location: @comment }
-    #   else
-    #     format.html { render :new, status: :unprocessable_entity }
-    #     format.json { render json: @comment.errors, status: :unprocessable_entity }
-    #   end
-    # end
   end
 
   # PATCH/PUT /comments/1 or /comments/1.json
   def update
-    if @comment.update(comment_params)
-      render json: @comment
+    if correct_user
+      if @comment.update(comment_params)
+        render json: {statusCode: 200,data: @comment}
+      else
+        render json: @comment.errors, status: :unprocessable_entity
+      end
     else
-      render json: @comment.errors, status: :unprocessable_entity
+      render json: {statusCode: 400,message: 'Incorrect user'}
     end
-    # respond_to do |format|
-    #   if @comment.update(comment_params)
-    #     format.html { redirect_to comment_url(@comment), notice: "Comment was successfully updated." }
-    #     format.json { render :show, status: :ok, location: @comment }
-    #   else
-    #     format.html { render :edit, status: :unprocessable_entity }
-    #     format.json { render json: @comment.errors, status: :unprocessable_entity }
-    #   end
-    # end
   end
 
   # DELETE /comments/1 or /comments/1.json
   def destroy
-    @comment.destroy
+    if correct_user
+      @comment.destroy
+      render json: { statusCode: 200 , message: 'Delete comment successfully'}, status: :ok
+    else
+      render json: {statusCode: 400 ,message: 'Incorrect user'}
+    end
 
-    # respond_to do |format|
-    #   format.html { redirect_to comments_url, notice: "Comment was successfully destroyed." }
-    #   format.json { head :no_content }
-    # end
+  end
+
+  def correct_user
+    @comment = current_user.comments.find_by(id: params[:id])
   end
 
   private
@@ -79,6 +72,7 @@ class Api::V1::CommentsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def comment_params
-      params.permit(:description, :post_id)
+      params.permit(:description, :post_id, :user_id)
     end
+
 end

@@ -91,7 +91,7 @@ const EditProfile = () => {
   };
   const validateLastName = () => {
     const PHONE_REGEX = new RegExp(
-      /^[a-zA-Z]+$/
+      /^[A-ZÀÁẠẢÃÂẦẤẬẨẪĂẰẮẶẲẴÈÉẸẺẼÊỀẾỆỂỄÌÍỊỈĨÒÓỌỎÕÔỒỐỘỔỖƠỜỚỢỞỠÙÚỤỦŨƯỪỨỰỬỮỲÝỴỶỸĐ][a-zàáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳýỵỷỹđ]*(?:[ ][A-ZÀÁẠẢÃÂẦẤẬẨẪĂẰẮẶẲẴÈÉẸẺẼÊỀẾỆỂỄÌÍỊỈĨÒÓỌỎÕÔỒỐỘỔỖƠỜỚỢỞỠÙÚỤỦŨƯỪỨỰỬỮỲÝỴỶỸĐ][a-zàáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳýỵỷỹđ]*)*$/
     );
     if (data?.last_name === "") {
       setErrorLastName(0);
@@ -117,7 +117,7 @@ const EditProfile = () => {
   }
   const validateFirstName = () => {
     const PHONE_REGEX = new RegExp(
-      /^[a-zA-Z]+$/
+      /^[A-ZÀÁẠẢÃÂẦẤẬẨẪĂẰẮẶẲẴÈÉẸẺẼÊỀẾỆỂỄÌÍỊỈĨÒÓỌỎÕÔỒỐỘỔỖƠỜỚỢỞỠÙÚỤỦŨƯỪỨỰỬỮỲÝỴỶỸĐ][a-zàáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳýỵỷỹđ]*(?:[ ][A-ZÀÁẠẢÃÂẦẤẬẨẪĂẰẮẶẲẴÈÉẸẺẼÊỀẾỆỂỄÌÍỊỈĨÒÓỌỎÕÔỒỐỘỔỖƠỜỚỢỞỠÙÚỤỦŨƯỪỨỰỬỮỲÝỴỶỸĐ][a-zàáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳýỵỷỹđ]*)*$/
     );
     if (data?.first_name === "") {
       setErrorfirstName(0);
@@ -269,7 +269,7 @@ const EditProfile = () => {
                 />
                   {errorfirstname ===0  && data?.first_name?.length <=0 ?(
                 <label id="errorComment">do not leave the first name blank </label> ): errorfirstname ===1 &&  data?.first_name.length >0?
-              ( <label id="errorComment">first name cannot contain numbers</label>): errorfirstname ===2 && data?.first_name?.length >15 ? ( <label id="errorComment">first name  more than 15 characters </label>) :""}
+              ( <label id="errorComment">First character must be capital, no special characters or number</label>): errorfirstname ===2 && data?.first_name?.length >15 ? ( <label id="errorComment">first name  more than 15 characters </label>) :""}
               </div>
               <div className="container-right-body-item">
                 <span>Last Name </span>
@@ -282,7 +282,7 @@ const EditProfile = () => {
                 />
                   {errorlastname ===0  && data?.last_name?.length <=0 ?(
                 <label id="errorComment">do not leave the last name blank </label> ): errorlastname ===1 &&  data?.last_name.length >0 ?
-              ( <label id="errorComment">last name cannot contain numbers</label>): errorlastname ===2 && data?.last_name?.length >15 ? ( <label id="errorComment">last name  more than 15 characters </label>) :""}
+              ( <label id="errorComment">First character must be capital, no special characters or number</label>): errorlastname ===2 && data?.last_name?.length >15 ? ( <label id="errorComment">last name  more than 15 characters </label>) :""}
               </div>
               <div className="container-right-body-item">
                 <span>User Name </span>

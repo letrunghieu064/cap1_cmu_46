@@ -139,9 +139,9 @@ const deleteUser = async (id) => {
     });
   return res;
 };
-const createLike = async (id,post_id) => {
+const createLike = async (user_id,post_id) => {
   const res = await axios
-    .post(API_URL + `/likes`, {id,post_id} ,{ headers: authHeader() })
+    .post(API_URL + `/likes`, {user_id,post_id} ,{ headers: authHeader() })
     .then((response) => {
       return response.data;
     });

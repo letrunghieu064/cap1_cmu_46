@@ -24,7 +24,7 @@ gem 'active_model_serializers', '~> 0.10.13'
 gem 'geocoder', '~> 1.8', '>= 1.8.1'
 gem 'jwt'
 gem 'simple_command', '~> 1.0', '>= 1.0.1'
-gem 'knock'
+# gem 'knock'
 # gem 'knock', git: 'https://github.com/nsarno/knock',
 #       branch: 'master', ref: '9214cd027422df8dc31eb67c60032fbbf8fc100b'
 
@@ -32,6 +32,7 @@ gem 'knock'
 
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
+  gem 'pry-rails'
 end
 
 group :development do

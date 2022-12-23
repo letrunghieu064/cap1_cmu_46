@@ -1,11 +1,11 @@
 class Api::V1::PostsController < ApplicationController
   before_action :set_post, only: %i[ show edit update destroy ]
-  # before_action :authenticate_user!, except: [:index, :show]
-  # before_action :correct_user, only: [:edit, :update, :destroy]
+  before_action :authenticate_request
+  before_action :correct_user, only: [ :update, :destroy]
 
   # GET /posts or /posts.json
   def index
-    @posts = Post.all
+    @posts = Post.all.includes(:user, {comments: :user}, :likes)
 
     render json: @posts
   end
@@ -14,47 +14,86 @@ class Api::V1::PostsController < ApplicationController
   def show
     render json: @post
   end
+  def getpost
+    @posts=Post.all
+    render json: @posts
+  end
 
   # GET /posts/new
   # def new
   #   @post = Post.new
   # end
 
-  # GET /posts/1/edit
-  # def edit
-  # end
+  # GET /posts/1/editdef search
+# def search
+#     @post= Post.where("name LIKE ?", params[:name] + "%")
+#     if @post
+#       binding.pry
+#       render json: @post
+#     else
+#       render json: "no resutf", status: :unprocessable_entity
+#     end
+# end
+def search
+  find params[:name]
+end
 
+def find(name)
+  post = Post.where("name like ?", "%#{name}%")
+  if post
+    render json: post
+  else
+    render json: {message: 'Post name does not exists'}
+  end
+end
   # POST /posts or /posts.json
   def create
     # @post = Post.new(post_params)
     @post = current_user.posts.build(post_params)
-
+    
+    #@post.user = current_user;
     if @post.save
-      render json: @post, status: :created
+      render json: Post.last
     else
       render json: @post.errors, status: :unprocessable_entity
     end
 
   end
-
+  # def search
+  #   @post= Post.where("name LIKE ?", params[:name] + "%")
+  #   if @post
+  #     binding.pry
+  #     render json: @post
+  #   else
+  #     render json: "no resutf", status: :unprocessable_entity
+  #   end
+  # end
+ 
   # PATCH/PUT /posts/1 or /posts/1.json
   def update
-    if @post.update(post_params)
-      render json: @post
+    if correct_user
+      if @post.update(post_params)
+        render json: {statusCode: 200 , data: @post}
+      else
+        render json: @post.errors, status: :unprocessable_entity
+      end
     else
-      render json: @post.errors, status: :unprocessable_entity
+      render json: {message: 'Incorrect user'}
     end
-
   end
 
   # DELETE /posts/1 or /posts/1.json
   def destroy
-    @post.destroy
-
+    if correct_user
+      @post.destroy
+      render json: { statusCode: 200 ,  message: 'Delete post successfully'}, status: :ok
+    else
+      render json: {message: 'Incorrect user'}
+    end
   end
 
   def correct_user
-    @post = correct_user.posts.find_by(id: params[:id])
+    @post = current_user.posts.find_by(id: params[:id])
   end
 
   private

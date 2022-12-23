@@ -32,4 +32,11 @@ class Api::V1::RegistrationsController < Devise::RegistrationsController
     end
   end
 
+  # protected
+
+  # def update_resource(resource, params)
+  #   params.delete :current_password
+  #   resource.update_without_password(params)
+  # end
+
 end

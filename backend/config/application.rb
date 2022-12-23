@@ -41,5 +41,7 @@ module Be
 
     #autoloads lib folder during development
     config.autoload_paths << Rails.root.join('lib')
+
+    config.time_zone = 'Hanoi'
   end
 end
