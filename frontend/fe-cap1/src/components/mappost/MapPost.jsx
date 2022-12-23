@@ -9,7 +9,7 @@ import "react-toastify/dist/ReactToastify.css";
 export default function MapPost({post,onClose}) {
   // const onclickView = (e) => {};
   console.log("sdfds",post)
-  const [postitem,setPostitem]=useState(post)
+  const [commentitem,setCommentitem]=useState(null)
   const [comments,setComments]=useState(post.comments)
   console.log("comments",comments)
   const [createModalComment,setCreateModalComment]=useState(false)
@@ -50,6 +50,9 @@ export default function MapPost({post,onClose}) {
   const handleCreateShow= async  () =>{ 
     setCreateModalComment(!createModalComment)
   }
+  const callbackItem =async (item)=>{
+    setCommentitem(item )
+  }
   useEffect(() => {
     setComments(post.comments);
   }, [post]);
@@ -86,7 +89,7 @@ export default function MapPost({post,onClose}) {
                 <div className="modal-content-comment-content-title"> 
                   <FaSkull className="modal-content-comment-content-title-icon"></FaSkull>
                   <p>{post?.created_at?.toString().slice(0, 10)} </p>
-                  <h2> 55°35′N 46°51′E</h2>
+                  <h2> toạ độ {post?.latitude +"," +post?.longitude}</h2>
                 </div>
                 <div className="modal-content-comment-content-body">
                     <p>
@@ -99,7 +102,11 @@ export default function MapPost({post,onClose}) {
                 <div className="modal-content-comment-content-comment">
                 <div className="modal-content-comment-content-comment-body">
                     <div className="modal-content-comment-content-comment-write">
-                      <img src="https://encrypted-tbn0.gstatic.com/imageƠs?q=tbn:ANd9GcRiGxpPkOa9f5LzIgUoOswNCmnIA_DwaufG-A&usqp=CAU" />
+                      <img src={
+          commentitem?.user?.url_img ||
+          "https://jp.boxhoidap.com/boxfiles/cach-de-anh-dai-dien-dep--f85ddf18094383e085fb97258c9c8d87.wepb"
+        }
+        alt="" />
                       <textarea placeholder="You thinking ..." value={writerComment } onChange={(e)=>{setwriterComment(e.target.value)}}></textarea>
                       <button onClick={handleWriterComment}>Comment</button>
                     </div>
@@ -112,7 +119,7 @@ export default function MapPost({post,onClose}) {
                     //   <p className="comment-content-comment-read-letter-writed"> {comment?.description}</p>
                     // </div>
                     // </div>
-                    <MapPostComment comment={comment} handleDeleteComment={handleDeleteComment} ></MapPostComment>
+                    <MapPostComment comment={comment} handleDeleteComment={handleDeleteComment} callbackItem={callbackItem} ></MapPostComment>
                     ))}
                     <div className="modal-content-comment-content-comment-read">
                     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRiGxpPkOa9f5LzIgUoOswNCmnIA_DwaufG-A&usqp=CAU" />

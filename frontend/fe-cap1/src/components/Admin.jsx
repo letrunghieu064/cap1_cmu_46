@@ -9,6 +9,10 @@ import Exportexcel from '../util/constants/Exportexcel'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { CiUser } from "react-icons/ci";
+import { BiUserCircle } from "react-icons/bi";
+import { BiColumns } from "react-icons/bi";
+
+
 const Admin = () => {
   const [tab, setTab] = useState("user");
   const [inputsearch,setInputSearch] =useState("");
@@ -92,12 +96,12 @@ const Admin = () => {
   }
   let handleOnClickExport= async()=>{
    
-    console.log("",addpost)
+    console.log("sầ",addpost)
     if(addpost){
       toast.success('Export File Cuscess!', {
         position: toast.POSITION.TOP_RIGHT
     });
-      await Exportexcel.exportExcel(addpost,"danh sách post","list")
+    await Exportexcel.exportExcel(addpost,"danh sách post","list")
     }
   }
   const handleChange = async(e)=>{
@@ -127,14 +131,14 @@ const Admin = () => {
     <ul>
       <li>
         <a className="dashboard-link-a" href="#"   onClick={() => handleTab("user")} >
-          <i className="fas fa-menorah" />
-          <span className="nav-item">Manager User</span>
+          <BiUserCircle className="dashboard-link-a-icon"></BiUserCircle>
+          <p className="nav-item">Manager User</p>
         </a>
       </li>
       <li>
         <a className="dashboard-link-a" href="#">
-          <i className="fas fa-comment" />
-          <span className="nav-item"  onClick={() => handleTab("posts")} >Manager Post</span>
+        <BiColumns className="dashboard-link-a-icon"></BiColumns>
+          <p className="nav-item"  onClick={() => handleTab("posts")} >Manager Post</p>
         </a>
       </li>
      

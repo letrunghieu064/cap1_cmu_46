@@ -9,6 +9,7 @@ import Person from "./person/Person";
 import axios from "axios";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+
 const EditProfile = () => {
   const currentUser = useSelector((state) => state.auth);
   console.log(" user khiem", currentUser?.user?.data);
@@ -33,16 +34,17 @@ const EditProfile = () => {
   const handleChange = (e) => {
     console.log("test", e.target.value);
     if(errorlastname===1 && data?.last_name.length <=0){
+    
       setErrorLastName(3)
+      console.log("test1",errorlastname);
    }
    if(errorfirstname===1 && data?.first_name.length <=0){
     setErrorfirstName(3)
 
  }
- if(error===1 && data?.phone_number.length <=0){
+  if(error===1 && data?.phone_number.length <=0){
   setError(3)
-
-}
+  }
  
     setData({
       ...data,
@@ -69,6 +71,7 @@ const EditProfile = () => {
   //     [e.target.name]: e.target.value,
   //   });
   // };
+  
   const validatePhoneNumber = () => {
     const PHONE_REGEX = new RegExp(
       /^([+]?[\s0-9]+)?(\d{3}|[(]?[0-9]+[)])?([-]?[\s]?[0-9])+$/i
@@ -88,7 +91,7 @@ const EditProfile = () => {
   };
   const validateLastName = () => {
     const PHONE_REGEX = new RegExp(
-      /^[A-ZÀÁẠẢÃÂẦẤẬẨẪĂẰẮẶẲẴÈÉẸẺẼÊỀẾỆỂỄÌÍỊỈĨÒÓỌỎÕÔỒỐỘỔỖƠỜỚỢỞỠÙÚỤỦŨƯỪỨỰỬỮỲÝỴỶỸĐ][a-zàáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳýỵỷỹđ]*(?:[ ][A-ZÀÁẠẢÃÂẦẤẬẨẪĂẰẮẶẲẴÈÉẸẺẼÊỀẾỆỂỄÌÍỊỈĨÒÓỌỎÕÔỒỐỘỔỖƠỜỚỢỞỠÙÚỤỦŨƯỪỨỰỬỮỲÝỴỶỸĐ][a-zàáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳýỵỷỹđ]*)*$/
+      /^[a-zA-Z]+$/
     );
     if (data?.last_name === "") {
       setErrorLastName(0);
@@ -114,7 +117,7 @@ const EditProfile = () => {
   }
   const validateFirstName = () => {
     const PHONE_REGEX = new RegExp(
-      /^[A-ZÀÁẠẢÃÂẦẤẬẨẪĂẰẮẶẲẴÈÉẸẺẼÊỀẾỆỂỄÌÍỊỈĨÒÓỌỎÕÔỒỐỘỔỖƠỜỚỢỞỠÙÚỤỦŨƯỪỨỰỬỮỲÝỴỶỸĐ][a-zàáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳýỵỷỹđ]*(?:[ ][A-ZÀÁẠẢÃÂẦẤẬẨẪĂẰẮẶẲẴÈÉẸẺẼÊỀẾỆỂỄÌÍỊỈĨÒÓỌỎÕÔỒỐỘỔỖƠỜỚỢỞỠÙÚỤỦŨƯỪỨỰỬỮỲÝỴỶỸĐ][a-zàáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳýỵỷỹđ]*)*$/
+      /^[a-zA-Z]+$/
     );
     if (data?.first_name === "") {
       setErrorfirstName(0);
@@ -173,11 +176,11 @@ const EditProfile = () => {
   const updateProfile = async (e) => {
     e.preventDefault();
     console.log("data", data);
-   
+    validateLastName()
      validatePhoneNumber();
      validateCardId();
      console.log("check", validatePhoneNumber(),validateCardId());
-    
+     validateFirstName()
     
      
     if (validatePhoneNumber() &&  validateCardId() &&  validateLastName() && validateFirstName()) {
@@ -191,7 +194,19 @@ const EditProfile = () => {
     });
     
     
+    } if(validateLastName() && errorlastname ===1  ){
+     
+      setErrorLastName(3)
+
+     
     }
+    if(validateFirstName() && errorfirstname ===1  ){
+     
+      setErrorfirstName(3)
+
+     
+    }
+
     if(validatePhoneNumber() && error   ){
      
       setError(3)
@@ -253,8 +268,8 @@ const EditProfile = () => {
                   onChange={handleChange}
                 />
                   {errorfirstname ===0  && data?.first_name?.length <=0 ?(
-                <label id="errorComment">do not leave the first name blank </label> ): errorfirstname ===1 &&  data?.first_name?.length >0?
-              ( <label id="errorComment">not character</label>): errorfirstname ===2 && data?.first_name?.length >15 ? ( <label id="errorComment">first name  more than 15 characters </label>) :""}
+                <label id="errorComment">do not leave the first name blank </label> ): errorfirstname ===1 &&  data?.first_name.length >0?
+              ( <label id="errorComment">first name cannot contain numbers</label>): errorfirstname ===2 && data?.first_name?.length >15 ? ( <label id="errorComment">first name  more than 15 characters </label>) :""}
               </div>
               <div className="container-right-body-item">
                 <span>Last Name </span>
@@ -266,8 +281,8 @@ const EditProfile = () => {
                   onChange={handleChange}
                 />
                   {errorlastname ===0  && data?.last_name?.length <=0 ?(
-                <label id="errorComment">do not leave the last name blank </label> ): errorlastname ===1 &&  data?.last_name?.length >0 ?
-              ( <label id="errorComment">not character</label>): errorlastname ===2 && data?.last_name?.length >15 ? ( <label id="errorComment">last name  more than 15 characters </label>) :""}
+                <label id="errorComment">do not leave the last name blank </label> ): errorlastname ===1 &&  data?.last_name.length >0 ?
+              ( <label id="errorComment">last name cannot contain numbers</label>): errorlastname ===2 && data?.last_name?.length >15 ? ( <label id="errorComment">last name  more than 15 characters </label>) :""}
               </div>
               <div className="container-right-body-item">
                 <span>User Name </span>
@@ -341,27 +356,27 @@ const EditProfile = () => {
                 </select>
               </div>
               <div className="container-right-body-bottom-submit">
-                <a
-                  href
+                <button
+                  
                   className="container-right-body-bottom-submit-cancel"
                   onClick={Comback}
                 >
-                  Về trang Edit
-                </a>
-                <a
-                  href
+                  About edit page
+                </button>
+                <button
+                  
                   className="container-right-body-bottom-submit-cancel"
                   onClick={Cancel}
                 >
                   Cancel
-                </a>
-                <a
-                  href
+                </button>
+                <button
+                  
                   className="container-right-body-bottom-submit-ok"
                   onClick={updateProfile}
                 >
                   Update
-                </a>
+                </button>
                 <ToastContainer />
               </div>
             </div>

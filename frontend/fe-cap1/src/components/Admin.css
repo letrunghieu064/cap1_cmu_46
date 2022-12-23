@@ -166,9 +166,24 @@ body{
   color: #fff;
   transition: 0.5s;
 }
-.nav-dashboard li a{
+.nav-dashboard ul li a{
   display: flex;
   align-items: center;
+  text-decoration: none;
+}
+.nav-dashboard ul li a:hover{
+  
+
+}
+.nav-dashboard ul li a p{
+  font-size: 20px;  
+}
+.nav-dashboard ul li {
+  display:flex;
+  align-items: center;
+}
+.dashboard-link-a-icon{
+font-size: 42px;
 }
 /* Attendance List serction */
 .attendance{
@@ -191,7 +206,7 @@ body{
   min-width: 100%;
   overflow: hidden;
   border-radius: 5px 5px 0 0;
-
+  text-align: left;
 }
 .table-dashboard thead tr{
   color: #fff;

@@ -36,10 +36,23 @@
 }
 .inputSeacrh{
   position: relative;
-  background-color: #e3e5e9a6;
+  background-color: #c4c4c4a6;
   padding: 6px 20px;
   border: 1px solid transparent;
   border-radius: 16px;
+  text-indent: 14px;
+}
+.nav-left_searchIcon{
+  font-size: 20px;
+  color: black;
+  position: absolute;
+  /* transform: translateY(50%); */
+  transform: translate(50%,50%);
+}
+.search-form-home{
+  display: flex;
+  padding: 2px;
+  margin-left:10px;
 }
 .inputSeacrh:focus{
   outline: none;
@@ -74,27 +87,21 @@ color: #2b8a3e;
 font-size: 32px;
 color: black;
 }
-.nav-left_searchIcon{
-  top: 50px;
-  font-size: 20px;
-  color: black;
-  position: absolute;
-}
+
 
 .home-body{
 padding: 0 20px;
 display: flex;
 gap: 20px;
+align-items: flex-start;
 }
 .home-body_left{
 margin-top: 50px;
 box-shadow: 0px 0px 2px #ccc;
 border-radius: 10px;
-}
-.home-body_left{
 background-color: white;
 flex: 1;
-height: 100vh;
+/* height: 100vh; */
 }
 .body_left-list{
 list-style: none;

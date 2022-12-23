@@ -105,10 +105,12 @@ export default function Header() {
     <div>
       <div className="nav">
         <div className="nav-left">
-          <a href="#">
+          <form className="search-form-home">
             <AiOutlineSearch className="nav-left_searchIcon"></AiOutlineSearch>
-          </a>
+    
           <input type="text" className="inputSeacrh" />
+          </form>
+        
         </div>
         <div className="nav-align">
           <ul className="nav-align_menu">

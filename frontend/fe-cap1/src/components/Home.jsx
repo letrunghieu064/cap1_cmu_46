@@ -14,6 +14,7 @@ import { FcVideoCall } from "react-icons/fc";
 import { FcPicture } from "react-icons/fc";
 import { SlEmotsmile } from "react-icons/sl";
 import { BiGroup } from "react-icons/bi";
+import { BiImages } from "react-icons/bi";
 import { CgProfile } from "react-icons/cg";
 import { CgLogOut } from "react-icons/cg";
 import { logout } from "../actions/auth";
@@ -22,7 +23,9 @@ import PostItem from "./PostItem";
 import PostCreate from "./posts/PostCreate";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import userService from "../services/user.service";
 const Home = () => {
+  const [inputsearch,setInputSearch] =useState("");
   const [enterPopup, setEnterPopup] = useState(false);
   const [createModal, setCreateModal] = useState(false);
   const [addpost, setaddpost] = useState([]);
@@ -43,6 +46,11 @@ const Home = () => {
 
     }
   };
+  const SearchPost= async()=>{
+    console.log("input",inputsearch)
+    const response = await userService.searchPost(inputsearch);
+    setaddpost(response);
+  }
 
   const onHanler = () => {
     setEnterPopup(!enterPopup);
@@ -96,16 +104,28 @@ const Home = () => {
     const newPosts = addpost.filter((item) => item.id !== id);
     setaddpost(newPosts);
   };
+  const handleChange = async(e)=>{
+    if(inputsearch.length===0){
+      
+      setaddpost(addpost);
+    }
+    setInputSearch(e.target.value)
+    console.log("ess",inputsearch.length)
+   
+  }
 
   return (
     <div>
       {isLoggedIn && (
         <div className="nav">
           <div className="nav-left">
-            <a href="!#">
-              <AiOutlineSearch className="nav-left_searchIcon"></AiOutlineSearch>
-            </a>
-            <input type="text" className="inputSeacrh" />
+            <form className="search-form-home">
+            
+
+           <input placeholder="Search..." type="search" className="inputSeacrh" value ={inputsearch} onChange={handleChange} />
+           <AiOutlineSearch className="nav-left_searchIcon"  onClick={SearchPost} ></AiOutlineSearch>
+            </form>
+              
           </div>
           <div className="nav-align">
             <ul className="nav-align_menu">

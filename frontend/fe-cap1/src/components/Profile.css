@@ -16,6 +16,7 @@ body{
   padding: 20px 30px;
   flex: 5;
   box-shadow: -2px 0px 3px 0px #aaa;
+  text-align: left;
 }
 .edit-profile-container-right h1{
   margin: 0;

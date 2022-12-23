@@ -3,6 +3,8 @@ import { CreatePost } from "../../actions/post";
 import { TfiClose } from "react-icons/tfi";
 import { CiLocationOn } from "react-icons/ci";
 import { useDispatch ,useSelector} from "react-redux";
+import { BiImages } from "react-icons/bi";
+
 import "./PostCreate.css";
 import axios from "axios";
 
@@ -108,16 +110,21 @@ export default function PostCreate({ onClose, callbackCreateSuccess }) {
           />
           <p>{currentUser.data.username}</p>
         </div>
-        <input type="file" onChange={handleUploadIamge} />
-        <input
+        <div className="div-label-post-img">
+          <label className="label-post-img" for="postFIle"><BiImages className="label-post-img-icon"></BiImages></label>
+          <input
           className="input_Name"
           name="name"
           id="name"
           onChange={handleChange}
-          placeholder="nhập tên bài post"
+          placeholder="Nhập tên bài post"
           value={data.name}
           validations={required}
         ></input>
+        </div>
+        {/* <BiImages></BiImages> */}
+        <input id="postFIle" type="file" onChange={handleUploadIamge} />
+        
         {error&& data.name.length <=0 ?
         <label className="l1 l2">name can not be Empty</label> :" "}
         <div className="create--header-content">

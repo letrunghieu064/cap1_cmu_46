@@ -95,11 +95,11 @@ const Comment = ({ postId }) => {
         ></input>
 
         <button
-          class="btn btn-primary"
+          class="btn-comment"
           type="submit"
           onClick={handleWriterComment}
         >
-          Bình
+          Bình Luận
         </button>
       </div>
       {error && writerComment.length <= 0 ? (
@@ -225,7 +225,8 @@ const CommentItem = ({ data, handleDeleteComment, handleEditComment ,handlEditSu
           <p className="comment_others-name">{comment?.user?.username}</p>
           <span className="comment_others-content">{comment?.description}</span>
         </div>
-        <p className="comment_others-action"> Thích</p>
+          <div className="comment_others-content-actions-list">
+          <p className="comment_others-action"> Thích</p>
         <p
           className="comment_others-action"
           onClick={() => {
@@ -247,6 +248,7 @@ const CommentItem = ({ data, handleDeleteComment, handleEditComment ,handlEditSu
         <span className="comment_others-action">
           {comment?.created_at?.toString().slice(0, 10)}
         </span>
+          </div>
       </div>
     </div>
   );
