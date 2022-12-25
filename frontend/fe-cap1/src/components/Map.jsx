@@ -157,11 +157,16 @@ export default function App() {
                   setSelectedPark(park);
                 }}
               >
-                <img
+               {park?.status ==="verified" ? (  <img
                   onClick={handleCreateModal}
+                  src="https://thuviendohoa.vn/upload/images/thumbs/logo-than-trong-bieu-tuong-canh-bao-tam-giac-vang-dau-cham-than-png-382.jpg"
+                  alt="https://thuviendohoa.vn/upload/images/thumbs/logo-than-trong-bieu-tuong-canh-bao-tam-giac-vang-dau-cham-than-png-382.jpg"
+                />) :(  <img
+                  onClick={handleCreateModal}
+                  style={{width:"20px"}}
                   src="https://freesvg.org/img/Map-Warning-Icon.png"
                   alt="https://freesvg.org/img/Map-Warning-Icon.png"
-                />
+                />)}
               </button>
             </Marker>
           ))}
@@ -232,6 +237,7 @@ export default function App() {
               </div>
             </div>
               <div className="modal-content-map-body">
+                {post?.status ==="verified" ? ( <p style={{color: "green"}}>đã xác thực </p>) :( <p style={{color: "red"}}>chưa xác thực </p>)}
                 <p>{post?.description}</p>
                                 <img src={post?.img_url || ""} alt="" />
 

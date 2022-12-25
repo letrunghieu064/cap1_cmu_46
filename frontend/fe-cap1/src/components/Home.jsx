@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect ,Fragment} from "react";
 import "./Home.css";
 import { AiOutlineSearch } from "react-icons/ai";
 import { BiHomeAlt } from "react-icons/bi";
@@ -65,6 +65,12 @@ const Home = () => {
         console.log(error);
       });
   };
+  const onHandleProfile = (e) => {
+    
+    window.location.replace("/profile");
+  
+};
+
   const Handlehome = (e) => {
     e.preventDefault();
     window.location.replace("/home");
@@ -172,30 +178,49 @@ const Home = () => {
                     {/* )} */}
                   </BiUserCircle>
                 </a>
-                {enterPopup && (
-                  <div className="user__modal--body">
-                    <ul className="user__modal--body-list">
-                      <li className="user__modal--body-item">
-                        <a href="#" onClick={handleAdmin}>
-                        <ToastContainer />
-                          <p>Admin</p>
-
-                          <BiGroup className="user__modal--body-icon"></BiGroup>
-                        </a>
-                      </li>
-                      <li className="user__modal--body-item">
-                        <a href="profile">
-                          <p>Profile</p>
-                          <CgProfile className="user__modal--body-icon"></CgProfile>
-                        </a>
-                      </li>
-                      <li className="user__modal--body-item">
-                        <p onClick={handleLogout}>LogOut</p>
-                        <CgLogOut className="user__modal--body-icon"></CgLogOut>
-                      </li>
-                    </ul>
-                  </div>
-                )}
+                {enterPopup && currentUser?.data?.role === "admin" ?(
+                <div className="user__modal--body">
+                  <ul className="user__modal--body-list">
+                    <li className="user__modal--body-item">
+                      <p onClick={handleAdmin}>Admin</p>
+                      <ToastContainer />
+                      <BiGroup className="user__modal--body-icon"></BiGroup>
+                    </li>
+                    <li
+                      className="user__modal--body-item"
+                      onClick={onHandleProfile}
+                    >
+                      <p>Profile</p>
+                      <CgProfile className="user__modal--body-icon"></CgProfile>
+                    </li>
+                    <li className="user__modal--body-item">
+                      <p onClick={handleLogout}>LogOut</p>
+                      <CgLogOut className="user__modal--body-icon"></CgLogOut>
+                    </li>
+                  </ul>
+                </div>
+              ): enterPopup && currentUser?.data?.role === "user" ?  (<div className="user__modal--body">
+              <ul className="user__modal--body-list">
+                {/* <li className="user__modal--body-item">
+                  <p onClick={handleAdmin}>Admin</p>
+                  <ToastContainer />
+                  <BiGroup className="user__modal--body-icon"></BiGroup>
+                </li> */}
+                <li
+                  className="user__modal--body-item"
+                  onClick={onHandleProfile}
+                >
+                  <p>Profile</p>
+                  <CgProfile className="user__modal--body-icon"></CgProfile>
+                </li>
+                <li className="user__modal--body-item">
+                  <p onClick={handleLogout}>LogOut</p>
+                  <CgLogOut className="user__modal--body-icon"></CgLogOut>
+                </li>
+              </ul>
+            </div>):(
+          <Fragment></Fragment>
+        )}
               </li>
             </ul>
           </div>

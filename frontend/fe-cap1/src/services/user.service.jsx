@@ -190,6 +190,24 @@ const searchUser = async(username)=>{
   })
   return res;
 }
+const deleteLike = async(post_id)=>{
+  console.log("xoas",post_id)
+  const res = await axios.delete(API_URL + `/likes/${post_id}`, { headers: authHeader() })
+  .then((response)=>{
+    return response.data;
+    
+  })
+  return res;
+}
+const comFirm = async(id,status)=>{
+  console.log("sajsf",typeof status)
+  const res = await axios.put(API_URL + `/admin/posts/${id}`,{status},{ headers: authHeader() })
+  .then((response)=>{
+    return response.data;
+    
+  })
+  return res;
+}
 
 
 
@@ -215,5 +233,7 @@ export default {
   createLike,
   getLikes,
   searchPost,
-  searchUser
+  searchUser,
+  deleteLike,
+  comFirm
 };

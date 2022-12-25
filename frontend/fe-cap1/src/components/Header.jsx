@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect , Fragment } from "react";
 import "./Home.css";
 import { AiOutlineSearch } from "react-icons/ai";
 import { BiHomeAlt } from "react-icons/bi";
@@ -47,14 +47,15 @@ export default function Header() {
   };
 
   const onHandleProfile = (e) => {
-    setprofile(!profile);
-    if (profile) {
+    
       window.location.replace("/profile");
-    }
+    
   };
 
   const onHanler = () => {
+   
     setEnterPopup(!enterPopup);
+    
   };
   const handleLogout = (e) => {
     e.preventDefault();
@@ -157,7 +158,7 @@ export default function Header() {
                   {/* )} */}
                 </BiUserCircle>
               </a>
-              {enterPopup && (
+              {enterPopup && currentUser?.data?.role === "admin" ?(
                 <div className="user__modal--body">
                   <ul className="user__modal--body-list">
                     <li className="user__modal--body-item">
@@ -178,7 +179,28 @@ export default function Header() {
                     </li>
                   </ul>
                 </div>
-              )}
+              ): enterPopup && currentUser?.data?.role === "user" ?  (<div className="user__modal--body">
+              <ul className="user__modal--body-list">
+                {/* <li className="user__modal--body-item">
+                  <p onClick={handleAdmin}>Admin</p>
+                  <ToastContainer />
+                  <BiGroup className="user__modal--body-icon"></BiGroup>
+                </li> */}
+                <li
+                  className="user__modal--body-item"
+                  onClick={onHandleProfile}
+                >
+                  <p>Profile</p>
+                  <CgProfile className="user__modal--body-icon"></CgProfile>
+                </li>
+                <li className="user__modal--body-item">
+                  <p onClick={handleLogout}>LogOut</p>
+                  <CgLogOut className="user__modal--body-icon"></CgLogOut>
+                </li>
+              </ul>
+            </div>):(
+          <Fragment></Fragment>
+        )}
             </li>
           </ul>
         </div>

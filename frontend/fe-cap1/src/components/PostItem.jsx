@@ -57,21 +57,17 @@ export default function PostItem({ post, onDelete }) {
    
     return sum;
   };
-  const hanldeLike = async (post_id) => {
+  const hanldeLike = async () => {
+
    
-    if (checklike) {
-     
-      const res = await userService.createLike(currentUser?.data?.id, post_id);
-      console.log("like", currentUser?.data?.id);
-      setLike(sumArray);
-      
-    } else {
-      if (like > 0) {
-        setLike(sumArray);
-      } else {
-        setLike(sumArray);
+     if(checklike){
+      const res = await userService.deleteLike(post.id);
+      console.log("likes1", res);
+      }else{
+        const res1 = await userService.createLike(currentUser?.data?.id, post.id);
+        console.log("likes2", res1);
       }
-    }
+    
   };
 
   const handleDeletePost = async (id) => {
@@ -92,7 +88,7 @@ export default function PostItem({ post, onDelete }) {
     // onDelete(id);
   };
   useEffect(() => {
-    setLike(sumArray);
+ 
    const   frechData = async () => {
       const res = await userService
         .getLikes()
@@ -101,6 +97,7 @@ export default function PostItem({ post, onDelete }) {
         })
         .then((likes) => {
           setLikes(likes)
+       
           return likes;
          
         })
@@ -113,7 +110,11 @@ export default function PostItem({ post, onDelete }) {
    
     frechData();
    
-  }, []);
+  }, [post.id]);
+  useEffect(() => {
+    console.log("likeid",likes)
+    setCheckLike(likes.findIndex((like) => like.id.user_id === currentUser?.id) !== -1);
+  }, [likes, currentUser.id]);
 
   // }
   // if (checklike) {
@@ -143,6 +144,7 @@ export default function PostItem({ post, onDelete }) {
             <BiWorld className="new-header_infor-earth"></BiWorld>
           </div>
         </div>
+        {post?.status ==="verified" ? ( <p style={{color: "green"}}>đã xác thực </p>) :( <p style={{color: "red"}}>chưa xác thực </p>)}
         <div className="new-header_infor-icons">
           <BiDotsHorizontalRounded
             className="new-header_infor-icon"
@@ -158,10 +160,10 @@ export default function PostItem({ post, onDelete }) {
                   <p>Xóa</p>
                   <CiTrash className="post_action-icon"></CiTrash>
                 </li>
-                <li className="post_action-item">
+                {/* <li className="post_action-item">
                   <p onClick={handleCreateModal}>Chỉnh Sửa </p>
                   <CiPickerEmpty className="post_action-icon"></CiPickerEmpty>
-                </li>
+                </li> */}
               </ul>
             </div>
           )}
@@ -183,7 +185,7 @@ export default function PostItem({ post, onDelete }) {
         <div className="new-action">
           <AiTwotoneLike className="new-actions-icon"></AiTwotoneLike>
           <p className="new-actions-text" onClick={hanldeLike}>
-            {like} Thích
+            {likes.length} Thích
           </p>
         </div>
         <div className="new-action" onClick={handleComment}>
