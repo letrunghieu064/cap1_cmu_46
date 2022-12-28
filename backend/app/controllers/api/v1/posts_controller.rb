@@ -71,7 +71,7 @@ class Api::V1::PostsController < ApplicationController
 
   def find(name)
     post = Post.where("name like ?", "%#{name}%")
-    if post
+    if post.nil?
       render json: post
     else
       render json: {message: 'Post name does not exists'}

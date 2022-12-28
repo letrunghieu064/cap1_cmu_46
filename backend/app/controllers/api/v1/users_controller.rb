@@ -1,5 +1,5 @@
 class Api::V1::UsersController < ApplicationController
-  skip_before_action :authenticate_request, only: %i[login register]
+  skip_before_action :authenticate_request, only: %i[login register forgot]
   before_action :set_user, only: [ :show, :update ]
   before_action :correct_user, only: [:edit, :update]
 
@@ -87,6 +87,12 @@ class Api::V1::UsersController < ApplicationController
     render json: {
       message: 'You have passed  '
     }
+  end
+
+  def forgot
+    user = User.find_by_email(params[:email])
+    puts user
+    user.send_password_reset if user
   end
 
   private

@@ -3,19 +3,21 @@ class Api::V1::PasswordController < ApplicationController
   attr_accessor :email, :password
 
   def forgot
-
-    user = User.find_by(email: params[:email])
-    if user
-      render json: {
-        alert: "Successfuly"
-      }
-      user.send_password_reset
-    else
-      #this sends regardless of whether there's an email in database for security reasons
-      render json: {
-        alert: "If this user exists, we have sent you a password reset email."
-      }
-    end
+    # user = User.find_by_email(params[:email])
+    # if user.nil?
+    #   user.send_password_reset and
+    #   render json: {
+    #     alert: "Successfuly"
+    #   }
+    # else
+    #   #this sends regardless of whether there's an email in database for security reasons
+    #   render json: {
+    #     alert: "If this user exists, we have sent you a password reset email."
+    #   }
+    # end
+    user = User.find_by(email: email)
+    puts user
+    user.send_password_reset if user
   end
 
   def reset
