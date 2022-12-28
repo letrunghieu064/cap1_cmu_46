@@ -62,9 +62,11 @@ export default function PostItem({ post, onDelete }) {
    
      if(checklike){
       const res = await userService.deleteLike(post.id);
+      setLikes(res)
       console.log("likes1", res);
       }else{
         const res1 = await userService.createLike(currentUser?.data?.id, post.id);
+        setLikes(res1)
         console.log("likes2", res1);
       }
     
@@ -113,7 +115,7 @@ export default function PostItem({ post, onDelete }) {
   }, [post.id]);
   useEffect(() => {
     console.log("likeid",likes)
-    setCheckLike(likes.findIndex((like) => like.id.user_id === currentUser?.id) !== -1);
+    setCheckLike(likes.findIndex((like) => like?.id?.user_id === currentUser?.data?.id) !== -1);
   }, [likes, currentUser.id]);
 
   // }
@@ -144,7 +146,7 @@ export default function PostItem({ post, onDelete }) {
             <BiWorld className="new-header_infor-earth"></BiWorld>
           </div>
         </div>
-        {post?.status ==="verified" ? ( <p style={{color: "green"}}>đã xác thực </p>) :( <p style={{color: "red"}}>chưa xác thực </p>)}
+        {post?.status ==="verified" ? ( <p className="chua-xac-thuc" style={{color: "green"}}>đã xác thực </p>) :( <p className="chua-xac-thuc" style={{color: "red"}}>chưa xác thực </p>)}
         <div className="new-header_infor-icons">
           <BiDotsHorizontalRounded
             className="new-header_infor-icon"
@@ -155,7 +157,7 @@ export default function PostItem({ post, onDelete }) {
               <ul className="post_action-list">
                 <li
                   className="post_action-item"
-                  onClick={() => handleDeletePost(post.id)}
+                  onClick={() => handleDeletePost(post?.id)}
                 >
                   <p>Xóa</p>
                   <CiTrash className="post_action-icon"></CiTrash>
@@ -185,7 +187,7 @@ export default function PostItem({ post, onDelete }) {
         <div className="new-action">
           <AiTwotoneLike className="new-actions-icon"></AiTwotoneLike>
           <p className="new-actions-text" onClick={hanldeLike}>
-            {likes.length} Thích
+            {likes?.length} Thích
           </p>
         </div>
         <div className="new-action" onClick={handleComment}>

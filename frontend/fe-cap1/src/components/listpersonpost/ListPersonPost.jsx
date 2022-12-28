@@ -106,6 +106,7 @@ export default function ListPersonPost() {
         Edit
       </a>
     </div>
+    <div className="body-profile-right">
     {posts.map((post, index) => (
             <PersonPost
             onDelete={onDelete}
@@ -115,6 +116,7 @@ export default function ListPersonPost() {
               key={`post-item-${index}`}
             />
           ))}
+   </div>       
   </div>
   </div>
   );

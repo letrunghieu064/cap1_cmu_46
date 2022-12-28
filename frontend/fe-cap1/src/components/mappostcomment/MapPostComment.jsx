@@ -23,7 +23,7 @@ export default function MapPostComment({ comment, handleDeleteComment ,callbackI
             {comment?.user?.username}
           </p>
           <p className="comment-content-comment-read-letter-time">
-            11 minutes ago
+          {comment?.created_at?.toString().slice(0, 10)}
           </p>
           <p className="comment-content-comment-read-letter-writed">
             {" "}

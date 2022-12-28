@@ -140,3 +140,34 @@ body{
 .edit-profile-container-right-header{
   padding: 0 20px;
 }
+
+.body-profile-right{
+  background-color: #69db7c;
+  padding:0;
+}
+.body-profile-right-postitem{
+  margin:0 0 28px 0;
+  background-color: white;
+  padding:20px;
+  border-radius: 20px;
+}
+.buttono-profile-edit{
+  display:inline-block;
+  padding: 8px 20px;
+  margin-left: auto;
+  display: block;
+  border: none;
+  border-radius: 4px;
+  background-color: #2f9e44;
+  color: white !important;
+  font-size: 24px;
+  float:right;
+}
+.body-profile-header{
+  z-index: 1;
+}
+
+
+
+
+

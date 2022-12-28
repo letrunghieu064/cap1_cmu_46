@@ -1,11 +1,11 @@
-import React, { useRef, useState ,useEffect} from "react";
+import React, { useRef, useState ,useEffect,Fragment} from "react";
 import { CreatePost } from "../../actions/post";
 import { TfiClose } from "react-icons/tfi";
 import { CiLocationOn } from "react-icons/ci";
 import { useDispatch ,useSelector} from "react-redux";
 import userService from "../../services/user.service";
 import axios from "axios";
-
+import { BiImages } from "react-icons/bi";
 export default function EditPost({ onClose, postItem ,callbackCreateSuccess}) {
   const { user: currentUser } = useSelector((state) => state.auth);
   const inputAddressRef = useRef(null);
@@ -102,14 +102,27 @@ export default function EditPost({ onClose, postItem ,callbackCreateSuccess}) {
           />
           <p>{currentUser.data.username}</p>
         </div>
-        <input type="file"  onChange={handleUploadIamge}  />
-        <input
+        <div className="div-label-post-img">
+          <label className="label-post-img" for="postFIle"><BiImages className="label-post-img-icon"></BiImages></label>
+          <input
+          className="input_Name"
           name="name"
           id="name"
-          value={data.name}
           onChange={handleChange}
-          placeholder="nhập tên bài post"
+          placeholder="Nhập tên bài post"
+          value={data.name}
         ></input>
+        </div>
+         <input id="postFIle" type="file" onChange={handleUploadIamge} />
+        {data?.img_url ?(<img 
+              //   objectFit={"cover"}
+              // width={"full"}
+              // height={"120px"}
+              // rounded="lg"
+               src={data?.img_url} alt={data?.img_url} />
+               ): (
+                <Fragment></Fragment>
+              )}
          {error&& data.name.length <=0 ?
         <label className="l1 l2">name can not be Empty</label> :" "}
         <div className="create--header-content">

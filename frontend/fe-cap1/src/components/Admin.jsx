@@ -172,7 +172,7 @@ const Admin = () => {
                     Search
                   </button>
                   <button
-                    classname="btn btn-success"
+                    className="reset-adminn"
                     onClick={() => {
                       setCheckReset(!checkreset);
                     }}
@@ -245,23 +245,24 @@ const Admin = () => {
                   >
                     Search
                   </button>
+                  
                   <button
-                    classname="btn btn-success"
-                    onClick={() => {
-                      handleOnClickExport();
-                    }}
-                  >
-                    {" "}
-                    Export File
-                  </button>
-                  <button
-                    classname="btn btn-success"
+                    className="reset-adminn"
                     onClick={() => {
                       setCheckReset(!checkreset);
                     }}
                   >
                     {" "}
                     Reset
+                  </button>
+                  <button
+                    className="reset-adminn btn-export-file"
+                    onClick={() => {
+                      handleOnClickExport();
+                    }}
+                  >
+                    {" "}
+                    Export File
                   </button>
                 </form>
                 <table className="table-dashboard">
@@ -296,7 +297,8 @@ const Admin = () => {
                         <td>
                           {" "}
                           {post?.status === "verified"? (
-                            <button
+                            <button className="button-xacthuc"
+                  
                               onClick={() => {
                                 handleAccuracy(post?.id,0);
                               }}

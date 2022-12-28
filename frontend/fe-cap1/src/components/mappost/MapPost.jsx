@@ -26,6 +26,7 @@ export default function MapPost({post,onClose}) {
       callbackComment(res);
     
     }
+    setwriterComment("")
   };
   const onDeleteComment = (id) => {
     console.log("id", id);
@@ -63,7 +64,7 @@ export default function MapPost({post,onClose}) {
             height: "920px",
             marginTop:"60px",
             marginRight:"499px",
-            width: "420px",
+            width: "841px",
             left: "auto",
             right: "0px",
             
@@ -82,7 +83,7 @@ export default function MapPost({post,onClose}) {
                     
                 </div>
                 <div className="modal-content-comment-content"  style={{
-             height: "300px",
+             height: "600px",
             overflowY: "scroll",
             
             }}> 
@@ -95,19 +96,19 @@ export default function MapPost({post,onClose}) {
                     <p>
                     {post?.description}
                     </p>
-                    <img src={post?.img_url || ""} alt="" />
+                    <img style={{width: " 100%"}} src={post?.img_url || ""} alt="" />
                     <button onClick={handleCreateShow}>Show Comment</button>
                 </div>
                 {createModalComment && (
                 <div className="modal-content-comment-content-comment">
                 <div className="modal-content-comment-content-comment-body">
                     <div className="modal-content-comment-content-comment-write">
-                      <img src={
+                      <img style={{width: "50px",height:"50px"}} src={
           commentitem?.user?.url_img ||
           "https://jp.boxhoidap.com/boxfiles/cach-de-anh-dai-dien-dep--f85ddf18094383e085fb97258c9c8d87.wepb"
         }
         alt="" />
-                      <textarea placeholder="You thinking ..." value={writerComment } onChange={(e)=>{setwriterComment(e.target.value)}}></textarea>
+                      <textarea style={{width: "500px",margin:"80px"}} placeholder="You thinking ..." value={writerComment } onChange={(e)=>{setwriterComment(e.target.value)}}></textarea>
                       <button onClick={handleWriterComment}>Comment</button>
                     </div>
                     {comments?.map((comment,index) =>(

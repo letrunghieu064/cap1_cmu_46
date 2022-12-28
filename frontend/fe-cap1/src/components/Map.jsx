@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./Map/Map.css"
+ import markergreen from  "../img/markergreen.png";
+ import markerred from  "../img/markerred.png";
 import ReactMapGL, {
   Marker,
   Popup,
@@ -22,6 +24,7 @@ import { CiShare2 } from "react-icons/ci";
 import { CiLocationOn } from "react-icons/ci";
 import { FaSkull } from "react-icons/fa";
 import MapPost from "./mappost/MapPost";
+import { FiClock } from "react-icons/fi";
 export default function App() {
   const [viewport, setViewport] = useState({
     latitude: 16.0602077,
@@ -143,13 +146,14 @@ export default function App() {
             setViewport(viewport);
           }}
         >
-          {posts.map((park) => (
+          {posts.map((park,index) => (
             <Marker
               key={park.id}
               latitude={Number(park.latitude)}
               longitude={Number(park.longitude)}
               onClick={handleCreateModal}
             >
+            <a href={"#"+park.id}>
               <button
                 className="marker-btn"
                 onClick={(e) => {
@@ -159,37 +163,46 @@ export default function App() {
               >
                {park?.status ==="verified" ? (  <img
                   onClick={handleCreateModal}
-                  src="https://thuviendohoa.vn/upload/images/thumbs/logo-than-trong-bieu-tuong-canh-bao-tam-giac-vang-dau-cham-than-png-382.jpg"
-                  alt="https://thuviendohoa.vn/upload/images/thumbs/logo-than-trong-bieu-tuong-canh-bao-tam-giac-vang-dau-cham-than-png-382.jpg"
+                  src={markergreen}
+                  alt={markergreen}
                 />) :(  <img
                   onClick={handleCreateModal}
                   style={{width:"20px"}}
-                  src="https://freesvg.org/img/Map-Warning-Icon.png"
-                  alt="https://freesvg.org/img/Map-Warning-Icon.png"
+                  src={markerred}
+                  alt={markerred}
                 />)}
               </button>
+            </a>
             </Marker>
           ))}
 
           {selectedPark ? (
-            <Popup
+            <Popup 
               latitude={selectedPark.latitude}
               longitude={selectedPark.longitude}
               onClose={() => {
                 setSelectedPark(null);
               }}
             >
-              <div
+              <div className="popppp-form"
                 style={{
-                  backgroundColor: "blue",
-                  color: "white",
+              
+                  color: "black",
                   borderRadius: "1em",
-                  padding: "0.2em",
+                  
+                  // padding: "0.2em",
                 }}
               >
-                <h6>Địa chỉ : {selectedPark?.address}</h6>
+                <h6 className="popuppp-header">Địa chỉ : {selectedPark?.address}</h6>
+               
+                <img className="popupppp-img"
+                    
+               src={selectedPark?.img_url} alt={selectedPark?.img_url} />
                 <p>description :{selectedPark?.description}</p>
-                <img src={selectedPark.img_url} alt={selectedPark.img_url} />
+                <div className="popppp-time">
+                  <FiClock className="popppp-time-icon"></FiClock>
+                  <p>{selectedPark?.created_at?.toString().slice(0, 10)}</p>
+                </div>
               </div>
             </Popup>
           ) : null}
@@ -225,7 +238,7 @@ export default function App() {
               </div>
             </div>
           {posts.map((post,index)=>(
-            <div className="modal-content-item">
+            <div id={post.id} className="modal-content-item">
             <div className="modal-content-map-header">
             <div className="modal-content-map-header-left">
             <FcSpeaker className="modal-content-map-header-left-icon"></FcSpeaker>

@@ -86,7 +86,7 @@
   box-shadow: 0 25px 50px 0 rgb(0 0 0 / 20%);
   box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px 0px;
   /* margin-left:-300px; */
-  width: 400px;
+  width: 100%;
   border-radius: 10px;
 
 }
@@ -259,4 +259,31 @@ margin:0
 }
 .modalwar-content-titer-header h3{
   font-weight:bold;
+}
+.popppp-form{
+  background-color: white;
+}
+.popupppp-img{
+  width:95%;
+  margin:10px 0;
+  object-fit: contain;
+  
+}
+.popuppp-header{
+  font-weight:bold;
+  padding:0 16px;
+}
+.popppp-time{
+  display:inline-flex;
+  text-align: center;
+  margin:0 0 0 20px;
+  align-items: center;
+}
+.popppp-time p{
+  font-size: 20px;  
+  margin: 0 10px;
+}
+.popppp-time-icon{
+  font-size: 30px;
+  color:lightpink;
 }

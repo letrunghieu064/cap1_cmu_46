@@ -33,8 +33,9 @@ const Comment = ({ postId }) => {
       const newComments = [...comments];
       newComments.unshift(res);
       
-      inputCommentRef.current.value = "";
+     
       setComments(newComments);
+      setWriterComment("")
     }
   };
   console.log("xzxx 2ss", comments);
@@ -76,7 +77,11 @@ const Comment = ({ postId }) => {
     setComments(newComments);
   };
   return (
-    <div className="comment">
+    <div style={{
+      height: "300px",
+     overflowY: "scroll",
+     
+     }} className="comment">
       <div className="comment_user">
         <img
           className="comment_user_avatar"

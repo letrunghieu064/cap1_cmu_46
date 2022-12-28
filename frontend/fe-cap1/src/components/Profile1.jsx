@@ -264,11 +264,11 @@ const EditProfile = () => {
                   type="text"
                   placeholder="First Name"
                   name="first_name"
-                  value={data.first_name}
+                  value={data?.first_name}
                   onChange={handleChange}
                 />
                   {errorfirstname ===0  && data?.first_name?.length <=0 ?(
-                <label id="errorComment">do not leave the first name blank </label> ): errorfirstname ===1 &&  data?.first_name.length >0?
+                <label id="errorComment">do not leave the first name blank </label> ): errorfirstname ===1 &&  data?.first_name?.length >0?
               ( <label id="errorComment">First character must be capital, no special characters or number</label>): errorfirstname ===2 && data?.first_name?.length >15 ? ( <label id="errorComment">first name  more than 15 characters </label>) :""}
               </div>
               <div className="container-right-body-item">
@@ -277,18 +277,18 @@ const EditProfile = () => {
                   type="text"
                   placeholder="Last Name"
                   name="last_name"
-                  value={data.last_name}
+                  value={data?.last_name}
                   onChange={handleChange}
                 />
                   {errorlastname ===0  && data?.last_name?.length <=0 ?(
-                <label id="errorComment">do not leave the last name blank </label> ): errorlastname ===1 &&  data?.last_name.length >0 ?
+                <label id="errorComment">do not leave the last name blank </label> ): errorlastname ===1 &&  data?.last_name?.length >0 ?
               ( <label id="errorComment">First character must be capital, no special characters or number</label>): errorlastname ===2 && data?.last_name?.length >15 ? ( <label id="errorComment">last name  more than 15 characters </label>) :""}
               </div>
               <div className="container-right-body-item">
                 <span>User Name </span>
                 <input
                   placeholder="Username"
-                  value={data.username}
+                  value={data?.username}
                   type="text"
                   onChange={handleChange}
                 />
@@ -303,7 +303,7 @@ const EditProfile = () => {
                   onChange={handleChange}
                 />
                 {error ===0  && data?.phone_number?.length <=0 ?(
-                <label id="errorComment">do not leave the phone number blank </label> ): error ===1 && data?.phone_number.length >0?
+                <label id="errorComment">do not leave the phone number blank </label> ): error ===1 && data?.phone_number?.length >0?
               ( <label id="errorComment">not numbers</label>): error ===2 && data?.phone_number?.length !==10 ? ( <label id="errorComment">phone number no less and more than 10 number </label>) :""}
               </div>
             </div>
@@ -328,11 +328,11 @@ const EditProfile = () => {
                     value={data?.card_id}
                     onChange={handleChange}
                   />
-                  {errorCard && data.card_id.length !==12  ? (<label id="errorComment">CardID must have 12 characters </label> ):""}
+                  {errorCard && data?.card_id?.length !==12  ? (<label id="errorComment">CardID must have 12 characters </label> ):""}
                 </div>
                 <div className="container-right-body-item">
                   <span>Email </span>
-                  <input placeholder="email" type="text" value={data.email} />
+                  <input placeholder="email" type="text" value={data?.email} />
                 </div>
                 <div className="container-right-body-item">
                   <span>Date Of Birth </span>

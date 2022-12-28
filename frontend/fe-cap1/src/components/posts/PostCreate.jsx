@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState,Fragment } from "react";
 import { CreatePost } from "../../actions/post";
 import { TfiClose } from "react-icons/tfi";
 import { CiLocationOn } from "react-icons/ci";
@@ -124,8 +124,16 @@ export default function PostCreate({ onClose, callbackCreateSuccess }) {
         </div>
         {/* <BiImages></BiImages> */}
         <input id="postFIle" type="file" onChange={handleUploadIamge} />
-        
-        {error&& data.name.length <=0 ?
+        {data?.img_url ?(<img 
+              //   objectFit={"cover"}
+              // width={"full"}
+              // height={"120px"}
+              // rounded="lg"
+               src={data?.img_url} alt={data?.img_url} />
+               ): (
+                <Fragment></Fragment>
+              )}
+        {error&& data?.name?.length <=0 ?
         <label className="l1 l2">name can not be Empty</label> :" "}
         <div className="create--header-content">
           <textarea
@@ -135,7 +143,7 @@ export default function PostCreate({ onClose, callbackCreateSuccess }) {
             onChange={handleChange}
           ></textarea>
         </div>
-        {error&& data.description.length <=0 ?
+        {error&& data?.description?.length <=0 ?
         <label className="l3">description can not be Empty</label> :" "}
         <div className="create__content">
           <input
@@ -148,11 +156,11 @@ export default function PostCreate({ onClose, callbackCreateSuccess }) {
             onChange={handleChangeAddress}
           />
         </div>
-        {error&& data.address.length <=0 ?
+        {error&& data?.address?.length <=0 ?
         <label className="l3" >address can not be Empty</label> :" "}
         <ul>
           {listAddr &&
-            listAddr.length > 0 &&
+            listAddr?.length > 0 &&
             listAddr.map((item) => {
               return (
                 <li onClick={() => handleChooseAddress(item)}>
