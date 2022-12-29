@@ -7,7 +7,7 @@ class Api::V1::Admin::PostsController < AdminBaseController
   end
   def update
     if @post.update(post_params)
-      render json: {data: @post}
+      render json: {statusCode: 200, data: Post.all}
     else
       render json: @post.errors, status: :unprocessable_entity
     end

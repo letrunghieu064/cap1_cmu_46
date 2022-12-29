@@ -11,13 +11,19 @@ import "react-toastify/dist/ReactToastify.css";
 import { CiUser } from "react-icons/ci";
 import { BiUserCircle } from "react-icons/bi";
 import { BiColumns } from "react-icons/bi";
-
+import Button from 'react-bootstrap/Button';
+import Modal from 'react-bootstrap/Modal';
 const Admin = () => {
   const [tab, setTab] = useState("user");
   const [inputsearch, setInputSearch] = useState("");
   const [users, setUsers] = useState([]);
   const [addpost, setaddpost] = useState([]);
   const [checkreset, setCheckReset] = useState(false);
+  const [show, setShow] = useState(false);
+  const [idpost,setIdPost]= useState(0);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
   const handleTab = (value) => {
     setTab(value);
   };
@@ -73,9 +79,10 @@ const Admin = () => {
       onDeleteUser(id);
     }
   };
-  const onDeletePost = (id) => {
-    const post = addpost.filter((item) => item.id !== id);
+  const onDeletePost = (idpost) => {
+    const post = addpost.filter((item) => item.id !== idpost);
     setaddpost(post);
+    setShow(!show)
   };
   const handleDeletePost = async (id) => {
     const response = await userService.deleteAdminPost(id);
@@ -87,10 +94,12 @@ const Admin = () => {
       });
     }
     if (response === 200) {
-      toast.success("Delete Success", {
-        position: toast.POSITION.TOP_RIGHT,
-      });
-      onDeletePost(id);
+      setIdPost(id);
+      setShow(!show)
+      // toast.success("Delete Success", {
+      //   position: toast.POSITION.TOP_RIGHT,
+      // });
+      // onDeletePost(id);
     }
   };
   let handleOnClickExport = async () => {
@@ -335,6 +344,20 @@ const Admin = () => {
           <Fragment></Fragment>
         )}
       </div>
+      <Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>xóa Người dùng này ?</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>Bạn có chắc chắn người dùng này không</Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Close
+          </Button>
+          <Button variant="primary" onClick={  (idpost) =>  {onDeletePost(idpost) }}>
+            Save Changes
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </div>
   );
 };

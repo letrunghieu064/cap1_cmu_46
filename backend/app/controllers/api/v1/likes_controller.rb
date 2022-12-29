@@ -1,6 +1,6 @@
 class Api::V1::LikesController < ApplicationController
   before_action :set_like, only: %i[ show edit update destroy ]
-
+  before_action :correct_user, only: [ :update, :destroy]
   # GET /likes or /likes.json
   def index
     @likes = Like.all
@@ -10,7 +10,13 @@ class Api::V1::LikesController < ApplicationController
 
   # GET /likes/1 or /likes/1.json
   def show
-    render json: @like
+    # render json: @like
+    if correct_user
+      @likes = Like.all
+      render json: { statusCode: 200 ,  message: 'Delete post successfully'}, status: :ok
+    else
+      render json: {message: 'Incorrect user'}
+    end
   end
 
   # GET /likes/new
@@ -27,7 +33,7 @@ class Api::V1::LikesController < ApplicationController
     @like = Like.new(like_params)
 
     if @like.save
-      render json: @like, status: :created
+      render json: Like.all, status: :created
     else
       render json: @like.errors, status: :unprocessable_entity
     end
@@ -63,14 +69,16 @@ class Api::V1::LikesController < ApplicationController
 
   # DELETE /likes/1 or /likes/1.json
   def destroy
-    @like.destroy
-
-    # respond_to do |format|
-    #   format.html { redirect_to likes_url, notice: "Like was successfully destroyed." }
-    #   format.json { head :no_content }
-    # end
+    if correct_user
+      @like.destroy
+      render json: { statusCode: 200 , data: Like.all , message: 'Delete Like Of Post  successfully'}, status: :ok
+    else
+      render json: {message: 'Incorrect user'}
+    end
   end
-
+  def correct_user
+    @like = current_user.likes.find_by(post_id: params[:id])
+  end
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_like
