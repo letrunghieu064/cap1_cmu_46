@@ -20,9 +20,12 @@ const Admin = () => {
   const [addpost, setaddpost] = useState([]);
   const [checkreset, setCheckReset] = useState(false);
   const [show, setShow] = useState(false);
-  const [idpost,setIdPost]= useState(0);
+  const [idpost,setIdPost]= useState(-1);
   const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  const handleShow = (id) =>{
+    setShow(true) 
+    setIdPost(id)
+   } 
 
   const handleTab = (value) => {
     setTab(value);
@@ -82,10 +85,10 @@ const Admin = () => {
   const onDeletePost = (idpost) => {
     const post = addpost.filter((item) => item.id !== idpost);
     setaddpost(post);
-    setShow(!show)
+    
   };
-  const handleDeletePost = async (id) => {
-    const response = await userService.deleteAdminPost(id);
+  const handleDeletePost = async () => {
+    const response = await userService.deleteAdminPost(idpost);
 
     console.log("response", response);
     if (response !== 200) {
@@ -94,12 +97,12 @@ const Admin = () => {
       });
     }
     if (response === 200) {
-      setIdPost(id);
+    
+      toast.success("Delete Success", {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+      onDeletePost(idpost);
       setShow(!show)
-      // toast.success("Delete Success", {
-      //   position: toast.POSITION.TOP_RIGHT,
-      // });
-      // onDeletePost(id);
     }
   };
   let handleOnClickExport = async () => {
@@ -326,8 +329,9 @@ const Admin = () => {
                         </td>
                         <td>
                           <button
-                            onClick={() => {
-                              handleDeletePost(post?.id);
+                            onClick={ () => {
+                              handleShow(post?.id)
+                              // handleDeletePost(post?.id);
                             }}
                           >
                             Delete
@@ -353,7 +357,7 @@ const Admin = () => {
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button variant="primary" onClick={  (idpost) =>  {onDeletePost(idpost) }}>
+          <Button variant="primary" onClick={   handleDeletePost }>
             Save Changes
           </Button>
         </Modal.Footer>
