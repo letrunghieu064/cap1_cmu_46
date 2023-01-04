@@ -193,12 +193,12 @@ export default function App() {
                   // padding: "0.2em",
                 }}
               >
-                <h6 className="popuppp-header">Địa chỉ : {selectedPark?.address}</h6>
+                <h6 className="popuppp-header">Address: {selectedPark?.address}</h6>
                
                 <img className="popupppp-img"
                     
                src={selectedPark?.img_url} alt={selectedPark?.img_url} />
-                <p>description :{selectedPark?.description}</p>
+                <p>Description: {selectedPark?.description}</p>
                 <div className="popppp-time">
                   <FiClock className="popppp-time-icon"></FiClock>
                   <p>{selectedPark?.created_at?.toString().slice(0, 10)}</p>
@@ -250,7 +250,7 @@ export default function App() {
               </div>
             </div>
               <div className="modal-content-map-body">
-                {post?.status ==="verified" ? ( <p style={{color: "green"}}>đã xác thực </p>) :( <p style={{color: "red"}}>chưa xác thực </p>)}
+                {post?.status ==="verified" ? ( <p style={{color: "green"}}> Verified </p>) :( <p style={{color: "red"}}> Not Verified</p>)}
                 <p>{post?.description}</p>
                                 <img src={post?.img_url || ""} alt="" />
 
@@ -261,7 +261,7 @@ export default function App() {
               <p onClick={()=>{setPost(post)}}>Comments</p>
               </div>
               <div className="modal-content-map-footer-right">
-              <p>Tell friends</p>
+              <p>Share to your friends</p>
             <CiShare2 className="modal-content-map-footer-right-icon"></CiShare2>
               
               </div>
@@ -289,7 +289,7 @@ export default function App() {
               <p onClick={()=>{setCreateMapPost(!modal)}}>Comments</p>
               </div>
               <div className="modal-content-map-footer-right">
-              <p>Tell friends</p>
+              <p>Share to your friends</p>
             <CiShare2 className="modal-content-map-footer-right-icon"></CiShare2>
               
               </div>

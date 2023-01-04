@@ -78,7 +78,7 @@ export default function MapPost({post,onClose}) {
                     </div>
                     <div className="modal-content-comment-header-right">
                     <CiLocationOn className="modal-content-comment-header-icon"> </CiLocationOn>
-                      <p onClick={onClose}>Close POST</p>
+                      <p onClick={onClose}>Close Post</p>
                     </div>
                     
                 </div>
@@ -90,7 +90,7 @@ export default function MapPost({post,onClose}) {
                 <div className="modal-content-comment-content-title"> 
                   <FaSkull className="modal-content-comment-content-title-icon"></FaSkull>
                   <p>{post?.created_at?.toString().slice(0, 10)} </p>
-                  <h2> toạ độ {post?.latitude +"," +post?.longitude}</h2>
+                  <h2> Location {post?.latitude +"," +post?.longitude}</h2>
                 </div>
                 <div className="modal-content-comment-content-body">
                     <p>
@@ -108,8 +108,8 @@ export default function MapPost({post,onClose}) {
           "https://jp.boxhoidap.com/boxfiles/cach-de-anh-dai-dien-dep--f85ddf18094383e085fb97258c9c8d87.wepb"
         }
         alt="" />
-                      <textarea style={{width: "500px",margin:"80px"}} placeholder="You thinking ..." value={writerComment } onChange={(e)=>{setwriterComment(e.target.value)}}></textarea>
-                      <button onClick={handleWriterComment}>Comment</button>
+                      <textarea style={{width: "650px",margin:"80px"}} placeholder="Add information ..." value={writerComment } onChange={(e)=>{setwriterComment(e.target.value)}}></textarea>
+                      <button onClick={handleWriterComment} style={{width: "150px"}}>Send</button>
                     </div>
                     {comments?.map((comment,index) =>(
                     // <div className="modal-content-comment-content-comment-read">

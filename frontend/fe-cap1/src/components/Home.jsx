@@ -232,7 +232,7 @@ const Home = () => {
             <li className="body_left-item">
               <a href="/person" className="body_left-item_link">
                 <BiUserCircle className="body_left-item-icon"> </BiUserCircle>
-                <p>{currentUser .data.username}</p>
+                <p>{currentUser?.data?.username}</p>
               </a>
             </li>
             <li className="body_left-item">
@@ -255,13 +255,13 @@ const Home = () => {
               />
               <input
                 id="inputPost"
-                placeholder={currentUser?.data?.username +", bạn cần hỗ trợ gì?"}
+                placeholder={currentUser?.data?.username +", Let us know about your problem....."}
                 type="text"
                 className="inputPost"
                 onClick={handleCreateModal}
               />
             </div>
-            <ul className="post-choose">
+            {/* <ul className="post-choose">
               <li id="post-choose_item" className="post-choose_item">
                 <FcVideoCall className="post-choose_icon"></FcVideoCall>
                 <p>Video Trực Tiếp</p>
@@ -274,7 +274,7 @@ const Home = () => {
                 <SlEmotsmile className="post-choose_icon post-choose_icon-smile"></SlEmotsmile>
                 <p>Cảm xúc/Hoạt động</p>
               </li>
-            </ul>
+            </ul> */}
           </div>
 
           {addpost.map((post, index) => (

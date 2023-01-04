@@ -10,6 +10,7 @@ import { clearMessage } from "../actions/message";
 import Admin from "./Admin";
 import Map from "./Map";
 // import HomeAll from "./HomeAll";
+import Forgotpassword from "./forgotpassword/Forgotpassword";
 import Profile1 from "./Profile1";
 import Person from "./person/Person";
 export default function Page() {
@@ -122,6 +123,7 @@ export default function Page() {
         <Route path="/register" element={<Register />} />
         <Route path="/profile" element={<Profile1 />} />
         <Route path="/person" element={<Person/>} />
+        <Route path="/forgotpassword" element={<Forgotpassword />} />
 
         {/* <Route path="/user" element={<BoardUser />} />
               <Route path="/mod" element={<BoardModerator />} />

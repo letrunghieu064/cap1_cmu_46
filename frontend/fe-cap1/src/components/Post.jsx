@@ -42,15 +42,15 @@ export default function Post() {
         <div className="new-actions">
           <div className="new-action">
             <AiTwotoneLike className="new-actions-icon"></AiTwotoneLike>
-            <p className="new-actions-text">Thích</p>
+            <p className="new-actions-text">Like</p>
           </div>
           <div className="new-action">
             <AiOutlineComment className="new-actions-icon"></AiOutlineComment>
-            <p className="new-actions-text">Bình luận</p>
+            <p className="new-actions-text">Comment</p>
           </div>
           <div className="new-action">
             <AiOutlineShareAlt className="new-actions-icon"></AiOutlineShareAlt>
-            <p className="new-actions-text">Chia sẻ</p>
+            <p className="new-actions-text">Share</p>
           </div>
         </div>
       </div>

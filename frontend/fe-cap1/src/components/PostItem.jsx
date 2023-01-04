@@ -146,7 +146,7 @@ export default function PostItem({ post, onDelete }) {
             <BiWorld className="new-header_infor-earth"></BiWorld>
           </div>
         </div>
-        {post?.status ==="verified" ? ( <p className="chua-xac-thuc" style={{color: "green"}}>đã xác thực </p>) :( <p className="chua-xac-thuc" style={{color: "red"}}>chưa xác thực </p>)}
+        {post?.status ==="verified" ? ( <p className="chua-xac-thuc" style={{color: "green"}}>Verified</p>) :( <p className="chua-xac-thuc" style={{color: "red"}}>Not Verified</p>)}
         <div className="new-header_infor-icons">
           <BiDotsHorizontalRounded
             className="new-header_infor-icon"
@@ -159,7 +159,7 @@ export default function PostItem({ post, onDelete }) {
                   className="post_action-item"
                   onClick={() => handleDeletePost(post?.id)}
                 >
-                  <p>Xóa</p>
+                  <p>Delete</p>
                   <CiTrash className="post_action-icon"></CiTrash>
                 </li>
                 {/* <li className="post_action-item">
@@ -187,16 +187,16 @@ export default function PostItem({ post, onDelete }) {
         <div className="new-action">
           <AiTwotoneLike className="new-actions-icon"></AiTwotoneLike>
           <p className="new-actions-text" onClick={hanldeLike}>
-            {likes?.length} Thích
+            {likes?.length} Like
           </p>
         </div>
         <div className="new-action" onClick={handleComment}>
           <AiOutlineComment className="new-actions-icon"></AiOutlineComment>
-          <p className="new-actions-text">Bình luận</p>
+          <p className="new-actions-text">Comment</p>
         </div>
         <div className="new-action">
           <AiOutlineShareAlt className="new-actions-icon"></AiOutlineShareAlt>
-          <p className="new-actions-text">Chia sẻ</p>
+          <p className="new-actions-text">Share</p>
         </div>
       </div>
       {/* comment */}

@@ -8,7 +8,7 @@ const [postitem,setPostItem]=useState({});
     const response = await userService.deletePost(id);
     console.log("res", response);
     if (response !== 200) {
-      alert(" xoá không thành công ");
+      alert(" Failed to delete post ");
     }
     if (response === 200) {
       onDelete(id);
@@ -51,8 +51,8 @@ const [postitem,setPostItem]=useState({});
           <div className="body-profile-content-actionnns">
            
             
-           <button className="body-profile-content-actionnns-icon"  onClick={() => handleDeletePost(post.id)} > Xóa </button>
-           <button className="body-profile-content-actionnns-icon" onClick={handleCreateModal}  > Chỉnh sửa </button>
+           <button className="body-profile-content-actionnns-icon"  onClick={() => handleDeletePost(post.id)} > Delete </button>
+           <button className="body-profile-content-actionnns-icon" onClick={handleCreateModal}  > Edit post </button>
          </div>
         </div>
         <div className="body-profile-content">
@@ -61,7 +61,7 @@ const [postitem,setPostItem]=useState({});
           </p>
           <img
             src={post?.img_url}
-            alt=""
+            alt=""  
           />
         </div>
         

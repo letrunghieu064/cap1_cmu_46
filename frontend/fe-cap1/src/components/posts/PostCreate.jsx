@@ -98,7 +98,7 @@ export default function PostCreate({ onClose, callbackCreateSuccess }) {
       <div onClick={onClose} className="modal-overplay"></div>
       <div className="modal--body">
         <div className="create--header">
-          <p className="create--title">Tạo bài viết</p>
+          <p className="create--title">Create Post</p>
           <TfiClose className="create--close" onClick={onClose}></TfiClose>
         </div>
         <div className="create--header__user">
@@ -117,7 +117,7 @@ export default function PostCreate({ onClose, callbackCreateSuccess }) {
           name="name"
           id="name"
           onChange={handleChange}
-          placeholder="Nhập tên bài post"
+          placeholder="Input post name"
           value={data.name}
           validations={required}
         ></input>
@@ -134,7 +134,7 @@ export default function PostCreate({ onClose, callbackCreateSuccess }) {
                 <Fragment></Fragment>
               )}
         {error&& data?.name?.length <=0 ?
-        <label className="l1 l2">name can not be Empty</label> :" "}
+        <label className="l1 l2">\Name can not be Empty</label> :" "}
         <div className="create--header-content">
           <textarea
             className="header-content-textarae"
@@ -144,10 +144,10 @@ export default function PostCreate({ onClose, callbackCreateSuccess }) {
           ></textarea>
         </div>
         {error&& data?.description?.length <=0 ?
-        <label className="l3">description can not be Empty</label> :" "}
+        <label className="l3">Description can not be Empty</label> :" "}
         <div className="create__content">
           <input
-            placeholder="Nhập địa chỉ ( số và tên đường , quận, thành phố)"
+            placeholder="Input fully address (number, district, ward, city)"
             type="text"
             id="address"
             ref={inputAddressRef}
@@ -157,7 +157,7 @@ export default function PostCreate({ onClose, callbackCreateSuccess }) {
           />
         </div>
         {error&& data?.address?.length <=0 ?
-        <label className="l3" >address can not be Empty</label> :" "}
+        <label className="l3" >Address can not be Empty</label> :" "}
         <ul>
           {listAddr &&
             listAddr?.length > 0 &&
@@ -169,13 +169,13 @@ export default function PostCreate({ onClose, callbackCreateSuccess }) {
               );
             })}
         </ul>
-        <div className="create__choose">
+        {/* <div className="create__choose">
           <p>Thêm vào bài viết </p>
           <CiLocationOn className="create__choose-location"></CiLocationOn>
-        </div>
+        </div> */}
         <div className="create__submit">
           <button className="create__submit-submit" onClick={HandleCreatePost}>
-            Đăng
+            Post
           </button>
         </div>
       </div>

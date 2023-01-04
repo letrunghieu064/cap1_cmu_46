@@ -87,7 +87,7 @@ const Login = (props) => {
         >
           <div>
             <h2 className="form__title">Sign in to Website</h2>
-            <div className="container__icon">
+            {/* <div className="container__icon">
               <a href="" className="login__icon">
                 <AiFillLinkedin className="login__icon-items" />
               </a>
@@ -100,7 +100,7 @@ const Login = (props) => {
             </div>
             <div>
               <p className="login__text">or use your emaill account</p>
-            </div>
+            </div> */}
           </div>
           <div></div>
           <div className=" form-login">
@@ -128,7 +128,7 @@ const Login = (props) => {
             />
           </div>
           <div>
-            <a className="form__link" href="#">
+            <a className="form__link" href="/forgotpassword">
               Forgot your password
             </a>
           </div>

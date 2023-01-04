@@ -5,7 +5,7 @@ class Api::V1::UsersController < ApplicationController
 
   # GET /users or /users.json
   def index
-    @users = User.all
+    @users = User.where(role: :user)
 
     render json: {data: @users}
   end

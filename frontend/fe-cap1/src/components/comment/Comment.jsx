@@ -77,11 +77,11 @@ const Comment = ({ postId }) => {
     setComments(newComments);
   };
   return (
-    <div style={{
-      height: "300px",
+    <div  className="comment" style={{
+      height: "200px",
      overflowY: "scroll",
      
-     }} className="comment">
+     }}>
       <div className="comment_user">
         <img
           className="comment_user_avatar"
@@ -93,7 +93,7 @@ const Comment = ({ postId }) => {
         />
         <input
           className="comment_user-input"
-          placeholder={currentUser?.data?.username + " bạn đang nghĩ gì ?"}
+          placeholder={"Provide some information...."}
           // ref={refInputComment}
           value={writerComment}
           ref={inputCommentRef}
@@ -107,11 +107,11 @@ const Comment = ({ postId }) => {
           type="submit"
           onClick={handleWriterComment}
         >
-          Bình Luận
+          Send
         </button>
       </div>
       {error && writerComment.length <= 0 ? (
-        <label id="errorComment">comment can not be Empty</label>
+        <label id="errorComment">Comment can not be Empty</label>
       ) : (
         " "
       )}
@@ -125,7 +125,7 @@ const Comment = ({ postId }) => {
         />
       ))}
       <div className="comment_view-morer">
-        <p>Xem thêm bình luận</p>
+        <p>See more</p>
       </div>
     </div>
   );
@@ -196,7 +196,7 @@ const CommentItem = ({ data, handleDeleteComment, handleEditComment ,handlEditSu
         />
         <input
           className="comment_user-input"
-          placeholder="Viết bình luận"
+          placeholder="Comment....."
           // ref={refInputComment}
           
           value={comment?.description}
@@ -205,7 +205,7 @@ const CommentItem = ({ data, handleDeleteComment, handleEditComment ,handlEditSu
           }}
         ></input>
         {error && comment.description.length <= 0 ? (
-          <label>comment can not be Empty</label>
+          <label>Comment can not be Empty</label>
         ) : (
           " "
         )}
@@ -215,12 +215,12 @@ const CommentItem = ({ data, handleDeleteComment, handleEditComment ,handlEditSu
           disabled={isLoading}
           onClick={handleWriterComment}
         >
-          {isLoading ? `Loading..` : `Cap nhat`}
+          {isLoading ? `Loading..` : `Updated`}
         </button>
       </div>
     );
   return (
-    <div className="comment_others">
+    <div className="comment_others" >
       <img
         className="comment_others_avatar"
         src={
@@ -235,7 +235,7 @@ const CommentItem = ({ data, handleDeleteComment, handleEditComment ,handlEditSu
           <span className="comment_others-content">{comment?.description}</span>
         </div>
           <div className="comment_others-content-actions-list">
-          <p className="comment_others-action"> Thích</p>
+          <p className="comment_others-action"> Like</p>
         <p
           className="comment_others-action"
           onClick={() => {
@@ -243,7 +243,7 @@ const CommentItem = ({ data, handleDeleteComment, handleEditComment ,handlEditSu
           }}
         >
           <ToastContainer />
-          xoá
+          Delete
         </p>
         <p
           className="comment_others-action"
@@ -252,7 +252,7 @@ const CommentItem = ({ data, handleDeleteComment, handleEditComment ,handlEditSu
           }}
         >
           <ToastContainer />
-          chỉnh sửa
+          Edit
         </p>
         <span className="comment_others-action">
           {comment?.created_at?.toString().slice(0, 10)}

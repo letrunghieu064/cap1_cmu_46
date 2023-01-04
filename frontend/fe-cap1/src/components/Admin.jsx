@@ -20,9 +20,17 @@ const Admin = () => {
   const [addpost, setaddpost] = useState([]);
   const [checkreset, setCheckReset] = useState(false);
   const [show, setShow] = useState(false);
-  const [idpost,setIdPost]= useState(0);
+  const [idpost,setIdPost]= useState(-1);
+  const [iduser,setIdUser]= useState(-1);
   const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  const handleShow = (id) =>{
+    setShow(true) 
+    if(tab === "posts"){
+    setIdPost(id)}
+    else{
+      setIdUser(id)
+    }
+   } 
 
   const handleTab = (value) => {
     setTab(value);
@@ -63,8 +71,8 @@ const Admin = () => {
     const user = users.filter((item) => item.id !== id);
     setUsers(user);
   };
-  const handleDeleteUser = async (id) => {
-    const response = await userService.deleteUser(id);
+  const handleDeleteUser = async () => {
+    const response = await userService.deleteUser(iduser);
 
     console.log("response", response);
     if (response !== 200) {
@@ -76,16 +84,17 @@ const Admin = () => {
       toast.success("Delete Success", {
         position: toast.POSITION.TOP_RIGHT,
       });
-      onDeleteUser(id);
+      onDeleteUser(iduser);
+      setShow(!show)
     }
   };
   const onDeletePost = (idpost) => {
     const post = addpost.filter((item) => item.id !== idpost);
     setaddpost(post);
-    setShow(!show)
+    
   };
-  const handleDeletePost = async (id) => {
-    const response = await userService.deleteAdminPost(id);
+  const handleDeletePost = async () => {
+    const response = await userService.deleteAdminPost(idpost);
 
     console.log("response", response);
     if (response !== 200) {
@@ -94,12 +103,12 @@ const Admin = () => {
       });
     }
     if (response === 200) {
-      setIdPost(id);
+    
+      toast.success("Delete Success", {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+      onDeletePost(idpost);
       setShow(!show)
-      // toast.success("Delete Success", {
-      //   position: toast.POSITION.TOP_RIGHT,
-      // });
-      // onDeletePost(id);
     }
   };
   let handleOnClickExport = async () => {
@@ -169,7 +178,7 @@ const Admin = () => {
                 <form action>
                   <input
                     className="dashboard-form-search-input"
-                    placeholder="Tìm kiếm user"
+                    placeholder="Searching for user"
                     type="text"
                     value={inputsearch}
                     onChange={handleChange}
@@ -223,7 +232,7 @@ const Admin = () => {
                         <td>
                           <button
                             onClick={() => {
-                              handleDeleteUser(user?.id);
+                              handleShow(user?.id);
                             }}
                           >
                             Delete
@@ -243,7 +252,7 @@ const Admin = () => {
                 <form action>
                   <input
                     className="dashboard-form-search-input"
-                    placeholder="Tìm kiếm bài post"
+                    placeholder="Searching for post"
                     type="text"
                     value={inputsearch}
                     onChange={handleChange}
@@ -296,9 +305,9 @@ const Admin = () => {
                         <td>
                           {" "}
                           {post?.status === "verified"? (
-                            <p style={{ color: "green" }}>đã xác thực </p>
+                            <p style={{ color: "green" }}>Verified </p>
                           ) : (
-                            <p style={{ color: "red" }}>chưa xác thực </p>
+                            <p style={{ color: "red" }}>Not Verified </p>
                           )}
                         </td>
                         <td>{post?.description}</td>
@@ -312,7 +321,7 @@ const Admin = () => {
                                 handleAccuracy(post?.id,0);
                               }}
                             >
-                              HỦy xác thực
+                              Redo
                             </button>
                           ) : (
                             <button
@@ -320,14 +329,15 @@ const Admin = () => {
                                 handleAccuracy(post.id,1);
                               }}
                             >
-                              xác Thực
+                              Verified
                             </button>
                           )}
                         </td>
                         <td>
                           <button
-                            onClick={() => {
-                              handleDeletePost(post?.id);
+                            onClick={ () => {
+                              handleShow(post?.id)
+                              // handleDeletePost(post?.id);
                             }}
                           >
                             Delete
@@ -346,16 +356,18 @@ const Admin = () => {
       </div>
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>xóa Người dùng này ?</Modal.Title>
+        {tab ==="posts" ? ( <Modal.Title>Are you want to delete this post??</Modal.Title> ):( <Modal.Title>Are you want to delete this user??</Modal.Title>)}
         </Modal.Header>
-        <Modal.Body>Bạn có chắc chắn người dùng này không</Modal.Body>
+        {tab ==="posts" ? (<Modal.Body>Are you sure to delete this post?</Modal.Body>):(<Modal.Body>Are you sure to delete this user?</Modal.Body>)} 
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button variant="primary" onClick={  (idpost) =>  {onDeletePost(idpost) }}>
+          {tab ==="posts" ?(<Button variant="primary" onClick={   handleDeletePost }>
             Save Changes
-          </Button>
+          </Button>) :(<Button variant="primary" onClick={   handleDeleteUser }>
+            Save Changes
+          </Button>)}
         </Modal.Footer>
       </Modal>
     </div>

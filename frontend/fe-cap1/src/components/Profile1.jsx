@@ -26,7 +26,7 @@ const EditProfile = () => {
     birthday: "",
     phone_number: "",
     address: "",
-    gender: "",
+    gender: "Female",
     card_id: "",
     url_img: "",
   });
@@ -268,8 +268,8 @@ const EditProfile = () => {
                   onChange={handleChange}
                 />
                   {errorfirstname ===0  && data?.first_name?.length <=0 ?(
-                <label id="errorComment">do not leave the first name blank </label> ): errorfirstname ===1 &&  data?.first_name?.length >0?
-              ( <label id="errorComment">First character must be capital, no special characters or number</label>): errorfirstname ===2 && data?.first_name?.length >15 ? ( <label id="errorComment">first name  more than 15 characters </label>) :""}
+                <label id="errorComment">Do not leave the first name blank </label> ): errorfirstname ===1 &&  data?.first_name?.length >0?
+              ( <label id="errorComment">First character must be capital, no special characters or number</label>): errorfirstname ===2 && data?.first_name?.length >15 ? ( <label id="errorComment">First name  more than 15 characters </label>) :""}
               </div>
               <div className="container-right-body-item">
                 <span>Last Name </span>
@@ -281,8 +281,8 @@ const EditProfile = () => {
                   onChange={handleChange}
                 />
                   {errorlastname ===0  && data?.last_name?.length <=0 ?(
-                <label id="errorComment">do not leave the last name blank </label> ): errorlastname ===1 &&  data?.last_name?.length >0 ?
-              ( <label id="errorComment">First character must be capital, no special characters or number</label>): errorlastname ===2 && data?.last_name?.length >15 ? ( <label id="errorComment">last name  more than 15 characters </label>) :""}
+                <label id="errorComment">Do not leave the last name blank </label> ): errorlastname ===1 &&  data?.last_name?.length >0 ?
+              ( <label id="errorComment">First character must be capital, no special characters or number</label>): errorlastname ===2 && data?.last_name?.length >15 ? ( <label id="errorComment">Last name  more than 15 characters </label>) :""}
               </div>
               <div className="container-right-body-item">
                 <span>User Name </span>
@@ -303,8 +303,8 @@ const EditProfile = () => {
                   onChange={handleChange}
                 />
                 {error ===0  && data?.phone_number?.length <=0 ?(
-                <label id="errorComment">do not leave the phone number blank </label> ): error ===1 && data?.phone_number?.length >0?
-              ( <label id="errorComment">not numbers</label>): error ===2 && data?.phone_number?.length !==10 ? ( <label id="errorComment">phone number no less and more than 10 number </label>) :""}
+                <label id="errorComment">Do not leave the phone number blank </label> ): error ===1 && data?.phone_number?.length >0?
+              ( <label id="errorComment">Not numbers</label>): error ===2 && data?.phone_number?.length !==10 ? ( <label id="errorComment">Phone number no less and more than 10 number </label>) :""}
               </div>
             </div>
             <div className="edit-profile-container-right-body-right">
