@@ -45,7 +45,7 @@ class User < ApplicationRecord
     self.reset_password_token = generate_base64_token
     self.reset_password_sent_at = Time.zone.now
     save!
-    # UserMailer.password_reset(self).deliver_now
+    UserMailer.with(user: @user).password_reset(self).deliver_now
   end
 
   def password_token_valid?

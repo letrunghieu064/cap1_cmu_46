@@ -92,7 +92,11 @@ class Api::V1::UsersController < ApplicationController
   def search
     find params[:username]
   end
-  
+  def forgot
+    user = User.find_by_email(params[:email])
+    puts user
+    user.send_password_reset if user
+  end
   def find(username)
     user = User.where("username like ?", "%#{username}%")
     if user
