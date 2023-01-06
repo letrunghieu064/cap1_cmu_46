@@ -256,12 +256,13 @@ const Register = () => {
     if (checkBtn.current.context._errors.length === 0) {
       dispatch(register(username, email, password))
         .then(() => {
-          setSuccessful(true);
+           setSuccessful(true);
         })
         .catch(() => {
           setSuccessful(false);
         });
     }
+   
   };
 
   return (
@@ -341,11 +342,15 @@ const Register = () => {
                   Sign Up
                 </button>
               </div>
+              {/* <div className="loginnnn-linkkk">
+                <a href="/login">Login</a>
+              </div> */}
             </div>
           )}
 
           {message &&(
             <div className="form-login">
+            
               <div
                 className={
                   successful ? "alert alert-success" : "validate__input"
@@ -353,9 +358,14 @@ const Register = () => {
                 role="alert"
               >
                 { message }
+                
               </div>
+              
             </div>
           )}
+          <div className="loginnnn-linkkk">
+                <a href="/login" className="alink_logggginnn">Login</a>
+            </div>
           <CheckButton style={{ display: "none" }} ref={checkBtn} />
         </Form>
       </div>

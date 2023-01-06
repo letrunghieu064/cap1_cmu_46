@@ -51,7 +51,7 @@ const Profile = () => {
           <p className="profile-infoo">20 Ham Nghi/Thac Gian/Thanh Khe/Da Nang</p>
         </li>
       </ul>
-      <button className="buttono-profile-edit">
+      <button className="buttono-profile-edit ">
         Edit
       </button>
     </div>

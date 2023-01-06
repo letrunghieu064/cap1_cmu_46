@@ -166,8 +166,9 @@ body{
 .body-profile-header{
   z-index: 1;
 }
-
-
+.buttono-profile-edit-delete{
+  background-color: #f03e3e ;
+}
 
 
 

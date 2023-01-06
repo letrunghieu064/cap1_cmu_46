@@ -200,7 +200,7 @@ export default function PostItem({ post, onDelete }) {
         </div>
       </div>
       {/* comment */}
-      {comment && <Comment postId={post.id} />}
+      {comment && <Comment postId={post.id} post={post}/>}
       {/* comment */}
       {createModal && (
         <EditPost onClose={handleCreateModal} postItem={postItem}></EditPost>
@@ -208,3 +208,4 @@ export default function PostItem({ post, onDelete }) {
     </div>
   );
 }
+

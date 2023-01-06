@@ -1,14 +1,12 @@
-//import logo from
-
 import axios from "axios";
 import { Fragment, useEffect } from "react";
 import { BrowserRouter } from "react-router-dom";
-import "./App.css";
-import Page from "./components/Page";
-import HomePage from "./components/homepage/HomePage";
+// import "./App.css";
+import Page from "../Page";
+// import HomePage from "../homepage/HomePage";
 import { ToastContainer, toast } from 'react-toastify';
-import { useSelector } from "react-redux";
-function App() {
+// import { useSelector } from "react-redux";
+function  GoPage() {
   return (
     <Fragment>
       <BrowserRouter>
@@ -20,4 +18,4 @@ function App() {
   );
 }
 
-export default App;
+export default GoPage;

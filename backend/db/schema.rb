@@ -41,7 +41,7 @@ ActiveRecord::Schema.define(version: 2022_10_21_092014) do
 
   create_table "posts", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3", force: :cascade do |t|
     t.string "name"
-    t.text "img_url"
+    t.binary "img_url", size: :medium
     t.string "description"
     t.integer "status", default: 0
     t.string "address"

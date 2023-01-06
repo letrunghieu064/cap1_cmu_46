@@ -272,3 +272,37 @@ font-size: 42px;
   color: #fff;
   transition: 0.5rem;
 }
+.button-redo{
+  border: 1px solid #43e72d !important; 
+}
+.button-redo:hover{
+  background-color: #4ad44a !important;
+}
+.body_left-adp li img{
+  width: 40%; 
+  height:40%; 
+  border-radius: 10%;
+}
+.body_left-adp {
+  list-style: none;
+}
+.body_left-adp li{
+  cursor: pointer;
+  gap:10px;
+  display:flex;
+  align-items: center;
+  padding:10px;
+  border-radius: 5px;
+  margin:0 0 10px 0;
+}
+
+.body_left-adp li:hover{
+  background-color: #eee;
+}
+.body_left-adp li p{
+  color:#65676B;
+}
+.active-verifyy td p{ 
+  margin:0;
+}
+

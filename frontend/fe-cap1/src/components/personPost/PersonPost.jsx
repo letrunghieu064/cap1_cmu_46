@@ -51,7 +51,7 @@ const [postitem,setPostItem]=useState({});
           <div className="body-profile-content-actionnns">
            
             
-           <button className="body-profile-content-actionnns-icon"  onClick={() => handleDeletePost(post.id)} > Delete </button>
+           <button className="body-profile-content-actionnns-icon buttono-profile-edit-delete"   onClick={() => handleDeletePost(post.id)} > Delete </button>
            <button className="body-profile-content-actionnns-icon" onClick={handleCreateModal}  > Edit post </button>
          </div>
         </div>

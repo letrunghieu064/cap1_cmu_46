@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback ,Fragment} from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Route, Link, useLocation, Routes } from "react-router-dom";
 import Login from "./Login";
@@ -13,6 +13,7 @@ import Map from "./Map";
 import Forgotpassword from "./forgotpassword/Forgotpassword";
 import Profile1 from "./Profile1";
 import Person from "./person/Person";
+import HomePage from "./homepage/HomePage";
 export default function Page() {
   const [showModeratorBoard, setShowModeratorBoard] = useState(false);
   const [showAdminBoard, setShowAdminBoard] = useState(false);
@@ -45,10 +46,12 @@ export default function Page() {
   }, [currentUser]);
   return (
     <div className="App">
-      {!isLoggedIn && (
+
+      {/* {!isLoggedIn && (
+
         <nav className="navbar navbar-expand navbar-dark bg-success">
           <Link to={"/"} className="navbar-brand">
-           
+
           </Link>
           <div className="navbar-nav mr-auto">
             <li className="nav-item">
@@ -95,27 +98,29 @@ export default function Page() {
               </li>
             </div>
           ) : (
-            <div className="navbar-nav ml-auto">
-              <li className="nav-item">
-                <Link to={"/login"} className="nav-link">
-                  Login
-                </Link>
-              </li>
 
-              <li className="nav-item">
+            // <div className="navbar-nav ml-auto">
+            //   <li className="nav-item">
+            //     <Link to={"/login"} className="nav-link">
+            //       Login
+            //     </Link>
+            //   </li>
+            <div className="navbar-nav ml-auto">
+               <li className="nav-item">
                 <Link to={"/register"} className="nav-link">
-                  Sign Up
+                Sign Up
                 </Link>
-              </li>
-            </div>
+             </li>
+           </div>
+            
           )}
         </nav>
-      )}
+      )} */}
 
       {/* <div className="container mt-3"> */}
 
       <Routes>
-        <Route path="/" element={<Login />} />
+        <Route path="/" element={<HomePage />} />
         <Route path="/admin" element={<Admin />} />
         <Route path="/home" element={<Home />} />
         <Route path="/map" element={<Map />} />
@@ -124,6 +129,8 @@ export default function Page() {
         <Route path="/profile" element={<Profile1 />} />
         <Route path="/person" element={<Person/>} />
         <Route path="/forgotpassword" element={<Forgotpassword />} />
+        <Route path="/homepage" element={<HomePage />} />
+        {/* <Route path="/homepage" element={<HomePage />} /> */}
 
         {/* <Route path="/user" element={<BoardUser />} />
               <Route path="/mod" element={<BoardModerator />} />

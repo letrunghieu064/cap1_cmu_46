@@ -76,9 +76,9 @@ export default function MapPost({post,onClose}) {
                     <CiShare1 className="modal-content-comment-header-icon"></CiShare1>
                     <p>Source</p>
                     </div>
-                    <div className="modal-content-comment-header-right">
+                    <div onClick={onClose} className="modal-content-comment-header-right">
                     <CiLocationOn className="modal-content-comment-header-icon"> </CiLocationOn>
-                      <p onClick={onClose}>Close Post</p>
+                      <p className="map-close-postttt" >Close Post</p>
                     </div>
                     
                 </div>

@@ -242,6 +242,44 @@ const Home = () => {
               </a>
             </li>
           </ul>
+              <ul className="body_left-adp">
+              <li>
+                <img
+                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSqz6SMNHuZH2136ZYVVIcLB3y7vPd0pyDziw&usqp=CAU"
+              />
+              <div>
+                <h5>Thiết bị chống trộm </h5>
+                <p>shopthietbi.vn</p>
+              </div>
+                </li>
+                <li>
+                <img
+                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQkZSJj48hJS39RLOtQVD8HAevoMxrijZrbbQ&usqp=CAU"
+              />
+              <div>
+                <h5>Thiết bị chống trộm </h5>
+                <p>shoppe.vn</p>
+              </div>
+                </li>
+                <li>
+                <img
+                src="https://abaro.vn/wp-content/uploads/2022/02/trom-se-roi-xa-ngoi-nha-cua-ban-ngay.jpg"
+              />
+              <div>
+                <h5>Thiết bị chống trộm </h5>
+                <p>shoppe.vn</p>
+              </div>
+                </li>
+                <li>
+                <img
+                src="https://abaro.vn/wp-content/uploads/2022/02/trom-se-roi-xa-ngoi-nha-cua-ban-ngay.jpg"
+              />
+              <div>
+                <h5>Thiết bị chống trộm </h5>
+                <p>shoppe.vn</p>
+              </div>
+                </li>
+              </ul>
         </div>
 
         <div className="home-body_right">

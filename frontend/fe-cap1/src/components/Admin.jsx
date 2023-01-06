@@ -299,7 +299,7 @@ const Admin = () => {
                   </thead>
                   <tbody>
                     {addpost.map((post) => (
-                      <tr className="active">
+                      <tr className="active active-verifyy">
                         <td>{post?.id}</td>
                         <td>{post?.name}</td>
                         <td>
@@ -315,8 +315,8 @@ const Admin = () => {
                         <td>
                           {" "}
                           {post?.status === "verified"? (
-                            <button className="button-xacthuc"
-                  
+                            <button className="button-xacthuc button-redo"
+                    
                               onClick={() => {
                                 handleAccuracy(post?.id,0);
                               }}
@@ -324,7 +324,7 @@ const Admin = () => {
                               Redo
                             </button>
                           ) : (
-                            <button
+                            <button className=" button-redo"
                               onClick={() => {
                                 handleAccuracy(post.id,1);
                               }}

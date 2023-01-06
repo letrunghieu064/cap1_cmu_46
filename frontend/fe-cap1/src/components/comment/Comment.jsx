@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import "./Comment.css";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-const Comment = ({ postId }) => {
+const Comment = ({ postId,post }) => {
   const [comments, setComments] = useState([]);
   const [writerComment, setWriterComment] = useState("");
   const { user: currentUser } = useSelector((state) => state.auth);
@@ -26,7 +26,7 @@ const Comment = ({ postId }) => {
   const handleWriterComment = async (e) => {
     e.preventDefault();
     if (writerComment.length === 0) {
-      setError(true);
+      return ;
     } else {
       const res = await userService.createComment(postId, writerComment);
       
@@ -110,11 +110,14 @@ const Comment = ({ postId }) => {
           Send
         </button>
       </div>
-      {error && writerComment.length <= 0 ? (
+      {error && writerComment?.length <= 0 ? (
         <label id="errorComment">Comment can not be Empty</label>
       ) : (
         " "
       )}
+       <div className="comment_view-morer">
+        <p>{comments?.length} comments</p>
+      </div>
       {comments.map((com, index) => (
         <CommentItem
           data={com}
@@ -125,7 +128,7 @@ const Comment = ({ postId }) => {
         />
       ))}
       <div className="comment_view-morer">
-        <p>See more</p>
+        <p>see more</p>
       </div>
     </div>
   );
@@ -204,11 +207,11 @@ const CommentItem = ({ data, handleDeleteComment, handleEditComment ,handlEditSu
             setComment({ ...comment, description: e.target.value });
           }}
         ></input>
-        {error && comment.description.length <= 0 ? (
+        {/* {error && comment.description.length <= 0 ? (
           <label>Comment can not be Empty</label>
         ) : (
           " "
-        )}
+        )} */}
         <button
           class="btn btn-primary"
           type="submit"

@@ -14,7 +14,7 @@ Rails.application.routes.draw do
       post 'auth/login' , to: 'users#login'
       get 'test' , to: 'users#test'
       put 'users', to: 'users#update'
-      post 'password/forgot', to: 'password#forgot'
+      post 'password/forgot', to: 'users#forgot'
       post 'password/reset', to: 'password#reset'
       post 'search',to:'posts#search'
       post 'user/search',to:'users#search'

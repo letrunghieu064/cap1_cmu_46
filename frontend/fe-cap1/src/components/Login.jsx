@@ -143,7 +143,12 @@ const Login = (props) => {
               <span>Login</span>
             </button>
           </div>
-
+          <div className="form-registerrrrr">
+            <span>Not a member ? </span>
+            <a className="" href="/register">
+              Sign up
+            </a>
+          </div>
           {message && (
             <div className=" form-login">
               <div className="alert alert-danger validate__input" role="alert">

@@ -1,5 +1,5 @@
 class Api::V1::UsersController < ApplicationController
-  skip_before_action :authenticate_request, only: %i[login register]
+  skip_before_action :authenticate_request, only: %i[login register forgot]
   before_action :set_user, only: [ :show, :update ]
   before_action :correct_user, only: [:edit, :update]
 

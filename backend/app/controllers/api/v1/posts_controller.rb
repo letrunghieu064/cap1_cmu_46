@@ -5,7 +5,7 @@ class Api::V1::PostsController < ApplicationController
 
   # GET /posts or /posts.json
   def index
-    @posts = Post.all.includes(:user, {comments: :user}, :likes)
+    @posts = Post.all.includes(:user, {comments: :user}, :likes).order(created_at: :DESC)
 
     render json: @posts
   end
@@ -34,6 +34,7 @@ class Api::V1::PostsController < ApplicationController
 #       render json: "no resutf", status: :unprocessable_entity
 #     end
 # end
+#   post = Post.where("name like ?", "%#{name}%")
 def search
   find params[:name]
 end

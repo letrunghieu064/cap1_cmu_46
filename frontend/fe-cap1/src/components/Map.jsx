@@ -40,6 +40,7 @@ export default function App() {
   const [createmappost,setCreateMapPost]=useState(false);
   const [posts, setPosts] = useState([]);
   const [post,setPost]=useState(null);
+
   useEffect(() => {
     toast.promise(
       axios
@@ -59,6 +60,7 @@ export default function App() {
         error: "error",
       }
     );
+    
 
     // axios
     //   .get("http://localhost:3000/api/v1/posts",{ headers: authHeader() })
@@ -71,6 +73,10 @@ export default function App() {
     //     setPosts([...result]);
     //   })
   }, []);
+  const getday =()=>{
+    let d=Date();
+    return d;
+  }
   
   const handleCreateModal = () => {
     console.log("modal", modal);
@@ -177,7 +183,7 @@ export default function App() {
           ))}
 
           {selectedPark ? (
-            <Popup 
+            <  Popup className="close-popup-x"
               latitude={selectedPark.latitude}
               longitude={selectedPark.longitude}
               onClose={() => {
@@ -231,7 +237,7 @@ export default function App() {
             <div className="modalwar-content-titer-header">
             <div className="modalwar-content-titer-header-left">
                 <h3>News Live</h3>
-                <p>Updated on 20/12/2022 22:06:51</p>
+                <p>Updated on {getday().toString().slice(0, 10)}</p>
               </div>
               <div className="modalwar-content-titer-header-right">
               

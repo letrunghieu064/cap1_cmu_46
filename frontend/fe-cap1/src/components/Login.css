@@ -96,3 +96,13 @@
 .login__icon-items{
     margin: 0 4px;
 }
+.form-registerrrrr{ 
+    margin:10px 0;
+}
+.form-registerrrrr span{
+    margin:0;
+}
+.form-registerrrrr .form__link{
+    text-decoration: none;
+    color: #2b8a3e;
+}
