@@ -1,17 +1,27 @@
 import React,{useState} from "react";
 import userService from "../../services/user.service";
 import EditPost from "../editpost/EditPost";
+import Button from 'react-bootstrap/Button';
+import Modal from 'react-bootstrap/Modal';
 const PersonPost = ({post,data,onDelete, callbackpost}) => {
 const [createModal,setCreateModal]=useState(false);
 const [postitem,setPostItem]=useState({});
-  const handleDeletePost = async (id) => {
-    const response = await userService.deletePost(id);
+const [idpost,setIdPost]= useState(-1);
+const [show, setShow] = useState(false);
+const handleClose = () => setShow(false);
+const handleShow = (id) =>{
+  setShow(true) 
+  setIdPost(id)
+ } 
+  const handleDeletePost = async () => {
+    const response = await userService.deletePost(idpost);
     console.log("res", response);
     if (response !== 200) {
       alert(" Failed to delete post ");
     }
     if (response === 200) {
-      onDelete(id);
+      onDelete(idpost);
+      setShow(!show)
     }
 
     //call api
@@ -51,7 +61,10 @@ const [postitem,setPostItem]=useState({});
           <div className="body-profile-content-actionnns">
            
             
-           <button className="body-profile-content-actionnns-icon buttono-profile-edit-delete"   onClick={() => handleDeletePost(post.id)} > Delete </button>
+           <button className="body-profile-content-actionnns-icon buttono-profile-edit-delete"     onClick={ () => {
+                              handleShow(post?.id)
+                              // handleDeletePost(post?.id);
+                            }} > Delete </button>
            <button className="body-profile-content-actionnns-icon" onClick={handleCreateModal}  > Edit post </button>
          </div>
         </div>
@@ -70,6 +83,20 @@ const [postitem,setPostItem]=useState({});
         </EditPost>
 
       )}
+      <Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+        <Modal.Title>Are you want to delete this post??</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>Are you sure to delete this post?</Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Close
+          </Button>
+          <Button variant="primary" onClick={handleDeletePost} >
+            Save Changes
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </div>
   );
 };

@@ -208,6 +208,22 @@ const comFirm = async(id,status)=>{
   })
   return res;
 }
+const forgotPassword = async(email)=>{
+  console.log("email",email)
+  const res = await axios.post(API_URL + `/password/forgot`,{email})
+  .then((response)=>{
+    return response.data;
+  })
+  return res;
+}
+const resetPassword = async(password,reset_password_token)=>{
+  console.log("email",password)
+  const res = await axios.post(API_URL + `/password/reset`,{password,reset_password_token})
+  .then((response)=>{
+    return response.data;
+  })
+  return res;
+}
 
 
 
@@ -235,5 +251,7 @@ export default {
   searchPost,
   searchUser,
   deleteLike,
-  comFirm
+  comFirm,
+  forgotPassword,
+  resetPassword,
 };

@@ -4,12 +4,22 @@ import { useSelector } from "react-redux";
 import "./Comment.css";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Button from 'react-bootstrap/Button';
+import Modal from 'react-bootstrap/Modal';
 const Comment = ({ postId,post }) => {
   const [comments, setComments] = useState([]);
   const [writerComment, setWriterComment] = useState("");
   const { user: currentUser } = useSelector((state) => state.auth);
   const [error, setError] = useState(false);
+  
   const inputCommentRef = useRef(null);
+  const [idcomment,setIdcomment]= useState(-1);
+const [show, setShow] = useState(false);
+const handleClose = () => setShow(false);
+const handleShow = (id) =>{
+  setShow(true) 
+  setIdcomment(id)
+ } 
   useEffect(() => {
     const res = userService
       .getComments(postId)
@@ -46,8 +56,8 @@ const Comment = ({ postId,post }) => {
     setComments(newComments);
   };
 
-  const handleDeleteComment = async (id) => {
-    const response = await userService.deleteComment(id);
+  const handleDeleteComment = async () => {
+    const response = await userService.deleteComment(idcomment);
 
     console.log("response", response);
     if (response !== 200) {
@@ -56,7 +66,8 @@ const Comment = ({ postId,post }) => {
       });
     }
     if (response === 200) {
-      onDeleteComment(id);
+      onDeleteComment(idcomment);
+      setShow(!show)
     }
   };
 
@@ -122,6 +133,7 @@ const Comment = ({ postId,post }) => {
         <CommentItem
           data={com}
           key={`comment-${postId}-${index}`}
+          handleShow={handleShow}
           handleDeleteComment={handleDeleteComment}
           handleEditComment={handleEditComment}
           handlEditSuccess={handlEditSuccess}
@@ -130,11 +142,25 @@ const Comment = ({ postId,post }) => {
       <div className="comment_view-morer">
         <p>see more</p>
       </div>
+      <Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+        <Modal.Title>Are you want to delete this comment??</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>Are you sure to delete this comment?</Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Close
+          </Button>
+          <Button variant="primary" onClick={handleDeleteComment} >
+            Save Changes
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </div>
   );
 };
 
-const CommentItem = ({ data, handleDeleteComment, handleEditComment ,handlEditSuccess}) => {
+const CommentItem = ({ data,handleShow, handleEditComment ,handlEditSuccess}) => {
   const [comment, setComment] = useState(data);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(false);
@@ -241,8 +267,9 @@ const CommentItem = ({ data, handleDeleteComment, handleEditComment ,handlEditSu
           <p className="comment_others-action"> Like</p>
         <p
           className="comment_others-action"
-          onClick={() => {
-            handleDeleteComment(comment.id);
+          onClick={ () => {
+            handleShow(comment?.id)
+            // handleDeletePost(post?.id);
           }}
         >
           <ToastContainer />

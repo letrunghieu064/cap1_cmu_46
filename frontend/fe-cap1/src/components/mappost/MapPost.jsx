@@ -6,6 +6,8 @@ import MapPostComment from "../mappostcomment/MapPostComment"
 import userService from "../../services/user.service";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Button from 'react-bootstrap/Button';
+import Modal from 'react-bootstrap/Modal';
 export default function MapPost({post,onClose}) {
   // const onclickView = (e) => {};
   console.log("sdfds",post)
@@ -14,6 +16,13 @@ export default function MapPost({post,onClose}) {
   console.log("comments",comments)
   const [createModalComment,setCreateModalComment]=useState(false)
   const [writerComment,setwriterComment]=useState("")
+  const [idcomment,setIdComment]= useState(-1);
+const [show, setShow] = useState(false);
+const handleClose = () => setShow(false);
+const handleShow = (id) =>{
+  setShow(true) 
+  setIdComment(id)
+ } 
   const callbackComment = async (comment )=>{
     setComments([{ ...comment }, ...comments])
   }
@@ -35,8 +44,8 @@ export default function MapPost({post,onClose}) {
     setComments(newComments);
   };
 
-  const handleDeleteComment = async (id) => {
-    const response = await userService.deleteComment(id);
+  const handleDeleteComment = async () => {
+    const response = await userService.deleteComment(idcomment);
 
     console.log("response", response);
     if (response !== 200) {
@@ -45,7 +54,8 @@ export default function MapPost({post,onClose}) {
       });
     }
     if (response === 200) {
-      onDeleteComment(id);
+      onDeleteComment(idcomment);
+      setShow(!show) 
     }
   };
   const handleCreateShow= async  () =>{ 
@@ -120,7 +130,7 @@ export default function MapPost({post,onClose}) {
                     //   <p className="comment-content-comment-read-letter-writed"> {comment?.description}</p>
                     // </div>
                     // </div>
-                    <MapPostComment comment={comment} handleDeleteComment={handleDeleteComment} callbackItem={callbackItem} ></MapPostComment>
+                    <MapPostComment comment={comment} handleDeleteComment={handleDeleteComment} callbackItem={callbackItem}  handleShow={handleShow}></MapPostComment>
                     ))}
                     <div className="modal-content-comment-content-comment-read">
                     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRiGxpPkOa9f5LzIgUoOswNCmnIA_DwaufG-A&usqp=CAU" />
@@ -144,6 +154,20 @@ export default function MapPost({post,onClose}) {
                 </div>
               </div>
         </div>
+        <Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+        <Modal.Title>Are you want to delete this post??</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>Are you sure to delete this post?</Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Close
+          </Button>
+          <Button variant="primary" onClick={handleDeleteComment} >
+            Save Changes
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </div>
   );
 }

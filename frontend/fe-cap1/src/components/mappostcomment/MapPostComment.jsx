@@ -1,9 +1,9 @@
 import Header from "../Header";
 import ListPersonPost from "../listpersonpost/ListPersonPost";
 import React, {  useEffect} from "react";
-export default function MapPostComment({ comment, handleDeleteComment ,callbackItem}) {
+export default function MapPostComment({ handleShow,comment, handleDeleteComment ,callbackItem}) {
   const handleDelete = async (e) => {
-    handleDeleteComment && handleDeleteComment(comment.id);
+    handleShow && handleShow(comment.id);
   };
   useEffect(() => {
     callbackItem && callbackItem(comment)

@@ -1,6 +1,8 @@
 import React ,{useState,useEffect}from "react";
 import "./ListPersonPost.css";
 import userService from "../../services/user.service";
+import Button from 'react-bootstrap/Button';
+import Modal from 'react-bootstrap/Modal';
 // import axios from "axios";
 import { useSelector } from "react-redux";
 import PersonPost from "../personPost/PersonPost";
@@ -12,6 +14,11 @@ export default function ListPersonPost() {
     
   }
   const [posts,setPosts]=useState([])
+  const [iduser,setIdUser]= useState(-1);
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  
+
   const [data, setData] = useState({
     email:"",
     first_name:"",
@@ -24,6 +31,10 @@ export default function ListPersonPost() {
     card_id:"",
     url_img:""
   })
+  const handleShow = (id) =>{
+    setShow(true) 
+    setIdUser(id)
+   } 
   const onDelete = (id) => {
     const newPosts = posts.filter((item) => item.id !== id);
     setPosts(newPosts);
@@ -118,6 +129,7 @@ export default function ListPersonPost() {
           ))}
    </div>       
   </div>
+ 
   </div>
   );
 }
