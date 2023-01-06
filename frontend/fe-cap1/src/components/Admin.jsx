@@ -111,13 +111,15 @@ const Admin = () => {
       setShow(!show)
     }
   };
-  let handleOnClickExport = async () => {
+  let handleOnClickExport = async (e) => {
+    e.preventDefault();
     console.log("sầ", addpost);
     if (addpost) {
+      await Exportexcel.exportExcel(addpost, "danh sách post", "list");
       toast.success("Export File Cuscess!", {
         position: toast.POSITION.TOP_RIGHT,
       });
-      await Exportexcel.exportExcel(addpost, "danh sách post", "list");
+     
     }
   };
   const handleChange = async (e) => {
@@ -158,14 +160,14 @@ const Admin = () => {
                 onClick={() => handleTab("user")}
               >
                 <BiUserCircle className="dashboard-link-a-icon"></BiUserCircle>
-                <p className="nav-item">Manager User</p>
+                <p className="nav-item">Manage User</p>
               </a>
             </li>
             <li>
               <a className="dashboard-link-a" href="#">
                 <BiColumns className="dashboard-link-a-icon"></BiColumns>
                 <p className="nav-item" onClick={() => handleTab("posts")}>
-                  Manager Post
+                  Manage Post
                 </p>
               </a>
             </li>

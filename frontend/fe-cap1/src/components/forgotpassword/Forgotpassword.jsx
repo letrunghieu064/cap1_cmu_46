@@ -7,7 +7,9 @@ export default function Forgotpassword() {
   const [password,setPassword]=useState("");
   const [veryfipassword,setverifiPassword]=useState("");
   const [code,setCode]=useState("");
-  const [validate,setvalidate]=useState(false);  
+  const [validatepassword,setvalidate]=useState(false);  
+  const [validateveryfipassword,setvalidateveryfipassword]=useState(false);  
+  const [validate,setValidate]=useState(false); 
   const forgotPass = async (e) => {
     e.preventDefault();
     if (email.length === 0) {
@@ -21,11 +23,22 @@ export default function Forgotpassword() {
   };
   const resetPassword = async (e) => {
     e.preventDefault();
-    if (password.length === 0 ||veryfipassword.length===0||veryfipassword!==password) {
-      setvalidate(!validate)
+    if (password.length === 0 ) {
+      setvalidate(!validatepassword)
       return ;
-    } else {
+    } 
+    if (veryfipassword.length === 0 ) {
+      setvalidateveryfipassword(!validateveryfipassword)
+      return ;
+    }
+    if (veryfipassword !==password ) {
+      setValidate(!validate)
+      return ;
+    }
+    else {
+      
       const res = await userService.resetPassword(password,code);
+      setValidate(false)
       console.log("hsgdsd",res)
       toast.success(res.message
         , {
@@ -53,16 +66,22 @@ export default function Forgotpassword() {
             <input placeholder="Create new password" type="password" onChange={(e) => {
             setPassword(e.target.value);
           }} />
+           {validatepassword && password?.length <=0 ?
+        <label className="l1 l2">cannot be left blank</label> :" "}
           </div>
           <div>
             <input placeholder="Confirm your password" type="password" onChange={(e) => {
             setverifiPassword(e.target.value);
           }}/>
+          {validateveryfipassword && veryfipassword?.length <=0 ?
+        <label className="l1 l2">cannot be left blank</label> :" "}
           </div>
           <div>
             <input placeholder="Enter code verrify" type="text" onChange={(e) => {
             setCode(e.target.value);
           }} />
+         {validate ?
+        <label className="l1 l2">passwords do not match</label> :" "}
           </div>
           <button onClick={resetPassword}>CHANGE</button>
           <div className="loginnnn-linkkk">

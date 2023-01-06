@@ -132,7 +132,7 @@ const handleShow = (id) =>{
                     // </div>
                     <MapPostComment comment={comment} handleDeleteComment={handleDeleteComment} callbackItem={callbackItem}  handleShow={handleShow}></MapPostComment>
                     ))}
-                    <div className="modal-content-comment-content-comment-read">
+                    {/* <div className="modal-content-comment-content-comment-read">
                     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRiGxpPkOa9f5LzIgUoOswNCmnIA_DwaufG-A&usqp=CAU" />
                     <div className="modal-content-comment-content-comment-read-letter">
                       <p className="comment-content-comment-read-letter-name">Hieu Lee</p>
@@ -147,7 +147,7 @@ const handleShow = (id) =>{
                       <p className="comment-content-comment-read-letter-time">11 minutes ago</p>
                       <p className="comment-content-comment-read-letter-writed"> Hôm qua mới nhậu ở đây luôn, sợ quá</p>
                     </div>
-                    </div>
+                    </div> */}
                 </div>
                 </div>
                 )}

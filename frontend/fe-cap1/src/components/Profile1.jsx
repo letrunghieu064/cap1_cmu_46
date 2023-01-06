@@ -358,10 +358,10 @@ const EditProfile = () => {
               <div className="container-right-body-bottom-submit">
                 <button
                   
-                  className="container-right-body-bottom-submit-cancel"
+                  className="container-right-body-bottom-submit-cancel" style={{backgroundColor:"#ffd700"}}
                   onClick={Comback}
                 >
-                  About edit page
+                  Person page
                 </button>
                 <button
                   

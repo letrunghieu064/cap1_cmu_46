@@ -274,7 +274,7 @@ export default function App() {
             </div>
             </div>
           ))}
-            <div className="modal-content-item">
+            {/* <div className="modal-content-item">
             <div className="modal-content-map-header">
             <div className="modal-content-map-header-left">
             <FcSpeaker className="modal-content-map-header-left-icon"></FcSpeaker>
@@ -300,7 +300,7 @@ export default function App() {
               
               </div>
             </div>
-            </div>
+            </div> */}
           </div>
           
           </div>
