@@ -1,0 +1,26 @@
+#errorComment{
+  display:block !important;
+  color:red !important;
+}
+.comment_others-content-actions-list{
+  display:flex;
+}
+.comment_others-name{
+  font-weight:bold;
+}
+.new-header_infor-name{
+  text-align: left;
+  font-weight:bold;
+  font-size: 16px;
+}
+.new-header_infor-time{
+  font-size: 14px;
+}
+.btn-comment{
+  background-color: #2f9e44;
+  padding:8px 10px;
+  border-radius: 6px;
+  color:white;
+  font-weight:bold;
+  margin : 0 0 0 10px;
+}
